@@ -1,5 +1,6 @@
 from pandas import read_csv
 from sklearn.preprocessing import LabelEncoder
+from artificial_neural_network_model_automation.classification_handler import ANNClassificationHandlerConfig
 from artificial_neural_network_model_automation.classification_handler import ANNClassificationHandler
 from sklearn.metrics import classification_report
 from artificial_neural_network_model_automation.data_path_handler import get_data_path
@@ -23,6 +24,13 @@ encoder = LabelEncoder()
 encoder.fit(Y)
 encoded_Y = encoder.transform(Y)
 # designing neural network
+ann_classification_handler_config = ANNClassificationHandlerConfig
+ann_classification_handler_config.classification_type = "binary"
+ann_classification_handler_config.number_of_inputs = 60
+ann_classification_handler_config.number_of_hidden_layers = 3
+ann_classification_handler_config.dropout = False
+ann_classification_handler_config
+
 ann_classification_handler = ANNClassificationHandler("binary", 60, 3, False, 1, "accuracy")
 classifier = ann_classification_handler.design_neural_network()
 # training neural network
