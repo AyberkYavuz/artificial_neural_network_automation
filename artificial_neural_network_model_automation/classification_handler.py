@@ -8,7 +8,7 @@ class ANNClassificationHandlerConfig:
     number_of_inputs: int
     number_of_hidden_layers: int
     dropout: bool
-    number_of_categories: str
+    number_of_outputs: str
     metric: object
     batch_size: int
     epochs: int
@@ -20,7 +20,7 @@ class ANNClassificationHandler:
         self.__number_of_inputs = ann_classification_handler_config.number_of_inputs
         self.__number_of_hidden_layers = ann_classification_handler_config.number_of_hidden_layers
         self.__dropout = ann_classification_handler_config.dropout
-        self.__number_of_categories = ann_classification_handler_config.number_of_categories
+        self.__number_of_outputs = ann_classification_handler_config.number_of_outputs
         self.__metric = ann_classification_handler_config.metric
         self.__batch_size = ann_classification_handler_config.batch_size
         self.__epochs = ann_classification_handler_config.epochs
@@ -43,9 +43,9 @@ class ANNClassificationHandler:
 
         # adding output layer
         if self.__classification_type == "binary":
-            classifier.add(Dense(self.__number_of_categories, activation='sigmoid'))
+            classifier.add(Dense(self.__number_of_outputs, activation='sigmoid'))
         else:
-            classifier.add(Dense(self.__number_of_categories, activation='softmax'))
+            classifier.add(Dense(self.__number_of_outputs, activation='softmax'))
 
         # compile classifier
         if self.__classification_type == "binary":
