@@ -24,19 +24,21 @@ encoder = LabelEncoder()
 encoder.fit(Y)
 encoded_Y = encoder.transform(Y)
 # designing neural network
-ann_classification_handler_config = ANNClassificationHandlerConfig
+ann_classification_handler_config = ANNClassificationHandlerConfig()
 ann_classification_handler_config.classification_type = "binary"
 ann_classification_handler_config.number_of_inputs = 60
 ann_classification_handler_config.number_of_hidden_layers = 3
 ann_classification_handler_config.dropout = False
-ann_classification_handler_config
+ann_classification_handler_config.number_of_outputs = 1
+ann_classification_handler_config.metric = "accuracy"
+ann_classification_handler_config.batch_size = 10
+ann_classification_handler_config.epochs = 50
 
-ann_classification_handler = ANNClassificationHandler("binary", 60, 3, False, 1, "accuracy")
-classifier = ann_classification_handler.design_neural_network()
+ann_classification_handler = ANNClassificationHandler(ann_classification_handler_config)
 # training neural network
-classifier.fit(X, encoded_Y, batch_size=10, epochs=50)
+ann_classification_handler.train_neural_network(X, encoded_Y)
 # making predictions
-y_pred = classifier.predict(X)
+y_pred = ann_classification_handler.classifier.predict(X)
 # our threshold is 0.5. if number is bigger han 0.5, it returns true. If number is less than 0.5, it returns false
 y_pred = [1 if prob > 0.5 else 0 for prob in y_pred]
 # classification report
