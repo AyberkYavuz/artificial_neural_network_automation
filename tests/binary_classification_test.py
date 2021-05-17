@@ -6,6 +6,7 @@ from sklearn.metrics import classification_report
 from artificial_neural_network_model_automation.data_path_handler import get_data_path
 
 data_name = "sonar.csv"
+# please define your os_type (mac, windows, linux)
 data_path = get_data_path(data_name, os_type="mac")
 
 
