@@ -24,7 +24,7 @@ class ANNClassificationHandler:
         self.__metric = ann_classification_handler_config.metric
         self.__batch_size = ann_classification_handler_config.batch_size
         self.__epochs = ann_classification_handler_config.epochs
-        self.__classifier = self.design_neural_network()
+        self.classifier = self.design_neural_network()
 
     def design_neural_network(self):
         # Initialising the ANN
@@ -56,5 +56,4 @@ class ANNClassificationHandler:
         return classifier
 
     def train_neural_network(self, X, y):
-        classification_model = self.__classifier.fit(X, y, batch_size=self.__batch_size, epochs=self.__epochs)
-        return classification_model
+        self.classifier.fit(X, y, batch_size=self.__batch_size, epochs=self.__epochs)
