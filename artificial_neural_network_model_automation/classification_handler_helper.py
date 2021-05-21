@@ -3,6 +3,12 @@ from numpy import argmax
 
 
 def get_label_based_on_thresold(x, thresold):
+   """Returns label of probability x
+
+    Args:
+      x: Probability value of target category which was produced by the classifier.
+      thresold: thresold which will be used for labeling.
+    """
    result = None
    if x > thresold:
       result = 1
