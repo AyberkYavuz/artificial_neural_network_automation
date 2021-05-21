@@ -1,6 +1,7 @@
 from keras.models import Sequential
 from keras.layers import Dense
 from keras.layers import Dropout
+from artificial_neural_network_model_automation.decorators import execution_time
 
 
 class ANNClassificationHandlerConfig:
@@ -69,5 +70,6 @@ class ANNClassificationHandler:
 
         return classifier
 
+    @execution_time
     def train_neural_network(self, X, y):
         self.classifier.fit(X, y, batch_size=self.__batch_size, epochs=self.__epochs)
