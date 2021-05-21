@@ -4,6 +4,11 @@ from keras.layers import Dropout
 
 
 class ANNClassificationHandlerConfig:
+    """A configuration for Keras artificial neural network classifier
+
+    Attributes:
+      classification_type: The type of classification task (binary, multiclass)
+    """
     classification_type: str
     number_of_inputs: int
     number_of_hidden_layers: int
