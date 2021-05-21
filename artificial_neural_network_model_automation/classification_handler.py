@@ -4,7 +4,7 @@ from keras.layers import Dropout
 
 
 class ANNClassificationHandlerConfig:
-    """A configuration for Keras artificial neural network classifier
+    """A configuration for Keras artificial neural network classifier.
 
     Attributes:
       classification_type: The type of classification task. It takes 2 different values
@@ -22,6 +22,11 @@ class ANNClassificationHandlerConfig:
 
 class ANNClassificationHandler:
     def __init__(self, ann_classification_handler_config: ANNClassificationHandlerConfig):
+        """Initializes Keras classifier based on ann_classification_handler_config object attributes
+
+        Args:
+          ann_classification_handler_config: ANNClassificationHandlerConfig instance.
+        """
         self.__classification_type = ann_classification_handler_config.classification_type
         self.__number_of_inputs = ann_classification_handler_config.number_of_inputs
         self.__number_of_hidden_layers = ann_classification_handler_config.number_of_hidden_layers
@@ -33,6 +38,9 @@ class ANNClassificationHandler:
         self.classifier = self.design_neural_network()
 
     def design_neural_network(self):
+        """Designs keras neural network architecture based on ANNClassificationHandlerConfig instance for classification
+        task and returns it.
+        """
         # Initialising the ANN
         classifier = Sequential()
         # Adding input layer and first hidden layer
