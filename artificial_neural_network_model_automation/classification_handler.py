@@ -19,6 +19,7 @@ class ANNClassificationHandlerConfig:
       dropout_dictionary: It is a python dictionary that has two attributes which are "dropout" and "dropout_rate".
                        Example usage; {"dropout": True, "dropout_rate": 0.01} which means that adding dropout layer between
                        hiddien layers and dropout rate will be 0.01.
+      optimizer: String (name of optimizer) or optimizer instance. See `tf.keras.optimizers`.
       metric: List of metrics to be evaluated by the model during training and testing. Each of this can be a string
            (name of a built-in function), function or a `tf.keras.metrics.Metric` instance. See
            `tf.keras.metrics`. Typically you will use `metrics=['accuracy']`.
@@ -38,6 +39,7 @@ class ANNClassificationHandlerConfig:
     neural_network_architecture = list
     hidden_layers_activation_function = str
     dropout_dictionary: dict
+    optimizer = object
     metric: object
     batch_size: int
     epochs: int
@@ -54,6 +56,7 @@ class ANNClassificationHandler:
         self.__neural_network_architecture = ann_classification_handler_config.neural_network_architecture
         self.__hidden_layers_activation_function = ann_classification_handler_config.hidden_layers_activation_function
         self.__dropout_dictionary = ann_classification_handler_config.dropout_dictionary
+        self.__optimizer = ann_classification_handler_config.optimizer
         self.__metric = ann_classification_handler_config.metric
         self.__batch_size = ann_classification_handler_config.batch_size
         self.__epochs = ann_classification_handler_config.epochs
@@ -87,9 +90,9 @@ class ANNClassificationHandler:
 
         # compile classifier
         if self.__classification_type == "binary":
-            classifier.compile(loss='binary_crossentropy', optimizer="adam", metrics=[self.__metric])
+            classifier.compile(loss='binary_crossentropy', optimizer=self.__optimizer, metrics=[self.__metric])
         else:
-            classifier.compile(loss='categorical_crossentropy', optimizer="adam", metrics=[self.__metric])
+            classifier.compile(loss='categorical_crossentropy', optimizer=self.__optimizer, metrics=[self.__metric])
 
         return classifier
 
