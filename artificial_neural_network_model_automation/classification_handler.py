@@ -10,7 +10,12 @@ class ANNClassificationHandlerConfig:
 
     Attributes:
       classification_type: The type of classification task. It takes 2 different values
-      which are "binary", "multiclass"
+      which are "binary", "multiclass".
+      neural_network_architecture: Neural network architecture represented by a python list. For example;
+      [60, 70, 80, 1] means that 60 is input layer, 70 is the first hidden layer neuron number, 80 is the
+      second hidden layer neuron number and 1 is output layer.
+      hidden_layers_activation_function: hidden layers activation function type. It could be "sigmoid", "relu", "tanh"
+      etc. Please look at https://keras.io/api/layers/activations/ for detailed information.
     """
     classification_type: str
     neural_network_architecture = list
