@@ -10,15 +10,29 @@ class ANNClassificationHandlerConfig:
 
     Attributes:
       classification_type: The type of classification task. It takes 2 different values
-      which are "binary", "multiclass".
+                         which are "binary", "multiclass".
       neural_network_architecture: Neural network architecture represented by a python list. For example;
-      [60, 70, 80, 1] means that 60 is input layer, 70 is the first hidden layer neuron number, 80 is the
-      second hidden layer neuron number and 1 is output layer.
-      hidden_layers_activation_function: hidden layers activation function type. It could be "sigmoid", "relu", "tanh"
-      etc. Please look at https://keras.io/api/layers/activations/ for detailed information.
+                                [60, 70, 80, 1] means that 60 is input layer, 70 is the first hidden layer neuron number,
+                                80 is the second hidden layer neuron number and 1 is output layer.
+      hidden_layers_activation_function: hidden layers activation function type. It could be "sigmoid", "relu", "tanh" etc.
+                                      Please look at https://keras.io/api/layers/activations/ for detailed information.
       dropout_dictionary: It is a python dictionary that has two attributes which are "dropout" and "dropout_rate".
-      Example usage; {"dropout": True, "dropout_rate": 0.01} which means that adding dropout layer between hiddien
-      layers and dropout rate will be 0.01.
+                       Example usage; {"dropout": True, "dropout_rate": 0.01} which means that adding dropout layer between
+                       hiddien layers and dropout rate will be 0.01.
+      metric: List of metrics to be evaluated by the model during training and testing. Each of this can be a string
+           (name of a built-in function), function or a `tf.keras.metrics.Metric` instance. See
+           `tf.keras.metrics`. Typically you will use `metrics=['accuracy']`.
+      batch_size: Integer or `None`. Number of samples per gradient update. If unspecified, `batch_size` will
+               default to 32. Do not specify the `batch_size` if your data is in the form of datasets, generators,
+               or `keras.utils.Sequence` instances (since they generate batches).
+      epochs: Integer. Number of epochs to train the model.
+            An epoch is an iteration over the entire `x` and `y`
+            data provided.
+            Note that in conjunction with `initial_epoch`,
+            `epochs` is to be understood as "final epoch".
+            The model is not trained for a number of iterations
+            given by `epochs`, but merely until the epoch
+            of index `epochs` is reached.
     """
     classification_type: str
     neural_network_architecture = list
