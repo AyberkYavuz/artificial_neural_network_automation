@@ -1,6 +1,7 @@
 from keras.models import Sequential
 from keras.layers import Dense
 from keras.layers import Dropout
+from keras.utils.vis_utils import plot_model
 from artificial_neural_network_model_automation.decorators import execution_time
 
 
@@ -22,7 +23,7 @@ class ANNClassificationHandlerConfig:
 
 class ANNClassificationHandler:
     def __init__(self, ann_classification_handler_config: ANNClassificationHandlerConfig):
-        """Compiles Keras classifier based on ann_classification_handler_config object attributes
+        """Compiles Keras classifier based on ann_classification_handler_config object attributes.
 
         Args:
           ann_classification_handler_config: ANNClassificationHandlerConfig instance.
@@ -69,6 +70,14 @@ class ANNClassificationHandler:
             classifier.compile(loss='categorical_crossentropy', optimizer="adam", metrics=[self.__metric])
 
         return classifier
+
+    def save_classifier_architecture_plot(self, png_path):
+        """Plots the classifier architecture and saves it as a png file.
+
+        Args:
+          png_path: string path argument. It must be contain location information of png file
+        """
+        plot_model(self.classifier, to_file=png_path, show_shapes=True, show_layer_names=True)
 
     @execution_time
     def train_neural_network(self, X, y):

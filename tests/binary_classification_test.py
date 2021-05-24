@@ -7,7 +7,7 @@ from artificial_neural_network_model_automation.data_path_handler import get_dat
 
 data_name = "sonar.csv"
 # please define your os_type (mac, windows, linux)
-data_path = get_data_path(data_name, os_type="mac")
+data_path = get_data_path(data_name, directory_name="data", os_type="mac")
 
 
 # load dataset
@@ -27,7 +27,7 @@ encoded_Y = encoder.transform(Y)
 # designing neural network
 ann_classification_handler_config = ANNClassificationHandlerConfig()
 ann_classification_handler_config.classification_type = "binary"
-ann_classification_handler_config.neural_network_architecture = [60, 70, 1]
+ann_classification_handler_config.neural_network_architecture = [60, 65, 70, 65, 1]
 ann_classification_handler_config.hidden_layers_activation_function = "relu"
 ann_classification_handler_config.dropout = False
 ann_classification_handler_config.metric = "accuracy"
@@ -35,6 +35,9 @@ ann_classification_handler_config.batch_size = 10
 ann_classification_handler_config.epochs = 50
 
 ann_classification_handler = ANNClassificationHandler(ann_classification_handler_config)
+# save the plot of classifier architecture
+png_path = get_data_path("neural_network_architecture.png", "neural_network_model_architecture_plots", os_type="mac")
+ann_classification_handler.save_classifier_architecture_plot(png_path)
 # training neural network
 ann_classification_handler.train_neural_network(X, encoded_Y)
 # making predictions
