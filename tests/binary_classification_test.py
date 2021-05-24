@@ -27,10 +27,9 @@ encoded_Y = encoder.transform(Y)
 # designing neural network
 ann_classification_handler_config = ANNClassificationHandlerConfig()
 ann_classification_handler_config.classification_type = "binary"
-ann_classification_handler_config.number_of_inputs = 60
-ann_classification_handler_config.number_of_hidden_layers = 3
+ann_classification_handler_config.neural_network_architecture = [60, 70, 1]
+ann_classification_handler_config.hidden_layers_activation_function = "relu"
 ann_classification_handler_config.dropout = False
-ann_classification_handler_config.number_of_outputs = 1
 ann_classification_handler_config.metric = "accuracy"
 ann_classification_handler_config.batch_size = 10
 ann_classification_handler_config.epochs = 50

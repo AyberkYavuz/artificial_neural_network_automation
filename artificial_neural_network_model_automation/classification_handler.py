@@ -12,10 +12,9 @@ class ANNClassificationHandlerConfig:
       which are "binary", "multiclass"
     """
     classification_type: str
-    number_of_inputs: int
-    number_of_hidden_layers: int
+    neural_network_architecture = list
+    hidden_layers_activation_function = str
     dropout: bool
-    number_of_outputs: str
     metric: object
     batch_size: int
     epochs: int
@@ -23,16 +22,15 @@ class ANNClassificationHandlerConfig:
 
 class ANNClassificationHandler:
     def __init__(self, ann_classification_handler_config: ANNClassificationHandlerConfig):
-        """Initializes Keras classifier based on ann_classification_handler_config object attributes
+        """Compiles Keras classifier based on ann_classification_handler_config object attributes
 
         Args:
           ann_classification_handler_config: ANNClassificationHandlerConfig instance.
         """
         self.__classification_type = ann_classification_handler_config.classification_type
-        self.__number_of_inputs = ann_classification_handler_config.number_of_inputs
-        self.__number_of_hidden_layers = ann_classification_handler_config.number_of_hidden_layers
+        self.__neural_network_architecture = ann_classification_handler_config.neural_network_architecture
+        self.__hidden_layers_activation_function = ann_classification_handler_config.hidden_layers_activation_function
         self.__dropout = ann_classification_handler_config.dropout
-        self.__number_of_outputs = ann_classification_handler_config.number_of_outputs
         self.__metric = ann_classification_handler_config.metric
         self.__batch_size = ann_classification_handler_config.batch_size
         self.__epochs = ann_classification_handler_config.epochs
@@ -45,22 +43,24 @@ class ANNClassificationHandler:
         # Initialising the ANN
         classifier = Sequential()
         # Adding input layer and first hidden layer
-        classifier.add(Dense(self.__number_of_inputs, input_dim=self.__number_of_inputs, activation='relu'))
-        if self.__dropout:
-            # adding the input layer and the first hidden layer with dropout
-            classifier.add(Dropout(rate=0.1))
-        # adding other hidden layers
-        for i in range(0, self.__number_of_hidden_layers-1):
-            classifier.add(Dense(self.__number_of_inputs + 5, activation='relu'))
-            if self.__dropout:
-                # adding dropout layer
-                classifier.add(Dropout(rate=0.1))
+        classifier.add(Dense(input_dim=self.__neural_network_architecture[0], units=self.__neural_network_architecture[1],
+                             activation=self.__hidden_layers_activation_function))
+
+        # adding other hidden layers, if they exist
+        other_hidden_layer_neuron_numbers = self.__neural_network_architecture[2:-1]
+        if len(other_hidden_layer_neuron_numbers) > 0:
+            for hidden_layer_neuron_number in other_hidden_layer_neuron_numbers:
+                if self.__dropout:
+                    # adding dropout layer
+                    classifier.add(Dropout(rate=0.1))
+                classifier.add(Dense(hidden_layer_neuron_number,
+                                     activation=self.__hidden_layers_activation_function))
 
         # adding output layer
         if self.__classification_type == "binary":
-            classifier.add(Dense(self.__number_of_outputs, activation='sigmoid'))
+            classifier.add(Dense(self.__neural_network_architecture[-1], activation='sigmoid'))
         else:
-            classifier.add(Dense(self.__number_of_outputs, activation='softmax'))
+            classifier.add(Dense(self.__neural_network_architecture[-1], activation='softmax'))
 
         # compile classifier
         if self.__classification_type == "binary":
