@@ -1,8 +1,19 @@
 from keras.models import Sequential
 from keras.layers import Dense
 from keras.layers import Dropout
+from tensorflow.keras.optimizers import SGD
+from tensorflow.keras.optimizers import RMSprop
+from tensorflow.keras.optimizers import Adam
+from tensorflow.keras.optimizers import Adadelta
+from tensorflow.keras.optimizers import Adagrad
+from tensorflow.keras.optimizers import Adamax
+from tensorflow.keras.optimizers import Nadam
+from tensorflow.keras.optimizers import Ftrl
 from keras.utils.vis_utils import plot_model
 from artificial_neural_network_model_automation.decorators import execution_time
+
+optimizer_list = [SGD, RMSprop, Adam, Adadelta, Adagrad, Adamax, Nadam, Ftrl]
+optimizer_string_list = ["sgd", "rmsprop", "adam", "adadelta", "adagrad", "adamax", "nadam", "ftrl"]
 
 
 class ANNClassificationHandlerConfig:
@@ -43,6 +54,40 @@ class ANNClassificationHandlerConfig:
     metric: object
     batch_size: int
     epochs: int
+
+    def check_types_of_attributes(self):
+        """Checks the types of attributes, if one of them is not okay, it raises exception.
+        """
+        if isinstance(self.classification_type, str):
+            print("classification_type data type is okay")
+        else:
+            raise Exception("Sorry, classification_type cannot be anything than str")
+
+        if isinstance(self.neural_network_architecture, list):
+            print("neural_network_architecture data type is okay")
+        else:
+            raise Exception("Sorry, neural_network_architecture cannot be anything than list")
+
+        if isinstance(self.hidden_layers_activation_function, str):
+            print("hidden_layers_activation_function data type is okay")
+        else:
+            raise Exception("Sorry, hidden_layers_activation_function cannot be anything than str")
+
+        if isinstance(self.dropout_dictionary, dict):
+            print("dropout_dictionary data type is okay")
+        else:
+            raise Exception("Sorry, dropout_dictionary cannot be anything than dict")
+
+        optimizer_instance_result_list = []
+        for optimizer_class in optimizer_list:
+            optimizer_instance_result = isinstance(self.optimizer, optimizer_class)
+            optimizer_instance_result_list.append(optimizer_instance_result)
+
+        optimizer_other_type_condition = True in optimizer_instance_result_list
+        if isinstance(self.optimizer, str) or optimizer_other_type_condition:
+            print("optimizer data type is okay")
+        else:
+            raise Exception("Sorry, dropout_dictionary cannot be anything than str or `tf.keras.optimizers`")
 
 
 class ANNClassificationHandler:
