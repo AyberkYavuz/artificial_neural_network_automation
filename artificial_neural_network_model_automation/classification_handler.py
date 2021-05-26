@@ -36,6 +36,8 @@ metric_string_list = ["accuracy", "binary_accuracy", "categorical_accuracy", "to
                       "AUC", "Precision", "Recall", "TruePositives", "TrueNegatives", "FalsePositives",
                       "FalseNegatives"]
 
+activation_functions = ["relu", "sigmoid", "tanh", "selu", "elu", "exponential"]
+
 
 class ANNClassificationHandlerConfig:
     """A configuration for Keras artificial neural network classifier.
@@ -79,7 +81,7 @@ class ANNClassificationHandlerConfig:
     def check_types_of_attributes(self):
         """Checks the types of attributes, if one of them is not okay, it raises exception.
         """
-        print("Checking the types of attributes")
+        print("\nChecking the types of attributes\n")
         if isinstance(self.classification_type, str):
             print("classification_type data type is okay")
         else:
@@ -131,6 +133,42 @@ class ANNClassificationHandlerConfig:
             print("epochs data type is okay")
         else:
             raise Exception("Sorry, epochs cannot be anything than int")
+
+    def check_values_of_attributes(self):
+        """Checks the values of attributes, if one of them is not okay, it raises exception.
+        """
+        print("\nChecking the values of attributes\n")
+        classification_type_condition = self.classification_type in ["binary", "multiclass"]
+        if classification_type_condition:
+            print("classification_type value is okay")
+        else:
+            raise Exception("Sorry, classification_type should be 'binary' or 'multiclass'")
+
+        length_of_neural_network_architecture = len(self.neural_network_architecture)
+        neural_network_architecture_condition_1 = length_of_neural_network_architecture < 3
+
+        if neural_network_architecture_condition_1:
+            raise Exception("Sorry, length of neural_network_architecture can't be less than 3")
+
+        for layer in self.neural_network_architecture:
+            if isinstance(layer, bool):
+                raise Exception("Sorry, neural network layer can't be anything than int")
+            layer_result_1 = not isinstance(layer, int)
+            if layer_result_1:
+                raise Exception("Sorry, neural network layer can't be anything than int")
+            layer_result_2 = layer < 0
+            if layer_result_2:
+                raise Exception("Sorry, neural network layer can't be less than 0")
+
+        print("neural_network_architecture value is okay")
+        hidden_layers_activation_function_condition = self.hidden_layers_activation_function in activation_functions
+        if hidden_layers_activation_function_condition:
+            print("hidden_layers_activation_function value is okay")
+        else:
+            raise Exception("Sorry, hidden_layers_activation_function value could be 'relu',"
+                            " 'sigmoid', 'tanh', 'selu', 'elu' or 'exponential'.")
+
+
 
 
 class ANNClassificationHandler:

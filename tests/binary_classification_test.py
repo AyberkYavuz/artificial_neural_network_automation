@@ -28,7 +28,7 @@ encoded_Y = encoder.transform(Y)
 ann_classification_handler_config = ANNClassificationHandlerConfig()
 ann_classification_handler_config.classification_type = "binary"
 # ann_classification_handler_config.classification_type = 1  # test for check_types_of_attributes()
-ann_classification_handler_config.neural_network_architecture = [60, 65, 70, 65, 1]
+ann_classification_handler_config.neural_network_architecture = [60, 50, 50, 1]
 # ann_classification_handler_config.neural_network_architecture = "dsknflsdkf"  # test for check_types_of_attributes()
 ann_classification_handler_config.hidden_layers_activation_function = "relu"
 # ann_classification_handler_config.hidden_layers_activation_function = 5  # test for check_types_of_attributes()
@@ -50,6 +50,8 @@ ann_classification_handler_config.epochs = 50
 
 # check the types of attributes of ann_classification_handler_config object
 ann_classification_handler_config.check_types_of_attributes()
+# check the values of attributes of ann_classification_handler_config object
+ann_classification_handler_config.check_values_of_attributes()
 
 ann_classification_handler = ANNClassificationHandler(ann_classification_handler_config)
 # save the plot of classifier architecture
