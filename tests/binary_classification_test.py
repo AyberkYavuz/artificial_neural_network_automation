@@ -35,13 +35,18 @@ ann_classification_handler_config.hidden_layers_activation_function = "relu"
 ann_classification_handler_config.dropout_dictionary = {"dropout": False, "dropout_rate": 0.01}
 # ann_classification_handler_config.dropout_dictionary = 6.7  # test for check_types_of_attributes()
 ann_classification_handler_config.optimizer = "adam"
-# ann_classification_handler_config.optimizer = 3 # test for check_types_of_attributes()
+# ann_classification_handler_config.optimizer = 3  # test for check_types_of_attributes()
 # from tensorflow.keras import optimizers
 # optimizer = optimizers.SGD(learning_rate=0.02)
 # ann_classification_handler_config.optimizer = optimizer # test for check_types_of_attributes()
 ann_classification_handler_config.metric = "accuracy"
+# from tensorflow.keras.metrics import SpecificityAtSensitivity
+# metric = SpecificityAtSensitivity(sensitivity=0.6)
+# ann_classification_handler_config.metric = metric  # test for check_types_of_attributes()
 ann_classification_handler_config.batch_size = 10
+# ann_classification_handler_config.batch_size = 1.0  # test for check_types_of_attributes()
 ann_classification_handler_config.epochs = 50
+# ann_classification_handler_config.epochs = 50.0  # test for check_types_of_attributes()
 
 # check the types of attributes of ann_classification_handler_config object
 ann_classification_handler_config.check_types_of_attributes()

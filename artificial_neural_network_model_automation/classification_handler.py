@@ -10,10 +10,31 @@ from tensorflow.keras.optimizers import Adamax
 from tensorflow.keras.optimizers import Nadam
 from tensorflow.keras.optimizers import Ftrl
 from keras.utils.vis_utils import plot_model
+from tensorflow.keras.metrics import Accuracy
+from tensorflow.keras.metrics import BinaryAccuracy
+from tensorflow.keras.metrics import CategoricalAccuracy
+from tensorflow.keras.metrics import TopKCategoricalAccuracy
+from tensorflow.keras.metrics import AUC
+from tensorflow.keras.metrics import Precision
+from tensorflow.keras.metrics import Recall
+from tensorflow.keras.metrics import TruePositives
+from tensorflow.keras.metrics import TrueNegatives
+from tensorflow.keras.metrics import FalsePositives
+from tensorflow.keras.metrics import FalseNegatives
+from tensorflow.keras.metrics import PrecisionAtRecall
+from tensorflow.keras.metrics import SensitivityAtSpecificity
+from tensorflow.keras.metrics import SpecificityAtSensitivity
 from artificial_neural_network_model_automation.decorators import execution_time
 
 optimizer_list = [SGD, RMSprop, Adam, Adadelta, Adagrad, Adamax, Nadam, Ftrl]
 optimizer_string_list = ["sgd", "rmsprop", "adam", "adadelta", "adagrad", "adamax", "nadam", "ftrl"]
+
+metric_list = [Accuracy, BinaryAccuracy, CategoricalAccuracy, TopKCategoricalAccuracy, AUC, Precision, Recall,
+               TruePositives, TrueNegatives, FalsePositives, FalseNegatives, PrecisionAtRecall,
+               SensitivityAtSpecificity, SpecificityAtSensitivity]
+metric_string_list = ["accuracy", "binary_accuracy", "categorical_accuracy", "top_k_categorical_accuracy",
+                      "AUC", "Precision", "Recall", "TruePositives", "TrueNegatives", "FalsePositives",
+                      "FalseNegatives"]
 
 
 class ANNClassificationHandlerConfig:
@@ -58,6 +79,7 @@ class ANNClassificationHandlerConfig:
     def check_types_of_attributes(self):
         """Checks the types of attributes, if one of them is not okay, it raises exception.
         """
+        print("Checking the types of attributes")
         if isinstance(self.classification_type, str):
             print("classification_type data type is okay")
         else:
@@ -87,7 +109,28 @@ class ANNClassificationHandlerConfig:
         if isinstance(self.optimizer, str) or optimizer_other_type_condition:
             print("optimizer data type is okay")
         else:
-            raise Exception("Sorry, dropout_dictionary cannot be anything than str or `tf.keras.optimizers`")
+            raise Exception("Sorry, optimizer cannot be anything than str or `tf.keras.optimizers`")
+
+        metric_instance_result_list = []
+        for metric_class in metric_list:
+            metric_instance_result = isinstance(self.metric, metric_class)
+            metric_instance_result_list.append(metric_instance_result)
+
+        metric_other_type_condition = True in metric_instance_result_list
+        if isinstance(self.metric, str) or metric_other_type_condition:
+            print("metric data type is okay")
+        else:
+            raise Exception("Sorry, metric cannot be anything than str or `tf.keras.metrics`")
+
+        if isinstance(self.batch_size, int):
+            print("batch_size data type is okay")
+        else:
+            raise Exception("Sorry, batch_size cannot be anything than int")
+
+        if isinstance(self.epochs, int):
+            print("epochs data type is okay")
+        else:
+            raise Exception("Sorry, epochs cannot be anything than int")
 
 
 class ANNClassificationHandler:
