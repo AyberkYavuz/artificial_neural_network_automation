@@ -69,88 +69,56 @@ class ANNClassificationHandlerConfig:
             given by `epochs`, but merely until the epoch
             of index `epochs` is reached.
     """
-    classification_type: str
-    neural_network_architecture = list
-    hidden_layers_activation_function = str
-    dropout_dictionary: dict
-    optimizer = object
-    metric: object
-    batch_size: int
-    epochs: int
+    def __init__(self, neural_network_config: dict):
+        """Compiles Keras classifier based on ann_classification_handler_config object attributes.
 
-    def check_types_of_attributes(self):
-        """Checks the types of attributes, if one of them is not okay, it raises exception.
+        Args:
+          neural_network_config: Python dictionary which includes neural network configuration data
         """
-        print("\nChecking the types of attributes\n")
-        if isinstance(self.classification_type, str):
+        self.classification_type = neural_network_config["classification_type"]
+        self.neural_network_architecture = neural_network_config["neural_network_architecture"]
+        self.hidden_layers_activation_function = neural_network_config["hidden_layers_activation_function"]
+        self.dropout_dictionary = neural_network_config["dropout_dictionary"]
+        self.optimizer = neural_network_config["optimizer"]
+        self.metric = neural_network_config["metric"]
+        self.batch_size = neural_network_config["batch_size"]
+        self.epochs = neural_network_config["epochs"]
+
+    @property
+    def classification_type(self):
+        return self._classification_type
+
+    @classification_type.setter
+    def classification_type(self, cl_type):
+        if isinstance(cl_type, str):
             print("classification_type data type is okay")
         else:
             raise Exception("Sorry, classification_type cannot be anything than str")
-
-        if isinstance(self.neural_network_architecture, list):
-            print("neural_network_architecture data type is okay")
-        else:
-            raise Exception("Sorry, neural_network_architecture cannot be anything than list")
-
-        if isinstance(self.hidden_layers_activation_function, str):
-            print("hidden_layers_activation_function data type is okay")
-        else:
-            raise Exception("Sorry, hidden_layers_activation_function cannot be anything than str")
-
-        if isinstance(self.dropout_dictionary, dict):
-            print("dropout_dictionary data type is okay")
-        else:
-            raise Exception("Sorry, dropout_dictionary cannot be anything than dict")
-
-        optimizer_instance_result_list = []
-        for optimizer_class in optimizer_list:
-            optimizer_instance_result = isinstance(self.optimizer, optimizer_class)
-            optimizer_instance_result_list.append(optimizer_instance_result)
-
-        optimizer_other_type_condition = True in optimizer_instance_result_list
-        if isinstance(self.optimizer, str) or optimizer_other_type_condition:
-            print("optimizer data type is okay")
-        else:
-            raise Exception("Sorry, optimizer cannot be anything than str or `tf.keras.optimizers`")
-
-        metric_instance_result_list = []
-        for metric_class in metric_list:
-            metric_instance_result = isinstance(self.metric, metric_class)
-            metric_instance_result_list.append(metric_instance_result)
-
-        metric_other_type_condition = True in metric_instance_result_list
-        if isinstance(self.metric, str) or metric_other_type_condition:
-            print("metric data type is okay")
-        else:
-            raise Exception("Sorry, metric cannot be anything than str or `tf.keras.metrics`")
-
-        if isinstance(self.batch_size, int):
-            print("batch_size data type is okay")
-        else:
-            raise Exception("Sorry, batch_size cannot be anything than int")
-
-        if isinstance(self.epochs, int):
-            print("epochs data type is okay")
-        else:
-            raise Exception("Sorry, epochs cannot be anything than int")
-
-    def check_values_of_attributes(self):
-        """Checks the values of attributes, if one of them is not okay, it raises exception.
-        """
-        print("\nChecking the values of attributes\n")
-        classification_type_condition = self.classification_type in ["binary", "multiclass"]
+        classification_type_condition = cl_type in ["binary", "multiclass"]
         if classification_type_condition:
             print("classification_type value is okay")
         else:
             raise Exception("Sorry, classification_type should be 'binary' or 'multiclass'")
+        self._classification_type = cl_type
 
-        length_of_neural_network_architecture = len(self.neural_network_architecture)
+    @property
+    def neural_network_architecture(self):
+        return self._neural_network_architecture
+
+    @neural_network_architecture.setter
+    def neural_network_architecture(self, nn_architecture):
+        if isinstance(nn_architecture, list):
+            print("neural_network_architecture data type is okay")
+        else:
+            raise Exception("Sorry, neural_network_architecture cannot be anything than list")
+
+        length_of_neural_network_architecture = len(nn_architecture)
         neural_network_architecture_condition_1 = length_of_neural_network_architecture < 3
 
         if neural_network_architecture_condition_1:
             raise Exception("Sorry, length of neural_network_architecture can't be less than 3")
 
-        for layer in self.neural_network_architecture:
+        for layer in nn_architecture:
             if isinstance(layer, bool):
                 raise Exception("Sorry, neural network layer can't be anything than int")
             layer_result_1 = not isinstance(layer, int)
@@ -161,14 +129,151 @@ class ANNClassificationHandlerConfig:
                 raise Exception("Sorry, neural network layer can't be less than 0")
 
         print("neural_network_architecture value is okay")
-        hidden_layers_activation_function_condition = self.hidden_layers_activation_function in activation_functions
+
+        self._neural_network_architecture = nn_architecture
+
+    @property
+    def hidden_layers_activation_function(self):
+        return self._hidden_layers_activation_function
+
+    @hidden_layers_activation_function.setter
+    def hidden_layers_activation_function(self, hlaf):
+        if isinstance(hlaf, str):
+            print("hidden_layers_activation_function data type is okay")
+        else:
+            raise Exception("Sorry, hidden_layers_activation_function cannot be anything than str")
+
+        hidden_layers_activation_function_condition = hlaf in activation_functions
         if hidden_layers_activation_function_condition:
             print("hidden_layers_activation_function value is okay")
         else:
             raise Exception("Sorry, hidden_layers_activation_function value could be 'relu',"
                             " 'sigmoid', 'tanh', 'selu', 'elu' or 'exponential'.")
 
+        self._hidden_layers_activation_function = hlaf
 
+    @property
+    def dropout_dictionary(self):
+        return self._dropout_dictionary
+
+    @dropout_dictionary.setter
+    def dropout_dictionary(self, d_dict):
+        if isinstance(d_dict, dict):
+            print("dropout_dictionary data type is okay")
+        else:
+            raise Exception("Sorry, dropout_dictionary cannot be anything than dict")
+
+        dropout_value = d_dict["dropout"]
+
+        if isinstance(dropout_value, bool):
+            print("dropout_value data type is okay")
+        else:
+            raise Exception("Sorry, dropout_value cannot be anything than bool")
+
+        dropout_rate = d_dict["dropout_rate"]
+
+        if isinstance(dropout_rate, float):
+            print("dropout_rate data type is okay")
+        else:
+            raise Exception("Sorry, dropout_rate cannot be anything than float")
+
+        if dropout_rate > 0.0:
+            print("dropout_rate value is okay")
+        else:
+            raise Exception("Sorry, dropout_rate cannot be less than 0.0")
+
+        self._dropout_dictionary = d_dict
+
+    @property
+    def optimizer(self):
+        return self._optimizer
+
+    @optimizer.setter
+    def optimizer(self, opt):
+        optimizer_instance_result_list = []
+        for optimizer_class in optimizer_list:
+            optimizer_instance_result = isinstance(opt, optimizer_class)
+            optimizer_instance_result_list.append(optimizer_instance_result)
+
+        optimizer_other_type_condition = True in optimizer_instance_result_list
+        if isinstance(opt, str) or optimizer_other_type_condition:
+            print("optimizer data type is okay")
+        else:
+            raise Exception("Sorry, optimizer cannot be anything than str or `tf.keras.optimizers`")
+
+        if isinstance(opt, str):
+            optimizer_str_condition = opt in optimizer_string_list
+            if optimizer_str_condition:
+                print("optimizer value is okay")
+            else:
+                raise Exception("Sorry, optimizer cannot be anything than 'sgd', "
+                                "'rmsprop', 'adam', 'adadelta', 'adagrad', 'adamax', 'nadam', 'ftrl'")
+
+        self._optimizer = opt
+
+    @property
+    def metric(self):
+        return self._metric
+
+    @metric.setter
+    def metric(self, m):
+        metric_instance_result_list = []
+        for metric_class in metric_list:
+            metric_instance_result = isinstance(m, metric_class)
+            metric_instance_result_list.append(metric_instance_result)
+
+        metric_other_type_condition = True in metric_instance_result_list
+        if isinstance(m, str) or metric_other_type_condition:
+            print("metric data type is okay")
+        else:
+            raise Exception("Sorry, metric cannot be anything than str or `tf.keras.metrics`")
+
+        if isinstance(m, str):
+            metric_str_condition = m in metric_string_list
+            if metric_str_condition:
+                print("metric value is okay")
+            else:
+                raise Exception("Sorry, metric cannot be anything than 'accuracy', 'binary_accuracy', "
+                                "'categorical_accuracy', 'top_k_categorical_accuracy', 'AUC', 'Precision', "
+                                "'Recall', 'TruePositives', 'TrueNegatives', 'FalsePositives', 'FalseNegatives'")
+
+        self._metric = m
+
+    @property
+    def batch_size(self):
+        return self._batch_size
+
+    @batch_size.setter
+    def batch_size(self, bs):
+        if isinstance(bs, int):
+            print("batch_size data type is okay")
+        else:
+            raise Exception("Sorry, batch_size cannot be anything than int")
+
+        if bs > 0:
+            print("batch_size value is okay")
+        else:
+            raise Exception("Sorry, batch_size cannot be less than 0")
+
+        self._batch_size = bs
+
+    @property
+    def epochs(self):
+        return self._epochs
+
+    @epochs.setter
+    def epochs(self, ep):
+        if isinstance(ep, int):
+            print("epochs data type is okay")
+        else:
+            raise Exception("Sorry, epochs cannot be anything than int")
+
+        if ep > 0:
+            print("epochs value is okay")
+        else:
+            raise Exception("Sorry, epochs cannot be less than 0")
+
+        self._epochs = ep
 
 
 class ANNClassificationHandler:
