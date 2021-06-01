@@ -1,42 +1,13 @@
 from keras.models import Sequential
 from keras.layers import Dense
 from keras.layers import Dropout
-from tensorflow.keras.optimizers import SGD
-from tensorflow.keras.optimizers import RMSprop
-from tensorflow.keras.optimizers import Adam
-from tensorflow.keras.optimizers import Adadelta
-from tensorflow.keras.optimizers import Adagrad
-from tensorflow.keras.optimizers import Adamax
-from tensorflow.keras.optimizers import Nadam
-from tensorflow.keras.optimizers import Ftrl
 from keras.utils.vis_utils import plot_model
-from tensorflow.keras.metrics import Accuracy
-from tensorflow.keras.metrics import BinaryAccuracy
-from tensorflow.keras.metrics import CategoricalAccuracy
-from tensorflow.keras.metrics import TopKCategoricalAccuracy
-from tensorflow.keras.metrics import AUC
-from tensorflow.keras.metrics import Precision
-from tensorflow.keras.metrics import Recall
-from tensorflow.keras.metrics import TruePositives
-from tensorflow.keras.metrics import TrueNegatives
-from tensorflow.keras.metrics import FalsePositives
-from tensorflow.keras.metrics import FalseNegatives
-from tensorflow.keras.metrics import PrecisionAtRecall
-from tensorflow.keras.metrics import SensitivityAtSpecificity
-from tensorflow.keras.metrics import SpecificityAtSensitivity
 from helper.decorators import execution_time
-
-optimizer_list = [SGD, RMSprop, Adam, Adadelta, Adagrad, Adamax, Nadam, Ftrl]
-optimizer_string_list = ["sgd", "rmsprop", "adam", "adadelta", "adagrad", "adamax", "nadam", "ftrl"]
-
-metric_list = [Accuracy, BinaryAccuracy, CategoricalAccuracy, TopKCategoricalAccuracy, AUC, Precision, Recall,
-               TruePositives, TrueNegatives, FalsePositives, FalseNegatives, PrecisionAtRecall,
-               SensitivityAtSpecificity, SpecificityAtSensitivity]
-metric_string_list = ["accuracy", "binary_accuracy", "categorical_accuracy", "top_k_categorical_accuracy",
-                      "AUC", "Precision", "Recall", "TruePositives", "TrueNegatives", "FalsePositives",
-                      "FalseNegatives"]
-
-activation_functions = ["relu", "sigmoid", "tanh", "selu", "elu", "exponential"]
+from helper.classification_handler_helper import optimizer_list
+from helper.classification_handler_helper import optimizer_string_list
+from helper.classification_handler_helper import metric_list
+from helper.classification_handler_helper import metric_string_list
+from helper.classification_handler_helper import activation_functions
 
 
 class ANNClassificationHandlerConfig:
