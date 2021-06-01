@@ -10,6 +10,7 @@ from helper.helper import check_hidden_layers_activation_value
 from helper.helper import check_dropout_dictionary_values
 from helper.classification_handler_helper import check_optimizer_value
 from helper.classification_handler_helper import check_metric_value
+from helper.helper import is_number_positive
 
 
 class ANNClassificationHandlerConfig:
@@ -122,12 +123,7 @@ class ANNClassificationHandlerConfig:
     @batch_size.setter
     def batch_size(self, bs):
         contol_instance_type(bs, "batch_size", int)
-
-        if bs > 0:
-            print("batch_size value is valid")
-        else:
-            raise Exception("Sorry, batch_size cannot be less than 0")
-
+        is_number_positive(bs, "batch_size")
         self._batch_size = bs
 
     @property
@@ -137,12 +133,7 @@ class ANNClassificationHandlerConfig:
     @epochs.setter
     def epochs(self, ep):
         contol_instance_type(ep, "epochs", int)
-
-        if ep > 0:
-            print("epochs value is valid")
-        else:
-            raise Exception("Sorry, epochs cannot be less than 0")
-
+        is_number_positive(ep, "epochs")
         self._epochs = ep
 
 

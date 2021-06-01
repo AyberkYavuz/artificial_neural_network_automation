@@ -73,3 +73,17 @@ def check_dropout_dictionary_values(d_dict):
         print("dropout_rate value is valid")
     else:
         raise Exception("Sorry, dropout_rate cannot be less than 0.0")
+
+
+def is_number_positive(number, variable_name):
+    """Checks number positive or not
+
+    Args:
+      number: Int. Number.
+      variable_name: String. Variable name for printing messages.
+    """
+    if number > 0:
+        print("{} value is valid".format(variable_name))
+    else:
+        raise Exception("Sorry, {} cannot be less than 0".format(variable_name))
+
