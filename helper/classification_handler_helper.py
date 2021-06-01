@@ -36,6 +36,19 @@ metric_string_list = ["accuracy", "binary_accuracy", "categorical_accuracy", "to
 activation_functions = ["relu", "sigmoid", "tanh", "selu", "elu", "exponential"]
 
 
+def contol_instance_value(object, type):
+    """Contols instance value of given object.
+
+    Args:
+      object: Python object to be controlled.
+      type: Data type of object like str, dict, int etc.
+    """
+    if isinstance(object, type):
+        print("classification_type data type is valid")
+    else:
+        raise Exception("Sorry, {} cannot be anything than {}".format(str(object), str(type)))
+
+
 def get_label_based_on_thresold(x, thresold):
     """Returns label of probability x which will be 0 or 1.
 
