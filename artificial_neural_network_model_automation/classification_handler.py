@@ -65,7 +65,7 @@ class ANNClassificationHandlerConfig:
         contol_instance_type(cl_type, "classification_type", str)
         classification_type_condition = cl_type in ["binary", "multiclass"]
         if classification_type_condition:
-            print("classification_type value is okay")
+            print("classification_type value is valid")
         else:
             raise Exception("Sorry, classification_type should be 'binary' or 'multiclass'")
         self._classification_type = cl_type
@@ -94,7 +94,7 @@ class ANNClassificationHandlerConfig:
             if layer_result_2:
                 raise Exception("Sorry, neural network layer can't be less than 0")
 
-        print("neural_network_architecture value is okay")
+        print("neural_network_architecture value is valid")
 
         self._neural_network_architecture = nn_architecture
 
@@ -108,7 +108,7 @@ class ANNClassificationHandlerConfig:
 
         hidden_layers_activation_function_condition = hlaf in activation_functions
         if hidden_layers_activation_function_condition:
-            print("hidden_layers_activation_function value is okay")
+            print("hidden_layers_activation_function value is valid")
         else:
             raise Exception("Sorry, hidden_layers_activation_function value could be 'relu',"
                             " 'sigmoid', 'tanh', 'selu', 'elu' or 'exponential'.")
@@ -132,7 +132,7 @@ class ANNClassificationHandlerConfig:
         contol_instance_type(dropout_rate, "dropout_rate", float)
 
         if dropout_rate > 0.0:
-            print("dropout_rate value is okay")
+            print("dropout_rate value is valid")
         else:
             raise Exception("Sorry, dropout_rate cannot be less than 0.0")
 
@@ -151,14 +151,14 @@ class ANNClassificationHandlerConfig:
 
         optimizer_other_type_condition = True in optimizer_instance_result_list
         if isinstance(opt, str) or optimizer_other_type_condition:
-            print("optimizer data type is okay")
+            print("optimizer data type is valid")
         else:
             raise Exception("Sorry, optimizer cannot be anything than str or `tf.keras.optimizers`")
 
         if isinstance(opt, str):
             optimizer_str_condition = opt in optimizer_string_list
             if optimizer_str_condition:
-                print("optimizer value is okay")
+                print("optimizer value is valid")
             else:
                 raise Exception("Sorry, optimizer cannot be anything than 'sgd', "
                                 "'rmsprop', 'adam', 'adadelta', 'adagrad', 'adamax', 'nadam', 'ftrl'")
@@ -178,14 +178,14 @@ class ANNClassificationHandlerConfig:
 
         metric_other_type_condition = True in metric_instance_result_list
         if isinstance(m, str) or metric_other_type_condition:
-            print("metric data type is okay")
+            print("metric data type is valid")
         else:
             raise Exception("Sorry, metric cannot be anything than str or `tf.keras.metrics`")
 
         if isinstance(m, str):
             metric_str_condition = m in metric_string_list
             if metric_str_condition:
-                print("metric value is okay")
+                print("metric value is valid")
             else:
                 raise Exception("Sorry, metric cannot be anything than 'accuracy', 'binary_accuracy', "
                                 "'categorical_accuracy', 'top_k_categorical_accuracy', 'AUC', 'Precision', "
@@ -202,7 +202,7 @@ class ANNClassificationHandlerConfig:
         contol_instance_type(bs, "batch_size", int)
 
         if bs > 0:
-            print("batch_size value is okay")
+            print("batch_size value is valid")
         else:
             raise Exception("Sorry, batch_size cannot be less than 0")
 
@@ -217,7 +217,7 @@ class ANNClassificationHandlerConfig:
         contol_instance_type(ep, "epochs", int)
 
         if ep > 0:
-            print("epochs value is okay")
+            print("epochs value is valid")
         else:
             raise Exception("Sorry, epochs cannot be less than 0")
 
