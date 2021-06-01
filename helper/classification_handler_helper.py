@@ -74,6 +74,20 @@ def check_neural_network_architecture_values(nn_architecture):
     print("neural_network_architecture value is valid")
 
 
+def check_hidden_layers_activation_value(hlaf):
+    """Checks hidden layers activation value.
+
+    Args:
+      hlaf: String. Hidden layer activation function
+    """
+    hidden_layers_activation_function_condition = hlaf in activation_functions
+    if hidden_layers_activation_function_condition:
+        print("hidden_layers_activation_function value is valid")
+    else:
+        raise Exception("Sorry, hidden_layers_activation_function value could be 'relu',"
+                        " 'sigmoid', 'tanh', 'selu', 'elu' or 'exponential'.")
+
+
 def get_label_based_on_thresold(x, thresold):
     """Returns label of probability x which will be 0 or 1.
 

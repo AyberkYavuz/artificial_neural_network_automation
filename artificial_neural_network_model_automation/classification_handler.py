@@ -6,11 +6,11 @@ from helper.decorators import execution_time
 from helper.instance_controller import contol_instance_type
 from helper.classification_handler_helper import check_classification_type_value
 from helper.classification_handler_helper import check_neural_network_architecture_values
+from helper.classification_handler_helper import check_hidden_layers_activation_value
 from helper.classification_handler_helper import optimizer_list
 from helper.classification_handler_helper import optimizer_string_list
 from helper.classification_handler_helper import metric_list
 from helper.classification_handler_helper import metric_string_list
-from helper.classification_handler_helper import activation_functions
 
 
 class ANNClassificationHandlerConfig:
@@ -85,14 +85,7 @@ class ANNClassificationHandlerConfig:
     @hidden_layers_activation_function.setter
     def hidden_layers_activation_function(self, hlaf):
         contol_instance_type(hlaf, "hidden_layers_activation_function", str)
-
-        hidden_layers_activation_function_condition = hlaf in activation_functions
-        if hidden_layers_activation_function_condition:
-            print("hidden_layers_activation_function value is valid")
-        else:
-            raise Exception("Sorry, hidden_layers_activation_function value could be 'relu',"
-                            " 'sigmoid', 'tanh', 'selu', 'elu' or 'exponential'.")
-
+        check_hidden_layers_activation_value(hlaf)
         self._hidden_layers_activation_function = hlaf
 
     @property
