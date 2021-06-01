@@ -5,9 +5,9 @@ from keras.utils.vis_utils import plot_model
 from helper.decorators import execution_time
 from helper.helper import contol_instance_type
 from helper.classification_handler_helper import check_classification_type_value
-from helper.classification_handler_helper import check_neural_network_architecture_values
-from helper.classification_handler_helper import check_hidden_layers_activation_value
-from helper.classification_handler_helper import check_dropout_dictionary_values
+from helper.helper import check_neural_network_architecture_values
+from helper.helper import check_hidden_layers_activation_value
+from helper.helper import check_dropout_dictionary_values
 from helper.classification_handler_helper import check_optimizer_value
 from helper.classification_handler_helper import check_metric_value
 

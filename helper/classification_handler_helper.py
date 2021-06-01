@@ -22,7 +22,6 @@ from tensorflow.keras.metrics import FalseNegatives
 from tensorflow.keras.metrics import PrecisionAtRecall
 from tensorflow.keras.metrics import SensitivityAtSpecificity
 from tensorflow.keras.metrics import SpecificityAtSensitivity
-from helper.helper import contol_instance_type
 
 optimizer_list = [SGD, RMSprop, Adam, Adadelta, Adagrad, Adamax, Nadam, Ftrl]
 optimizer_string_list = ["sgd", "rmsprop", "adam", "adadelta", "adagrad", "adamax", "nadam", "ftrl"]
@@ -48,65 +47,6 @@ def check_classification_type_value(cl_type):
         print("classification_type value is valid")
     else:
         raise Exception("Sorry, classification_type should be 'binary' or 'multiclass'")
-
-
-def check_neural_network_architecture_values(nn_architecture):
-    """Checks neural network architecture values.
-
-    Args:
-      nn_architecture: List. Neural network architecture.
-    """
-    length_of_neural_network_architecture = len(nn_architecture)
-    neural_network_architecture_condition_1 = length_of_neural_network_architecture < 3
-
-    if neural_network_architecture_condition_1:
-        raise Exception("Sorry, length of neural_network_architecture can't be less than 3")
-
-    for layer in nn_architecture:
-        if isinstance(layer, bool):
-            raise Exception("Sorry, neural network layer can't be anything than int")
-        layer_result_1 = not isinstance(layer, int)
-        if layer_result_1:
-            raise Exception("Sorry, neural network layer can't be anything than int")
-        layer_result_2 = layer < 0
-        if layer_result_2:
-            raise Exception("Sorry, neural network layer can't be less than 0")
-
-    print("neural_network_architecture value is valid")
-
-
-def check_hidden_layers_activation_value(hlaf):
-    """Checks hidden layers activation value.
-
-    Args:
-      hlaf: String. Hidden layer activation function
-    """
-    hidden_layers_activation_function_condition = hlaf in activation_functions
-    if hidden_layers_activation_function_condition:
-        print("hidden_layers_activation_function value is valid")
-    else:
-        raise Exception("Sorry, hidden_layers_activation_function value could be 'relu',"
-                        " 'sigmoid', 'tanh', 'selu', 'elu' or 'exponential'.")
-
-
-def check_dropout_dictionary_values(d_dict):
-    """Checks dropout dictionary values.
-
-    Args:
-      d_dict: Dictionary. Dropout dictionary.
-    """
-    dropout_value = d_dict["dropout"]
-
-    contol_instance_type(dropout_value, "dropout_value", bool)
-
-    dropout_rate = d_dict["dropout_rate"]
-
-    contol_instance_type(dropout_rate, "dropout_rate", float)
-
-    if dropout_rate > 0.0:
-        print("dropout_rate value is valid")
-    else:
-        raise Exception("Sorry, dropout_rate cannot be less than 0.0")
 
 
 def check_optimizer_value(opt):
