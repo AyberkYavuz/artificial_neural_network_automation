@@ -38,6 +38,9 @@ def check_neural_network_architecture_values(nn_architecture):
     print("neural_network_architecture value is valid")
 
 
+activation_functions = ["relu", "sigmoid", "tanh", "selu", "elu", "exponential"]
+
+
 def check_hidden_layers_activation_value(hlaf):
     """Checks hidden layers activation value.
 

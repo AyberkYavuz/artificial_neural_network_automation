@@ -33,8 +33,6 @@ metric_string_list = ["accuracy", "binary_accuracy", "categorical_accuracy", "to
                       "AUC", "Precision", "Recall", "TruePositives", "TrueNegatives", "FalsePositives",
                       "FalseNegatives"]
 
-activation_functions = ["relu", "sigmoid", "tanh", "selu", "elu", "exponential"]
-
 
 def check_classification_type_value(cl_type):
     """Checks classification type value.
