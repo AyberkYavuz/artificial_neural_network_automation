@@ -22,7 +22,7 @@ from tensorflow.keras.metrics import FalseNegatives
 from tensorflow.keras.metrics import PrecisionAtRecall
 from tensorflow.keras.metrics import SensitivityAtSpecificity
 from tensorflow.keras.metrics import SpecificityAtSensitivity
-from helper.instance_controller import contol_instance_type
+from helper.helper import contol_instance_type
 
 optimizer_list = [SGD, RMSprop, Adam, Adadelta, Adagrad, Adamax, Nadam, Ftrl]
 optimizer_string_list = ["sgd", "rmsprop", "adam", "adadelta", "adagrad", "adamax", "nadam", "ftrl"]
