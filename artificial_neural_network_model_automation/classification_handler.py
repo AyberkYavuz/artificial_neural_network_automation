@@ -4,6 +4,8 @@ from keras.layers import Dropout
 from keras.utils.vis_utils import plot_model
 from helper.decorators import execution_time
 from helper.instance_controller import contol_instance_type
+from helper.classification_handler_helper import check_classification_type_value
+from helper.classification_handler_helper import check_neural_network_architecture_values
 from helper.classification_handler_helper import optimizer_list
 from helper.classification_handler_helper import optimizer_string_list
 from helper.classification_handler_helper import metric_list
@@ -63,11 +65,7 @@ class ANNClassificationHandlerConfig:
     @classification_type.setter
     def classification_type(self, cl_type):
         contol_instance_type(cl_type, "classification_type", str)
-        classification_type_condition = cl_type in ["binary", "multiclass"]
-        if classification_type_condition:
-            print("classification_type value is valid")
-        else:
-            raise Exception("Sorry, classification_type should be 'binary' or 'multiclass'")
+        check_classification_type_value(cl_type)
         self._classification_type = cl_type
 
     @property
@@ -77,25 +75,7 @@ class ANNClassificationHandlerConfig:
     @neural_network_architecture.setter
     def neural_network_architecture(self, nn_architecture):
         contol_instance_type(nn_architecture, "neural_network_architecture", list)
-
-        length_of_neural_network_architecture = len(nn_architecture)
-        neural_network_architecture_condition_1 = length_of_neural_network_architecture < 3
-
-        if neural_network_architecture_condition_1:
-            raise Exception("Sorry, length of neural_network_architecture can't be less than 3")
-
-        for layer in nn_architecture:
-            if isinstance(layer, bool):
-                raise Exception("Sorry, neural network layer can't be anything than int")
-            layer_result_1 = not isinstance(layer, int)
-            if layer_result_1:
-                raise Exception("Sorry, neural network layer can't be anything than int")
-            layer_result_2 = layer < 0
-            if layer_result_2:
-                raise Exception("Sorry, neural network layer can't be less than 0")
-
-        print("neural_network_architecture value is valid")
-
+        check_neural_network_architecture_values(nn_architecture)
         self._neural_network_architecture = nn_architecture
 
     @property

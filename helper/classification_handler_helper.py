@@ -36,6 +36,44 @@ metric_string_list = ["accuracy", "binary_accuracy", "categorical_accuracy", "to
 activation_functions = ["relu", "sigmoid", "tanh", "selu", "elu", "exponential"]
 
 
+def check_classification_type_value(cl_type):
+    """Checks classification type value.
+
+    Args:
+      cl_type: String. Classification type.
+    """
+    classification_type_condition = cl_type in ["binary", "multiclass"]
+    if classification_type_condition:
+        print("classification_type value is valid")
+    else:
+        raise Exception("Sorry, classification_type should be 'binary' or 'multiclass'")
+
+
+def check_neural_network_architecture_values(nn_architecture):
+    """Checks neural network architecture values.
+
+    Args:
+      nn_architecture: List. Neural network architecture.
+    """
+    length_of_neural_network_architecture = len(nn_architecture)
+    neural_network_architecture_condition_1 = length_of_neural_network_architecture < 3
+
+    if neural_network_architecture_condition_1:
+        raise Exception("Sorry, length of neural_network_architecture can't be less than 3")
+
+    for layer in nn_architecture:
+        if isinstance(layer, bool):
+            raise Exception("Sorry, neural network layer can't be anything than int")
+        layer_result_1 = not isinstance(layer, int)
+        if layer_result_1:
+            raise Exception("Sorry, neural network layer can't be anything than int")
+        layer_result_2 = layer < 0
+        if layer_result_2:
+            raise Exception("Sorry, neural network layer can't be less than 0")
+
+    print("neural_network_architecture value is valid")
+
+
 def get_label_based_on_thresold(x, thresold):
     """Returns label of probability x which will be 0 or 1.
 
