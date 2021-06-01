@@ -3,7 +3,7 @@ from keras.layers import Dense
 from keras.layers import Dropout
 from keras.utils.vis_utils import plot_model
 from helper.decorators import execution_time
-from helper.classification_handler_helper import contol_instance_type
+from helper.instance_controller import contol_instance_type
 from helper.classification_handler_helper import optimizer_list
 from helper.classification_handler_helper import optimizer_string_list
 from helper.classification_handler_helper import metric_list
