@@ -44,7 +44,7 @@ def contol_instance_value(object, type):
       type: Data type of object like str, dict, int etc.
     """
     if isinstance(object, type):
-        print("classification_type data type is valid")
+        print("{} data type is valid".format(str(object)))
     else:
         raise Exception("Sorry, {} cannot be anything than {}".format(str(object), str(type)))
 
