@@ -76,7 +76,7 @@ def check_dropout_dictionary_values(d_dict):
 
 
 def is_number_positive(number, variable_name):
-    """Checks number positive or not
+    """Checks number is spositive or not.
 
     Args:
       number: Int. Number.
