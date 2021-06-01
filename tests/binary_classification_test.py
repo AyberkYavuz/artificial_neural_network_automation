@@ -3,7 +3,7 @@ from sklearn.preprocessing import LabelEncoder
 from artificial_neural_network_model_automation.classification_handler import ANNClassificationHandlerConfig
 from artificial_neural_network_model_automation.classification_handler import ANNClassificationHandler
 from sklearn.metrics import classification_report
-from artificial_neural_network_model_automation.data_path_handler import get_data_path
+from helper.data_path_handler import get_data_path
 
 data_name = "sonar.csv"
 # please define your os_type (mac, windows, linux)

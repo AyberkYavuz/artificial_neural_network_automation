@@ -24,7 +24,7 @@ from tensorflow.keras.metrics import FalseNegatives
 from tensorflow.keras.metrics import PrecisionAtRecall
 from tensorflow.keras.metrics import SensitivityAtSpecificity
 from tensorflow.keras.metrics import SpecificityAtSensitivity
-from artificial_neural_network_model_automation.decorators import execution_time
+from helper.decorators import execution_time
 
 optimizer_list = [SGD, RMSprop, Adam, Adadelta, Adagrad, Adamax, Nadam, Ftrl]
 optimizer_string_list = ["sgd", "rmsprop", "adam", "adadelta", "adagrad", "adamax", "nadam", "ftrl"]
