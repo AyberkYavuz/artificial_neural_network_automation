@@ -3,6 +3,7 @@ from keras.layers import Dense
 from keras.layers import Dropout
 from keras.utils.vis_utils import plot_model
 from helper.decorators import execution_time
+from helper.classification_handler_helper import contol_instance_type
 from helper.classification_handler_helper import optimizer_list
 from helper.classification_handler_helper import optimizer_string_list
 from helper.classification_handler_helper import metric_list
@@ -61,10 +62,7 @@ class ANNClassificationHandlerConfig:
 
     @classification_type.setter
     def classification_type(self, cl_type):
-        if isinstance(cl_type, str):
-            print("classification_type data type is okay")
-        else:
-            raise Exception("Sorry, classification_type cannot be anything than str")
+        contol_instance_type(cl_type, "classification_type", str)
         classification_type_condition = cl_type in ["binary", "multiclass"]
         if classification_type_condition:
             print("classification_type value is okay")
@@ -78,10 +76,7 @@ class ANNClassificationHandlerConfig:
 
     @neural_network_architecture.setter
     def neural_network_architecture(self, nn_architecture):
-        if isinstance(nn_architecture, list):
-            print("neural_network_architecture data type is okay")
-        else:
-            raise Exception("Sorry, neural_network_architecture cannot be anything than list")
+        contol_instance_type(nn_architecture, "neural_network_architecture", list)
 
         length_of_neural_network_architecture = len(nn_architecture)
         neural_network_architecture_condition_1 = length_of_neural_network_architecture < 3
@@ -109,10 +104,7 @@ class ANNClassificationHandlerConfig:
 
     @hidden_layers_activation_function.setter
     def hidden_layers_activation_function(self, hlaf):
-        if isinstance(hlaf, str):
-            print("hidden_layers_activation_function data type is okay")
-        else:
-            raise Exception("Sorry, hidden_layers_activation_function cannot be anything than str")
+        contol_instance_type(hlaf, "hidden_layers_activation_function", str)
 
         hidden_layers_activation_function_condition = hlaf in activation_functions
         if hidden_layers_activation_function_condition:
@@ -129,24 +121,15 @@ class ANNClassificationHandlerConfig:
 
     @dropout_dictionary.setter
     def dropout_dictionary(self, d_dict):
-        if isinstance(d_dict, dict):
-            print("dropout_dictionary data type is okay")
-        else:
-            raise Exception("Sorry, dropout_dictionary cannot be anything than dict")
+        contol_instance_type(d_dict, "dropout_dictionary", dict)
 
         dropout_value = d_dict["dropout"]
 
-        if isinstance(dropout_value, bool):
-            print("dropout_value data type is okay")
-        else:
-            raise Exception("Sorry, dropout_value cannot be anything than bool")
+        contol_instance_type(dropout_value, "dropout_value", bool)
 
         dropout_rate = d_dict["dropout_rate"]
 
-        if isinstance(dropout_rate, float):
-            print("dropout_rate data type is okay")
-        else:
-            raise Exception("Sorry, dropout_rate cannot be anything than float")
+        contol_instance_type(dropout_rate, "dropout_rate", float)
 
         if dropout_rate > 0.0:
             print("dropout_rate value is okay")
@@ -216,10 +199,7 @@ class ANNClassificationHandlerConfig:
 
     @batch_size.setter
     def batch_size(self, bs):
-        if isinstance(bs, int):
-            print("batch_size data type is okay")
-        else:
-            raise Exception("Sorry, batch_size cannot be anything than int")
+        contol_instance_type(bs, "batch_size", int)
 
         if bs > 0:
             print("batch_size value is okay")
@@ -234,10 +214,7 @@ class ANNClassificationHandlerConfig:
 
     @epochs.setter
     def epochs(self, ep):
-        if isinstance(ep, int):
-            print("epochs data type is okay")
-        else:
-            raise Exception("Sorry, epochs cannot be anything than int")
+        contol_instance_type(ep, "epochs", int)
 
         if ep > 0:
             print("epochs value is okay")
