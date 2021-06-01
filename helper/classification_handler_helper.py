@@ -36,8 +36,8 @@ metric_string_list = ["accuracy", "binary_accuracy", "categorical_accuracy", "to
 activation_functions = ["relu", "sigmoid", "tanh", "selu", "elu", "exponential"]
 
 
-def contol_instance_value(object, type):
-    """Contols instance value of given object.
+def contol_instance_type(object, type):
+    """Contols instance type of given object.
 
     Args:
       object: Python object to be controlled.
