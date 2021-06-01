@@ -90,7 +90,7 @@ def check_hidden_layers_activation_value(hlaf):
 
 
 def check_dropout_dictionary_values(d_dict):
-    """Checks dropout dictionary values value.
+    """Checks dropout dictionary values.
 
     Args:
       d_dict: Dictionary. Dropout dictionary.
@@ -107,6 +107,32 @@ def check_dropout_dictionary_values(d_dict):
         print("dropout_rate value is valid")
     else:
         raise Exception("Sorry, dropout_rate cannot be less than 0.0")
+
+
+def check_optimizer_value(opt):
+    """Checks optimizer value
+
+    Args:
+      opt: String or `tf.keras.optimizers`. Optimizer.
+    """
+    optimizer_instance_result_list = []
+    for optimizer_class in optimizer_list:
+        optimizer_instance_result = isinstance(opt, optimizer_class)
+        optimizer_instance_result_list.append(optimizer_instance_result)
+
+    optimizer_other_type_condition = True in optimizer_instance_result_list
+    if isinstance(opt, str) or optimizer_other_type_condition:
+        print("optimizer data type is valid")
+    else:
+        raise Exception("Sorry, optimizer cannot be anything than str or `tf.keras.optimizers`")
+
+    if isinstance(opt, str):
+        optimizer_str_condition = opt in optimizer_string_list
+        if optimizer_str_condition:
+            print("optimizer value is valid")
+        else:
+            raise Exception("Sorry, optimizer cannot be anything than 'sgd', "
+                            "'rmsprop', 'adam', 'adadelta', 'adagrad', 'adamax', 'nadam', 'ftrl'")
 
 
 def get_label_based_on_thresold(x, thresold):

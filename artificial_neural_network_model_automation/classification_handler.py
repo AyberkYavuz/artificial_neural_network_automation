@@ -8,8 +8,7 @@ from helper.classification_handler_helper import check_classification_type_value
 from helper.classification_handler_helper import check_neural_network_architecture_values
 from helper.classification_handler_helper import check_hidden_layers_activation_value
 from helper.classification_handler_helper import check_dropout_dictionary_values
-from helper.classification_handler_helper import optimizer_list
-from helper.classification_handler_helper import optimizer_string_list
+from helper.classification_handler_helper import check_optimizer_value
 from helper.classification_handler_helper import metric_list
 from helper.classification_handler_helper import metric_string_list
 
@@ -105,25 +104,7 @@ class ANNClassificationHandlerConfig:
 
     @optimizer.setter
     def optimizer(self, opt):
-        optimizer_instance_result_list = []
-        for optimizer_class in optimizer_list:
-            optimizer_instance_result = isinstance(opt, optimizer_class)
-            optimizer_instance_result_list.append(optimizer_instance_result)
-
-        optimizer_other_type_condition = True in optimizer_instance_result_list
-        if isinstance(opt, str) or optimizer_other_type_condition:
-            print("optimizer data type is valid")
-        else:
-            raise Exception("Sorry, optimizer cannot be anything than str or `tf.keras.optimizers`")
-
-        if isinstance(opt, str):
-            optimizer_str_condition = opt in optimizer_string_list
-            if optimizer_str_condition:
-                print("optimizer value is valid")
-            else:
-                raise Exception("Sorry, optimizer cannot be anything than 'sgd', "
-                                "'rmsprop', 'adam', 'adadelta', 'adagrad', 'adamax', 'nadam', 'ftrl'")
-
+        check_optimizer_value(opt)
         self._optimizer = opt
 
     @property
