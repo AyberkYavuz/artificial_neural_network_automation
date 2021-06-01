@@ -110,7 +110,7 @@ def check_dropout_dictionary_values(d_dict):
 
 
 def check_optimizer_value(opt):
-    """Checks optimizer value
+    """Checks optimizer value.
 
     Args:
       opt: String or `tf.keras.optimizers`. Optimizer.
@@ -133,6 +133,33 @@ def check_optimizer_value(opt):
         else:
             raise Exception("Sorry, optimizer cannot be anything than 'sgd', "
                             "'rmsprop', 'adam', 'adadelta', 'adagrad', 'adamax', 'nadam', 'ftrl'")
+
+
+def check_metric_value(m):
+    """Checks metric value.
+
+    Args:
+      m: String. Metric.
+    """
+    metric_instance_result_list = []
+    for metric_class in metric_list:
+        metric_instance_result = isinstance(m, metric_class)
+        metric_instance_result_list.append(metric_instance_result)
+
+    metric_other_type_condition = True in metric_instance_result_list
+    if isinstance(m, str) or metric_other_type_condition:
+        print("metric data type is valid")
+    else:
+        raise Exception("Sorry, metric cannot be anything than str or `tf.keras.metrics`")
+
+    if isinstance(m, str):
+        metric_str_condition = m in metric_string_list
+        if metric_str_condition:
+            print("metric value is valid")
+        else:
+            raise Exception("Sorry, metric cannot be anything than 'accuracy', 'binary_accuracy', "
+                            "'categorical_accuracy', 'top_k_categorical_accuracy', 'AUC', 'Precision', "
+                            "'Recall', 'TruePositives', 'TrueNegatives', 'FalsePositives', 'FalseNegatives'")
 
 
 def get_label_based_on_thresold(x, thresold):

@@ -9,8 +9,7 @@ from helper.classification_handler_helper import check_neural_network_architectu
 from helper.classification_handler_helper import check_hidden_layers_activation_value
 from helper.classification_handler_helper import check_dropout_dictionary_values
 from helper.classification_handler_helper import check_optimizer_value
-from helper.classification_handler_helper import metric_list
-from helper.classification_handler_helper import metric_string_list
+from helper.classification_handler_helper import check_metric_value
 
 
 class ANNClassificationHandlerConfig:
@@ -113,26 +112,7 @@ class ANNClassificationHandlerConfig:
 
     @metric.setter
     def metric(self, m):
-        metric_instance_result_list = []
-        for metric_class in metric_list:
-            metric_instance_result = isinstance(m, metric_class)
-            metric_instance_result_list.append(metric_instance_result)
-
-        metric_other_type_condition = True in metric_instance_result_list
-        if isinstance(m, str) or metric_other_type_condition:
-            print("metric data type is valid")
-        else:
-            raise Exception("Sorry, metric cannot be anything than str or `tf.keras.metrics`")
-
-        if isinstance(m, str):
-            metric_str_condition = m in metric_string_list
-            if metric_str_condition:
-                print("metric value is valid")
-            else:
-                raise Exception("Sorry, metric cannot be anything than 'accuracy', 'binary_accuracy', "
-                                "'categorical_accuracy', 'top_k_categorical_accuracy', 'AUC', 'Precision', "
-                                "'Recall', 'TruePositives', 'TrueNegatives', 'FalsePositives', 'FalseNegatives'")
-
+        check_metric_value(m)
         self._metric = m
 
     @property
