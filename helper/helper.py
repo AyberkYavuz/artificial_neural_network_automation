@@ -87,3 +87,16 @@ def is_number_positive(number, variable_name):
     else:
         raise Exception("Sorry, {} cannot be less than 0".format(variable_name))
 
+
+def is_list_empty(lst, variable_name):
+    """Checks python list is empty or not.
+
+    Args:
+      lst: Python list.
+      variable_name: String. Variable name for printing messages.
+    """
+    if lst:
+        print("{} is not empty".format(variable_name))
+    else:
+        raise Exception("Sorry, {} cannot be empty".format(variable_name))
+
