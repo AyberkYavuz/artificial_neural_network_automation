@@ -44,7 +44,7 @@ class ANNClassificationHandlerConfig:
             of index `epochs` is reached.
     """
     def __init__(self, neural_network_config: dict):
-        """Compiles Keras classifier based on ann_classification_handler_config object attributes.
+        """Artificial Neural Network Configuration
 
         Args:
           neural_network_config: Python dictionary which includes neural network configuration data
