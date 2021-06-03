@@ -31,7 +31,7 @@ optimizer2 = Adam(learning_rate=0.01)
 optimizer3 = Adam(learning_rate=0.02)
 optimizer4 = SGD()
 optimizer5 = SGD(learning_rate=0.02)
-"""
+
 neural_network_config_list_dict = {
     "classification_type": "binary",
     "neural_network_architecture_list": [
@@ -50,31 +50,6 @@ neural_network_config_list_dict = {
         [60, 80, 70, 1],
         [60, 90, 80, 70, 1]
     ],
-    "hidden_layers_activation_function_list": [
-        "relu",
-        "sigmoid",
-        "tanh",
-        "selu",
-        "elu"
-    ],
-    "dropout_dictionary_list": [
-        {"dropout": True, "dropout_rate": 0.001},
-        {"dropout": True, "dropout_rate": 0.002},
-        {"dropout": True, "dropout_rate": 0.01},
-        {"dropout": True, "dropout_rate": 0.02},
-        {"dropout": True, "dropout_rate": 0.1},
-        {"dropout": True, "dropout_rate": 0.2},
-        {"dropout": False, "dropout_rate": 0.0}
-    ],
-    "optimizer_list": [optimizer1, optimizer2, optimizer3, optimizer4, optimizer5],
-    "metric_list": ["AUC", "Recall", "Precision"],
-    "batch_size_list": [10, 20, 30, 40, 50],
-    "epochs_list": [10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
-}
-"""
-neural_network_config_list_dict = {
-    "classification_type": "binary",
-    "neural_network_architecture_list": [],
     "hidden_layers_activation_function_list": [
         "relu",
         "sigmoid",
