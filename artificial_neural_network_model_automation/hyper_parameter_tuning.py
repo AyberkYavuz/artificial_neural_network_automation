@@ -1,5 +1,6 @@
 from helper.helper import contol_instance_type
 from helper.classification_handler_helper import check_classification_type_value
+from helper.helper import is_list_empty
 
 
 class ANNClassificationRandomizedSearchConfig:
@@ -52,7 +53,9 @@ class ANNClassificationRandomizedSearchConfig:
 
     @neural_network_architecture_list.setter
     def neural_network_architecture_list(self, nna_list):
-        contol_instance_type(nna_list, "neural_network_architecture_list", list)
+        variable_name = "neural_network_architecture_list"
+        contol_instance_type(nna_list, variable_name, list)
+        is_list_empty(nna_list, variable_name)
         self._neural_network_architecture_list = nna_list
 
     @property
@@ -61,7 +64,9 @@ class ANNClassificationRandomizedSearchConfig:
 
     @hidden_layers_activation_function_list.setter
     def hidden_layers_activation_function_list(self, hlaf_list):
-        contol_instance_type(hlaf_list, "hidden_layers_activation_function_list", list)
+        variable_name = "hidden_layers_activation_function_list"
+        contol_instance_type(hlaf_list, variable_name, list)
+        is_list_empty(hlaf_list, variable_name)
         self._hidden_layers_activation_function_list = hlaf_list
 
     @property
@@ -70,7 +75,9 @@ class ANNClassificationRandomizedSearchConfig:
 
     @dropout_dictionary_list.setter
     def dropout_dictionary_list(self, dd_list):
-        contol_instance_type(dd_list, "dropout_dictionary_list", list)
+        variable_name = "dropout_dictionary_list"
+        contol_instance_type(dd_list, variable_name, list)
+        is_list_empty(dd_list, variable_name)
         self._dropout_dictionary_list = dd_list
 
     @property
@@ -79,7 +86,9 @@ class ANNClassificationRandomizedSearchConfig:
 
     @optimizer_list.setter
     def optimizer_list(self, o_list):
-        contol_instance_type(o_list, "optimizer_list", list)
+        variable_name = "optimizer_list"
+        contol_instance_type(o_list, variable_name, list)
+        is_list_empty(o_list, variable_name)
         self._optimizer_list = o_list
 
     @property
@@ -88,7 +97,9 @@ class ANNClassificationRandomizedSearchConfig:
 
     @metric_list.setter
     def metric_list(self, m_list):
-        contol_instance_type(m_list, "metric_list", list)
+        variable_name = "metric_list"
+        contol_instance_type(m_list, variable_name, list)
+        is_list_empty(m_list, variable_name)
         self._metric_list = m_list
 
     @property
@@ -97,7 +108,9 @@ class ANNClassificationRandomizedSearchConfig:
 
     @batch_size_list.setter
     def batch_size_list(self, bs_list):
-        contol_instance_type(bs_list, "batch_size_list", list)
+        variable_name = "batch_size_list"
+        contol_instance_type(bs_list, variable_name, list)
+        is_list_empty(bs_list, variable_name)
         self._batch_size_list = bs_list
 
     @property
@@ -106,5 +119,7 @@ class ANNClassificationRandomizedSearchConfig:
 
     @epochs_list.setter
     def epochs_list(self, e_list):
-        contol_instance_type(e_list, "epochs_list", list)
+        variable_name = "epochs_list"
+        contol_instance_type(e_list, variable_name, list)
+        is_list_empty(e_list, variable_name)
         self._epochs_list = e_list
