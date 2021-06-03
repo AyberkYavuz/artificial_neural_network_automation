@@ -1,4 +1,5 @@
 from helper.helper import contol_instance_type
+from helper.classification_handler_helper import check_classification_type_value
 
 
 class ANNClassificationRandomizedSearchConfig:
@@ -42,6 +43,7 @@ class ANNClassificationRandomizedSearchConfig:
     @classification_type.setter
     def classification_type(self, cl_type):
         contol_instance_type(cl_type, "classification_type", str)
+        check_classification_type_value(cl_type)
         self._classification_type = cl_type
 
     @property
