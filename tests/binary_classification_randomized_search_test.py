@@ -75,5 +75,6 @@ neural_network_config_list_dict = {
 
 ann_classification_randomized_search_config = ANNClassificationRandomizedSearchConfig(neural_network_config_list_dict)
 
-ann_classification_randomized_search = ANNClassificationRandomizedSearch(ann_classification_randomized_search_config, 200)
+ann_classification_randomized_search = ANNClassificationRandomizedSearch(ann_classification_randomized_search_config,
+                                                                         200, n_jobs=-1)
 ann_classification_randomized_search.fit(X, encoded_Y)

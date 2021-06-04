@@ -215,6 +215,6 @@ class ANNClassificationRandomizedSearch:
             for _ in range(0, self.n_iter):
                 self.train_ann(X, y)
         else:
-            Parallel(n_jobs=self.n_jobs, prefer="threads")(delayed(self.train_ann)(X, y) for _ in range(0, self.n_iter))
+            Parallel(n_jobs=self.n_jobs)(delayed(self.train_ann)(X, y) for _ in range(0, self.n_iter))
 
 
