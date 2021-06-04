@@ -100,3 +100,20 @@ def is_list_empty(lst, variable_name):
     else:
         raise Exception("Sorry, {} cannot be empty".format(variable_name))
 
+
+def check_n_jobs(n_jobs):
+    """Checks n_jobs attribute of ANNClassificationRandomizedSearch
+
+    Args:
+      n_jobs: int, default=None.Number of jobs to run in parallel.
+            None means 1 unless in a joblib.parallel_backend context. -1 means using all processors.
+    """
+    condition1 = isinstance(n_jobs, int)
+    condition2 = n_jobs is None
+    if condition1 or condition2:
+        print("n_jobs value is valid")
+    else:
+        print("n_jobs value is not valid")
+
+    if condition1:
+        is_number_positive(n_jobs, "n_jobs")
