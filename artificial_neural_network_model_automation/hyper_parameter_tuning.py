@@ -1,6 +1,11 @@
 from helper.helper import contol_instance_type
 from helper.classification_handler_helper import check_classification_type_value
 from helper.helper import is_list_empty
+from helper.helper import is_number_positive
+from helper.decorators import execution_time
+from artificial_neural_network_model_automation.classification_handler import ANNClassificationHandlerConfig
+from artificial_neural_network_model_automation.classification_handler import ANNClassificationHandler
+from random import choice
 
 
 class ANNClassificationRandomizedSearchConfig:
@@ -123,3 +128,66 @@ class ANNClassificationRandomizedSearchConfig:
         contol_instance_type(e_list, variable_name, list)
         is_list_empty(e_list, variable_name)
         self._epochs_list = e_list
+
+
+class ANNClassificationRandomizedSearch:
+    """Randomized Search which was designed for ANNClassificationHandler.
+
+    Attributes:
+      ann_classification_randomized_search_config: ANNClassificationRandomizedSearchConfig instance.
+      n_iter: Integer. Number of parameter settings that are sampled. n_iter trades off runtime vs quality of the solution.
+    """
+    def __init__(self, ann_classification_randomized_search_config:ANNClassificationRandomizedSearchConfig, n_iter: int):
+        self.ann_classification_randomized_search_config = ann_classification_randomized_search_config
+        self.n_iter = n_iter
+
+    @property
+    def n_iter(self):
+        return self._n_iter
+
+    @n_iter.setter
+    def n_iter(self, n):
+        variable_name = "n_iter"
+        contol_instance_type(n, variable_name, int)
+        is_number_positive(n, variable_name)
+        self._n_iter = n
+
+    def get_randomly_ann_classification_handler_config(self):
+        """Randomly creates ann_classification_handler_config based on atrributes and returns it.
+        """
+        neural_network_architecture = choice(self.ann_classification_randomized_search_config.neural_network_architecture_list)
+        hidden_layers_activation_function = choice(self.ann_classification_randomized_search_config.hidden_layers_activation_function_list)
+        dropout_dictionary = choice(self.ann_classification_randomized_search_config.dropout_dictionary_list)
+        optimizer = choice(self.ann_classification_randomized_search_config.optimizer_list)
+        metric = choice(self.ann_classification_randomized_search_config.metric_list)
+        batch_size = choice(self.ann_classification_randomized_search_config.batch_size_list)
+        epochs = choice(self.ann_classification_randomized_search_config.epochs_list)
+        neural_network_config = {"classification_type": self.ann_classification_randomized_search_config.classification_type,
+                                 "neural_network_architecture": neural_network_architecture,
+                                 "hidden_layers_activation_function": hidden_layers_activation_function,
+                                 "dropout_dictionary": dropout_dictionary,
+                                 "optimizer": optimizer,
+                                 "metric": metric,
+                                 "batch_size": batch_size,
+                                 "epochs": epochs}
+        ann_classification_handler_config = ANNClassificationHandlerConfig(neural_network_config)
+        return ann_classification_handler_config
+
+    @execution_time
+    def fit(self, X, y):
+        """Run fit with all sets of parameters.
+
+        Attributes:
+        X : array-like of shape (n_samples, n_features)
+            Training vector, where n_samples is the number of samples and
+            n_features is the number of features.
+        y : array-like of shape (n_samples, n_output) \
+            or (n_samples,), default=None
+            Target relative to X for classification or regression;
+            None for unsupervised learning.
+        """
+        for _ in range(0, self.n_iter):
+            ann_classification_handler_config = self.get_randomly_ann_classification_handler_config()
+            print(ann_classification_handler_config.neural_network_architecture)
+            print(ann_classification_handler_config.hidden_layers_activation_function)
+            print(ann_classification_handler_config.batch_size)

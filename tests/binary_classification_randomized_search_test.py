@@ -4,6 +4,7 @@ from helper.data_path_handler import get_data_path
 from tensorflow.keras.optimizers import Adam
 from tensorflow.keras.optimizers import SGD
 from artificial_neural_network_model_automation.hyper_parameter_tuning import ANNClassificationRandomizedSearchConfig
+from artificial_neural_network_model_automation.hyper_parameter_tuning import ANNClassificationRandomizedSearch
 
 data_name = "sonar.csv"
 # please define your os_type (mac, windows, linux)
@@ -73,3 +74,6 @@ neural_network_config_list_dict = {
 }
 
 ann_classification_randomized_search_config = ANNClassificationRandomizedSearchConfig(neural_network_config_list_dict)
+
+ann_classification_randomized_search = ANNClassificationRandomizedSearch(ann_classification_randomized_search_config, 10)
+ann_classification_randomized_search.fit(X, encoded_Y)
