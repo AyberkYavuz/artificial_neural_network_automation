@@ -115,5 +115,3 @@ def check_n_jobs(n_jobs):
     else:
         raise Exception("n_jobs value is not valid")
 
-    if condition1:
-        is_number_positive(n_jobs, "n_jobs")
