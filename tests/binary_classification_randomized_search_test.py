@@ -65,7 +65,7 @@ neural_network_config_list_dict = {
         {"dropout": True, "dropout_rate": 0.02},
         {"dropout": True, "dropout_rate": 0.1},
         {"dropout": True, "dropout_rate": 0.2},
-        {"dropout": False, "dropout_rate": 0.0}
+        {"dropout": False, "dropout_rate": 0.03}
     ],
     "optimizer_list": [optimizer1, optimizer2, optimizer3, optimizer4, optimizer5],
     "metric_list": ["AUC", "Recall", "Precision"],
@@ -75,5 +75,5 @@ neural_network_config_list_dict = {
 
 ann_classification_randomized_search_config = ANNClassificationRandomizedSearchConfig(neural_network_config_list_dict)
 
-ann_classification_randomized_search = ANNClassificationRandomizedSearch(ann_classification_randomized_search_config, 10)
+ann_classification_randomized_search = ANNClassificationRandomizedSearch(ann_classification_randomized_search_config, 200)
 ann_classification_randomized_search.fit(X, encoded_Y)

@@ -2,10 +2,12 @@ from helper.helper import contol_instance_type
 from helper.classification_handler_helper import check_classification_type_value
 from helper.helper import is_list_empty
 from helper.helper import is_number_positive
+from helper.helper import check_n_jobs
 from helper.decorators import execution_time
 from artificial_neural_network_model_automation.classification_handler import ANNClassificationHandlerConfig
 from artificial_neural_network_model_automation.classification_handler import ANNClassificationHandler
 from random import choice
+from joblib import Parallel, delayed
 
 
 class ANNClassificationRandomizedSearchConfig:
@@ -136,10 +138,19 @@ class ANNClassificationRandomizedSearch:
     Attributes:
       ann_classification_randomized_search_config: ANNClassificationRandomizedSearchConfig instance.
       n_iter: Integer. Number of parameter settings that are sampled. n_iter trades off runtime vs quality of the solution.
+      n_jobs: int, default: None. The maximum number of concurrently running jobs, such as the number of Python worker
+                        processes when backend=”multiprocessing” or the size of the thread-pool when
+                        backend=”threading”. If -1 all CPUs are used. If 1 is given, no parallel computing code is used
+                        at all, which is useful for debugging. For n_jobs below -1, (n_cpus + 1 + n_jobs) are used.
+                        Thus for n_jobs = -2, all CPUs but one are used. None is a marker for ‘unset’ that will be
+                        interpreted as n_jobs=1 (sequential execution) unless the call is performed under a
+                        parallel_backend context manager that sets another value for n_jobs.
     """
-    def __init__(self, ann_classification_randomized_search_config:ANNClassificationRandomizedSearchConfig, n_iter: int):
+    def __init__(self, ann_classification_randomized_search_config:ANNClassificationRandomizedSearchConfig,
+                 n_iter: int, n_jobs=None):
         self.ann_classification_randomized_search_config = ann_classification_randomized_search_config
         self.n_iter = n_iter
+        self.n_jobs = n_jobs
 
     @property
     def n_iter(self):
@@ -151,6 +162,15 @@ class ANNClassificationRandomizedSearch:
         contol_instance_type(n, variable_name, int)
         is_number_positive(n, variable_name)
         self._n_iter = n
+
+    @property
+    def n_jobs(self):
+        return self._n_jobs
+
+    @n_jobs.setter
+    def n_jobs(self, jobs):
+        check_n_jobs(jobs)
+        self._n_jobs = jobs
 
     def get_randomly_ann_classification_handler_config(self):
         """Randomly creates ann_classification_handler_config based on atrributes and returns it.
@@ -173,6 +193,11 @@ class ANNClassificationRandomizedSearch:
         ann_classification_handler_config = ANNClassificationHandlerConfig(neural_network_config)
         return ann_classification_handler_config
 
+    def train_ann(self, X, y):
+        ann_classification_handler_config = self.get_randomly_ann_classification_handler_config()
+        ann_classification_handler = ANNClassificationHandler(ann_classification_handler_config)
+        ann_classification_handler.train_neural_network(X, y)
+
     @execution_time
     def fit(self, X, y):
         """Run fit with all sets of parameters.
@@ -186,8 +211,10 @@ class ANNClassificationRandomizedSearch:
             Target relative to X for classification or regression;
             None for unsupervised learning.
         """
-        for _ in range(0, self.n_iter):
-            ann_classification_handler_config = self.get_randomly_ann_classification_handler_config()
-            print(ann_classification_handler_config.neural_network_architecture)
-            print(ann_classification_handler_config.hidden_layers_activation_function)
-            print(ann_classification_handler_config.batch_size)
+        if self.n_jobs is None:
+            for _ in range(0, self.n_iter):
+                self.train_ann(X, y)
+        else:
+            Parallel(n_jobs=self.n_jobs, prefer="threads")(delayed(self.train_ann)(X, y) for _ in range(0, self.n_iter))
+
+
