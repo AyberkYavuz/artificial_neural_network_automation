@@ -8,6 +8,8 @@ from artificial_neural_network_model_automation.classification_handler import AN
 from artificial_neural_network_model_automation.classification_handler import ANNClassificationHandler
 from random import choice
 from joblib import Parallel, delayed
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import f1_score
 
 
 class ANNClassificationRandomizedSearchConfig:
@@ -146,7 +148,7 @@ class ANNClassificationRandomizedSearch:
                         interpreted as n_jobs=1 (sequential execution) unless the call is performed under a
                         parallel_backend context manager that sets another value for n_jobs.
     """
-    def __init__(self, ann_classification_randomized_search_config:ANNClassificationRandomizedSearchConfig,
+    def __init__(self, ann_classification_randomized_search_config: ANNClassificationRandomizedSearchConfig,
                  n_iter: int, n_jobs=None):
         self.ann_classification_randomized_search_config = ann_classification_randomized_search_config
         self.n_iter = n_iter
@@ -193,10 +195,14 @@ class ANNClassificationRandomizedSearch:
         ann_classification_handler_config = ANNClassificationHandlerConfig(neural_network_config)
         return ann_classification_handler_config
 
-    def train_ann(self, X, y):
+    def train_ann(self, X_train, X_test, y_train, y_test):
         ann_classification_handler_config = self.get_randomly_ann_classification_handler_config()
         ann_classification_handler = ANNClassificationHandler(ann_classification_handler_config)
-        ann_classification_handler.train_neural_network(X, y)
+        ann_classification_handler.train_neural_network(X_train, y_train)
+        y_pred = ann_classification_handler.classifier.predict(X_test)
+        y_pred = [1 if prob > 0.5 else 0 for prob in y_pred]
+        score = f1_score(y_test, y_pred)
+
 
     @execution_time
     def fit(self, X, y):
@@ -211,10 +217,12 @@ class ANNClassificationRandomizedSearch:
             Target relative to X for classification or regression;
             None for unsupervised learning.
         """
+        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.25, random_state=42)
         if self.n_jobs is None:
             for _ in range(0, self.n_iter):
-                self.train_ann(X, y)
+                self.train_ann(X_train, X_test, y_train, y_test)
         else:
-            Parallel(n_jobs=self.n_jobs)(delayed(self.train_ann)(X, y) for _ in range(0, self.n_iter))
+            Parallel(n_jobs=self.n_jobs)(delayed(self.train_ann)(X_train, X_test, y_train, y_test) for _ in range(0, self.n_iter))
+
 
 
