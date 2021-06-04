@@ -113,7 +113,7 @@ def check_n_jobs(n_jobs):
     if condition1 or condition2:
         print("n_jobs value is valid")
     else:
-        print("n_jobs value is not valid")
+        raise Exception("n_jobs value is not valid")
 
     if condition1:
         is_number_positive(n_jobs, "n_jobs")
