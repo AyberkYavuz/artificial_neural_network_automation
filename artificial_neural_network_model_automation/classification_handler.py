@@ -7,7 +7,8 @@ from helper.helper import contol_instance_type
 from helper.classification_handler_helper import check_classification_type_value
 from helper.helper import check_neural_network_architecture_values
 from helper.helper import check_hidden_layers_activation_value
-from helper.helper import check_dropout_dictionary_values
+from helper.helper import check_dropout_rate_data_type
+from helper.helper import check_dropout_rate_value
 from helper.classification_handler_helper import check_optimizer_value
 from helper.classification_handler_helper import check_metric_value
 from helper.helper import is_number_positive
@@ -24,9 +25,8 @@ class ANNClassificationHandlerConfig:
                                 80 is the second hidden layer neuron number and 1 is output layer.
       hidden_layers_activation_function: hidden layers activation function type. It could be "sigmoid", "relu", "tanh" etc.
                                       Please look at https://keras.io/api/layers/activations/ for detailed information.
-      dropout_dictionary: It is a python dictionary that has two attributes which are "dropout" and "dropout_rate".
-                       Example usage; {"dropout": True, "dropout_rate": 0.01} which means that adding dropout layer between
-                       hiddien layers and dropout rate will be 0.01.
+      dropout_rate: None or float. If it is float, dropout layers between
+                hiddien layers will be added. If it is None, dropout layers between hiddien layers will not be added.
       optimizer: String (name of optimizer) or optimizer instance. See `tf.keras.optimizers`.
       metric: List of metrics to be evaluated by the model during training and testing. Each of this can be a string
            (name of a built-in function), function or a `tf.keras.metrics.Metric` instance. See
@@ -52,7 +52,7 @@ class ANNClassificationHandlerConfig:
         self.classification_type = neural_network_config["classification_type"]
         self.neural_network_architecture = neural_network_config["neural_network_architecture"]
         self.hidden_layers_activation_function = neural_network_config["hidden_layers_activation_function"]
-        self.dropout_dictionary = neural_network_config["dropout_dictionary"]
+        self.dropout_rate = neural_network_config["dropout_rate"]
         self.optimizer = neural_network_config["optimizer"]
         self.metric = neural_network_config["metric"]
         self.batch_size = neural_network_config["batch_size"]
@@ -89,14 +89,14 @@ class ANNClassificationHandlerConfig:
         self._hidden_layers_activation_function = hlaf
 
     @property
-    def dropout_dictionary(self):
-        return self._dropout_dictionary
+    def dropout_rate(self):
+        return self._dropout_rate
 
-    @dropout_dictionary.setter
-    def dropout_dictionary(self, d_dict):
-        contol_instance_type(d_dict, "dropout_dictionary", dict)
-        check_dropout_dictionary_values(d_dict)
-        self._dropout_dictionary = d_dict
+    @dropout_rate.setter
+    def dropout_rate(self, d_rate):
+        check_dropout_rate_data_type(d_rate)
+        check_dropout_rate_value(d_rate)
+        self._dropout_rate = d_rate
 
     @property
     def optimizer(self):
@@ -147,7 +147,7 @@ class ANNClassificationHandler:
         self.__classification_type = ann_classification_handler_config.classification_type
         self.__neural_network_architecture = ann_classification_handler_config.neural_network_architecture
         self.__hidden_layers_activation_function = ann_classification_handler_config.hidden_layers_activation_function
-        self.__dropout_dictionary = ann_classification_handler_config.dropout_dictionary
+        self.__dropout_rate = ann_classification_handler_config.dropout_rate
         self.__optimizer = ann_classification_handler_config.optimizer
         self.__metric = ann_classification_handler_config.metric
         self.__batch_size = ann_classification_handler_config.batch_size
@@ -168,9 +168,9 @@ class ANNClassificationHandler:
         other_hidden_layer_neuron_numbers = self.__neural_network_architecture[2:-1]
         if len(other_hidden_layer_neuron_numbers) > 0:
             for hidden_layer_neuron_number in other_hidden_layer_neuron_numbers:
-                if self.__dropout_dictionary["dropout"]:
+                if self.__dropout_rate is not None:
                     # adding dropout layer
-                    classifier.add(Dropout(rate=self.__dropout_dictionary["dropout_rate"]))
+                    classifier.add(Dropout(rate=self.__dropout_rate))
                 classifier.add(Dense(hidden_layer_neuron_number,
                                      activation=self.__hidden_layers_activation_function))
 

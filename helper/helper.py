@@ -55,24 +55,32 @@ def check_hidden_layers_activation_value(hlaf):
                         " 'sigmoid', 'tanh', 'selu', 'elu' or 'exponential'.")
 
 
-def check_dropout_dictionary_values(d_dict):
-    """Checks dropout dictionary values.
+def check_dropout_rate_data_type(d_rate):
+    """Checks dropout rate data types.
 
     Args:
-      d_dict: Dictionary. Dropout dictionary.
+      d_rate: Dropout rate.
     """
-    dropout_value = d_dict["dropout"]
-
-    contol_instance_type(dropout_value, "dropout_value", bool)
-
-    dropout_rate = d_dict["dropout_rate"]
-
-    contol_instance_type(dropout_rate, "dropout_rate", float)
-
-    if dropout_rate > 0.0:
-        print("dropout_rate value is valid")
+    condition1 = isinstance(d_rate, float)
+    condition2 = d_rate is None
+    if condition1 or condition2:
+        print("dropout_rate data type is valid.")
     else:
-        raise Exception("Sorry, dropout_rate cannot be less than 0.0")
+        raise Exception("Sorry, dropout_rate data can only be float or None.")
+
+
+def check_dropout_rate_value(d_rate):
+    """Checks dropout rate value.
+
+    Args:
+      d_rate: Dropout rate.
+    """
+    condition = isinstance(d_rate, float)
+    if condition:
+        if d_rate > 0.0:
+            print("dropout_rate value is valid")
+        else:
+            raise Exception("Sorry, dropout_rate cannot be less than 0.0")
 
 
 def is_number_positive(number, variable_name):

@@ -29,7 +29,7 @@ encoded_Y = encoder.transform(Y)
 neural_network_config = {"classification_type": "binary",
                          "neural_network_architecture": [60, 65, 65, 1],
                          "hidden_layers_activation_function": "relu",
-                         "dropout_dictionary": {"dropout": False, "dropout_rate": 0.01},
+                         "dropout_rate": 0.01,
                          "optimizer": "adam",
                          "metric": "Recall",
                          "batch_size": 10,
@@ -37,6 +37,7 @@ neural_network_config = {"classification_type": "binary",
 ann_classification_handler_config = ANNClassificationHandlerConfig(neural_network_config)
 
 ann_classification_handler = ANNClassificationHandler(ann_classification_handler_config)
+
 # save the plot of classifier architecture
 png_path = get_data_path("neural_network_architecture.png", "neural_network_model_architecture_plots", os_type="mac")
 ann_classification_handler.save_classifier_architecture_plot(png_path)
