@@ -22,8 +22,7 @@ class ANNClassificationRandomizedSearchConfig:
                                 [[60, 70, 80, 1], [60, 80, 1], [60, 70, 70, 1]]
       hidden_layers_activation_function_list: List of hidden layers activation function types. For example;
                                           ["sigmoid", "relu", "tanh"]
-      dropout_dictionary_list: List of dropout_dictionaries. For example; [{"dropout": True, "dropout_rate": 0.01},
-                            {"dropout": True, "dropout_rate": 0.02}]
+      dropout_rate_list: List of dropout_rate values. For example; [None, 0.01, 0.0001, 0.1]
       optimizer_list: List of optimizers. For example; ["adam", "sgd", "nadam"] or
                   [keras.optimizers.Adam(learning_rate=0.01), keras.optimizers.Adam(learning_rate=0.02)]
       metric_list: List of metrics. For example; ["accuracy", "Recall", "Precision", "AUC"] or
@@ -40,7 +39,7 @@ class ANNClassificationRandomizedSearchConfig:
         self.classification_type = neural_network_config_list_dict["classification_type"]
         self.neural_network_architecture_list = neural_network_config_list_dict["neural_network_architecture_list"]
         self.hidden_layers_activation_function_list = neural_network_config_list_dict["hidden_layers_activation_function_list"]
-        self.dropout_dictionary_list = neural_network_config_list_dict["dropout_dictionary_list"]
+        self.dropout_rate_list = neural_network_config_list_dict["dropout_rate_list"]
         self.optimizer_list = neural_network_config_list_dict["optimizer_list"]
         self.metric_list = neural_network_config_list_dict["metric_list"]
         self.batch_size_list = neural_network_config_list_dict["batch_size_list"]
@@ -79,15 +78,15 @@ class ANNClassificationRandomizedSearchConfig:
         self._hidden_layers_activation_function_list = hlaf_list
 
     @property
-    def dropout_dictionary_list(self):
-        return self._dropout_dictionary_list
+    def dropout_rate_list(self):
+        return self._dropout_rate_list
 
-    @dropout_dictionary_list.setter
-    def dropout_dictionary_list(self, dd_list):
-        variable_name = "dropout_dictionary_list"
-        contol_instance_type(dd_list, variable_name, list)
-        is_list_empty(dd_list, variable_name)
-        self._dropout_dictionary_list = dd_list
+    @dropout_rate_list.setter
+    def dropout_rate_list(self, d_list):
+        variable_name = "dropout_rate_list"
+        contol_instance_type(d_list, variable_name, list)
+        is_list_empty(d_list, variable_name)
+        self._dropout_rate_list = d_list
 
     @property
     def optimizer_list(self):
@@ -179,7 +178,7 @@ class ANNClassificationRandomizedSearch:
         """
         neural_network_architecture = choice(self.ann_classification_randomized_search_config.neural_network_architecture_list)
         hidden_layers_activation_function = choice(self.ann_classification_randomized_search_config.hidden_layers_activation_function_list)
-        dropout_dictionary = choice(self.ann_classification_randomized_search_config.dropout_dictionary_list)
+        dropout_rate = choice(self.ann_classification_randomized_search_config.dropout_rate_list)
         optimizer = choice(self.ann_classification_randomized_search_config.optimizer_list)
         metric = choice(self.ann_classification_randomized_search_config.metric_list)
         batch_size = choice(self.ann_classification_randomized_search_config.batch_size_list)
@@ -187,7 +186,7 @@ class ANNClassificationRandomizedSearch:
         neural_network_config = {"classification_type": self.ann_classification_randomized_search_config.classification_type,
                                  "neural_network_architecture": neural_network_architecture,
                                  "hidden_layers_activation_function": hidden_layers_activation_function,
-                                 "dropout_dictionary": dropout_dictionary,
+                                 "dropout_rate": dropout_rate,
                                  "optimizer": optimizer,
                                  "metric": metric,
                                  "batch_size": batch_size,
