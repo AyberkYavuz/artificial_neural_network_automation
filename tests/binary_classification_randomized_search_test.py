@@ -75,6 +75,12 @@ neural_network_config_list_dict = {
 
 ann_classification_randomized_search_config = ANNClassificationRandomizedSearchConfig(neural_network_config_list_dict)
 
+
 ann_classification_randomized_search = ANNClassificationRandomizedSearch(ann_classification_randomized_search_config,
-                                                                         200)
-ann_classification_randomized_search.fit(X, encoded_Y)
+                                                                         100)
+ann_classification_randomized_search.fit(X, encoded_Y)  # Method Execution Time : 83.26 seconds
+
+# parallelism test
+ann_classification_randomized_search_2 = ANNClassificationRandomizedSearch(ann_classification_randomized_search_config,
+                                                                         100, n_jobs=-1)
+ann_classification_randomized_search_2.fit(X, encoded_Y)  # Method Execution Time : 27.46 seconds

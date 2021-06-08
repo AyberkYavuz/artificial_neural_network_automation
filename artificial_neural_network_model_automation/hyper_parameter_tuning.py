@@ -10,6 +10,7 @@ from random import choice
 from joblib import Parallel, delayed
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import f1_score
+import pandas as pd
 
 
 class ANNClassificationRandomizedSearchConfig:
@@ -152,6 +153,9 @@ class ANNClassificationRandomizedSearch:
         self.ann_classification_randomized_search_config = ann_classification_randomized_search_config
         self.n_iter = n_iter
         self.n_jobs = n_jobs
+        self.best_param_ = None
+        self.best_estimator_ = None
+        self.best_score_ = None
 
     @property
     def n_iter(self):
@@ -173,7 +177,7 @@ class ANNClassificationRandomizedSearch:
         check_n_jobs(jobs)
         self._n_jobs = jobs
 
-    def get_randomly_ann_classification_handler_config(self):
+    def _get_randomly_ann_classification_handler_config(self):
         """Randomly creates ann_classification_handler_config based on atrributes and returns it.
         """
         neural_network_architecture = choice(self.ann_classification_randomized_search_config.neural_network_architecture_list)
@@ -194,14 +198,25 @@ class ANNClassificationRandomizedSearch:
         ann_classification_handler_config = ANNClassificationHandlerConfig(neural_network_config)
         return ann_classification_handler_config
 
-    def train_ann(self, X_train, X_test, y_train, y_test):
-        ann_classification_handler_config = self.get_randomly_ann_classification_handler_config()
+    def _fit_and_score(self, X_train, X_test, y_train, y_test):
+        ann_classification_handler_config = self._get_randomly_ann_classification_handler_config()
         ann_classification_handler = ANNClassificationHandler(ann_classification_handler_config)
         ann_classification_handler.train_neural_network(X_train, y_train)
         y_pred = ann_classification_handler.classifier.predict(X_test)
         y_pred = [1 if prob > 0.5 else 0 for prob in y_pred]
         score = f1_score(y_test, y_pred)
+        result = {"score": score,
+                  "ann_classification_handler_config": ann_classification_handler_config,
+                  "classifier": ann_classification_handler.classifier}
+        return result
 
+    def _set_metric_params(self, list_of_dictionaries):
+        metric_dataframe = pd.DataFrame(list_of_dictionaries)
+        max_score = metric_dataframe["score"].max()
+        data = metric_dataframe[metric_dataframe["score"] == max_score].iloc[0]
+        self.best_estimator_ = data["classifier"]
+        self.best_param_ = data["ann_classification_handler_config"]
+        self.best_score_ = max_score
 
     @execution_time
     def fit(self, X, y):
@@ -216,12 +231,15 @@ class ANNClassificationRandomizedSearch:
             Target relative to X for classification or regression;
             None for unsupervised learning.
         """
+
         X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.25, random_state=42)
+        list_of_dictionaries = list()
         if self.n_jobs is None:
             for _ in range(0, self.n_iter):
-                self.train_ann(X_train, X_test, y_train, y_test)
+                result = self._fit_and_score(X_train, X_test, y_train, y_test)
+                list_of_dictionaries.append(result)
+                self._set_metric_params(list_of_dictionaries)
         else:
-            Parallel(n_jobs=self.n_jobs)(delayed(self.train_ann)(X_train, X_test, y_train, y_test) for _ in range(0, self.n_iter))
-
-
+            list_of_dictionaries = Parallel(n_jobs=self.n_jobs)(delayed(self._fit_and_score)(X_train, X_test, y_train, y_test) for _ in range(0, self.n_iter))
+            self._set_metric_params(list_of_dictionaries)
 
