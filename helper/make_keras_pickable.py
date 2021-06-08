@@ -14,6 +14,7 @@ def unpack(model, training_config, weights):
     restored_model.set_weights(weights)
     return restored_model
 
+
 # Hotfix function
 def make_keras_picklable():
 
