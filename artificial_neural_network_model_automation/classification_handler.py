@@ -12,6 +12,7 @@ from helper.helper import check_dropout_rate_value
 from helper.classification_handler_helper import check_optimizer_value
 from helper.classification_handler_helper import check_metric_value
 from helper.helper import is_number_positive
+from helper.make_keras_pickable import make_keras_picklable
 
 
 class ANNClassificationHandlerConfig:
@@ -152,6 +153,7 @@ class ANNClassificationHandler:
         self.__metric = ann_classification_handler_config.metric
         self.__batch_size = ann_classification_handler_config.batch_size
         self.__epochs = ann_classification_handler_config.epochs
+        make_keras_picklable()
         self.classifier = self.design_neural_network()
 
     def design_neural_network(self):
