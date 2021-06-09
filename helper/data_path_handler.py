@@ -2,12 +2,14 @@ import os
 
 
 def get_data_path(data_name, directory_name, os_type):
-    """Returns data path string
+    """Creates data path string.
 
     Args:
       data_name: Data set name in data folder.
       directory_name: string directory name of the data
       os_type: Operation system type of your platform. For example; windows, linux, mac etc.
+    Returns:
+        data_path: str. Data path.
     """
     data_path = ""
     working_dir = os.getcwd()
