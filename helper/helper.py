@@ -17,7 +17,7 @@ def check_neural_network_architecture_values(nn_architecture):
     """Checks neural network architecture values.
 
     Args:
-      nn_architecture: List. Neural network architecture.
+      nn_architecture: list. Neural network architecture.
     """
     length_of_neural_network_architecture = len(nn_architecture)
     neural_network_architecture_condition_1 = length_of_neural_network_architecture < 3
@@ -45,7 +45,7 @@ def check_hidden_layers_activation_value(hlaf):
     """Checks hidden layers activation value.
 
     Args:
-      hlaf: String. Hidden layer activation function
+      hlaf: str. Hidden layer activation function
     """
     hidden_layers_activation_function_condition = hlaf in activation_functions
     if hidden_layers_activation_function_condition:
@@ -59,7 +59,7 @@ def check_dropout_rate_data_type(d_rate):
     """Checks dropout rate data types.
 
     Args:
-      d_rate: Dropout rate.
+      d_rate: float or None. Dropout rate.
     """
     condition1 = isinstance(d_rate, float)
     condition2 = d_rate is None
@@ -73,7 +73,7 @@ def check_dropout_rate_value(d_rate):
     """Checks dropout rate value.
 
     Args:
-      d_rate: Dropout rate.
+      d_rate: float. Dropout rate.
     """
     condition = isinstance(d_rate, float)
     if condition:
@@ -87,8 +87,8 @@ def is_number_positive(number, variable_name):
     """Checks number is spositive or not.
 
     Args:
-      number: Int. Number.
-      variable_name: String. Variable name for printing messages.
+      number: int. Number.
+      variable_name: str. Variable name for printing messages.
     """
     if number > 0:
         print("{} value is valid".format(variable_name))
@@ -100,8 +100,8 @@ def is_list_empty(lst, variable_name):
     """Checks python list is empty or not.
 
     Args:
-      lst: Python list.
-      variable_name: String. Variable name for printing messages.
+      lst: list.
+      variable_name: str. Variable name for printing messages.
     """
     if lst:
         print("{} is not empty".format(variable_name))
@@ -113,7 +113,7 @@ def check_n_jobs(n_jobs):
     """Checks n_jobs attribute of ANNClassificationRandomizedSearch
 
     Args:
-      n_jobs: int, default=None.Number of jobs to run in parallel.
+      n_jobs: int, default=None. Number of jobs to run in parallel.
             None means 1 unless in a joblib.parallel_backend context. -1 means using all processors.
     """
     condition1 = isinstance(n_jobs, int)
