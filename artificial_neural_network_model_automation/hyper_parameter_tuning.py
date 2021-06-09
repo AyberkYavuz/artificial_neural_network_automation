@@ -140,13 +140,19 @@ class ANNClassificationRandomizedSearch:
     Attributes:
       ann_classification_randomized_search_config: ANNClassificationRandomizedSearchConfig instance.
       n_iter: int, default=10. Number of parameter settings that are sampled. n_iter trades off runtime vs quality of the solution.
-      n_jobs: int, default: None. The maximum number of concurrently running jobs, such as the number of Python worker
+      n_jobs: int, default=None. The maximum number of concurrently running jobs, such as the number of Python worker
                         processes when backend=”multiprocessing” or the size of the thread-pool when
                         backend=”threading”. If -1 all CPUs are used. If 1 is given, no parallel computing code is used
                         at all, which is useful for debugging. For n_jobs below -1, (n_cpus + 1 + n_jobs) are used.
                         Thus for n_jobs = -2, all CPUs but one are used. None is a marker for ‘unset’ that will be
                         interpreted as n_jobs=1 (sequential execution) unless the call is performed under a
                         parallel_backend context manager that sets another value for n_jobs.
+      best_param_: ANNClassificationHandlerConfig instance, default=None. This attribute will be initialized,
+                                                                 when _set_metric_params private method is called.
+      best_estimator_: Keras classifier, default=None. This attribute will be initialized,
+                                              when _set_metric_params private method is called.
+      best_score_: float, default=None. This attribute will be initialized,
+                               when _set_metric_params private method is called.
     """
     def __init__(self, ann_classification_randomized_search_config: ANNClassificationRandomizedSearchConfig,
                  n_iter=10, n_jobs=None):
@@ -178,7 +184,9 @@ class ANNClassificationRandomizedSearch:
         self._n_jobs = jobs
 
     def _get_randomly_ann_classification_handler_config(self):
-        """Randomly creates ann_classification_handler_config based on atrributes and returns it.
+        """Randomly creates ann_classification_handler_config based on atrributes.
+        Returns:
+            ann_classification_handler_config: ANNClassificationHandlerConfig instance.
         """
         neural_network_architecture = choice(self.ann_classification_randomized_search_config.neural_network_architecture_list)
         hidden_layers_activation_function = choice(self.ann_classification_randomized_search_config.hidden_layers_activation_function_list)
@@ -199,6 +207,15 @@ class ANNClassificationRandomizedSearch:
         return ann_classification_handler_config
 
     def _fit_and_score(self, X_train, X_test, y_train, y_test):
+        """Fits and scores Keras classifier.
+        Attributes:
+            X_train: it can be list, numpy array, scipy-sparse matrix or pandas dataframe.
+            X_test: it can be list, numpy array, scipy-sparse matrix or pandas dataframe.
+            y_train: it can be list, numpy array, scipy-sparse matrix or pandas dataframe.
+            y_test: it can be list, numpy array, scipy-sparse matrix or pandas dataframe.
+        Returns:
+            result: dict. It contains ANNClassificationHandlerConfig instance, score and Keras classifier.
+        """
         ann_classification_handler_config = self._get_randomly_ann_classification_handler_config()
         ann_classification_handler = ANNClassificationHandler(ann_classification_handler_config)
         ann_classification_handler.train_neural_network(X_train, y_train)
@@ -211,6 +228,10 @@ class ANNClassificationRandomizedSearch:
         return result
 
     def _set_metric_params(self, list_of_dictionaries):
+        """Initializes best_estimator_, best_param_ and best_score_ attributes.
+        Attributes:
+            list_of_dictionaries: list. It is list of dictionaries.
+        """
         metric_dataframe = pd.DataFrame(list_of_dictionaries)
         max_score = metric_dataframe["score"].max()
         data = metric_dataframe[metric_dataframe["score"] == max_score].iloc[0]
@@ -231,7 +252,6 @@ class ANNClassificationRandomizedSearch:
             Target relative to X for classification or regression;
             None for unsupervised learning.
         """
-
         X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.25, random_state=42)
         list_of_dictionaries = list()
         if self.n_jobs is None:
