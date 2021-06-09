@@ -215,7 +215,7 @@ class ANNClassificationRandomizedSearch:
 
     def _fit_and_score(self, X_train, X_test, y_train, y_test):
         """Fits and scores Keras classifier.
-        Attributes:
+        Args:
             X_train: it can be list, numpy array, scipy-sparse matrix or pandas dataframe.
             X_test: it can be list, numpy array, scipy-sparse matrix or pandas dataframe.
             y_train: it can be list, numpy array, scipy-sparse matrix or pandas dataframe.
@@ -236,7 +236,7 @@ class ANNClassificationRandomizedSearch:
 
     def _set_metric_params(self, list_of_dictionaries):
         """Initializes best_estimator_, best_param_ and best_score_ attributes.
-        Attributes:
+        Args:
             list_of_dictionaries: list. It is list of dictionaries.
         """
         metric_dataframe = pd.DataFrame(list_of_dictionaries)
@@ -250,7 +250,7 @@ class ANNClassificationRandomizedSearch:
     def fit(self, X, y):
         """Run fit with all sets of parameters.
 
-        Attributes:
+        Args:
         X : array-like of shape (n_samples, n_features)
             Training vector, where n_samples is the number of samples and
             n_features is the number of features.
