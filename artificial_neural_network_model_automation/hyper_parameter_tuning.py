@@ -139,7 +139,7 @@ class ANNClassificationRandomizedSearch:
 
     Attributes:
       ann_classification_randomized_search_config: ANNClassificationRandomizedSearchConfig instance.
-      n_iter: Integer. Number of parameter settings that are sampled. n_iter trades off runtime vs quality of the solution.
+      n_iter: int, default=10. Number of parameter settings that are sampled. n_iter trades off runtime vs quality of the solution.
       n_jobs: int, default: None. The maximum number of concurrently running jobs, such as the number of Python worker
                         processes when backend=”multiprocessing” or the size of the thread-pool when
                         backend=”threading”. If -1 all CPUs are used. If 1 is given, no parallel computing code is used
@@ -149,7 +149,7 @@ class ANNClassificationRandomizedSearch:
                         parallel_backend context manager that sets another value for n_jobs.
     """
     def __init__(self, ann_classification_randomized_search_config: ANNClassificationRandomizedSearchConfig,
-                 n_iter: int, n_jobs=None):
+                 n_iter=10, n_jobs=None):
         self.ann_classification_randomized_search_config = ann_classification_randomized_search_config
         self.n_iter = n_iter
         self.n_jobs = n_jobs
