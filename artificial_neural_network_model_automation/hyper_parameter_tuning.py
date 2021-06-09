@@ -32,7 +32,7 @@ class ANNClassificationRandomizedSearchConfig:
       epochs_list: List of epochs. For example; [10, 20, 30, 40, 50, 100]
     """
     def __init__(self, neural_network_config_list_dict: dict):
-        """Artificial Neural Network Configuration Lists for Randomized Search
+        """Constructs all the necessary attributes for the ann_classification_randomized_search_config object.
 
         Args:
           neural_network_config_list_dict: Python dictionary which includes neural network configuration lists data
@@ -156,6 +156,13 @@ class ANNClassificationRandomizedSearch:
     """
     def __init__(self, ann_classification_randomized_search_config: ANNClassificationRandomizedSearchConfig,
                  n_iter=10, n_jobs=None):
+        """Constructs all the necessary attributes for the ann_classification_randomized_search object.
+
+        Args:
+          ann_classification_randomized_search_config: ANNClassificationRandomizedSearchConfig instance.
+          n_iter: int, default=10.
+          n_jobs: int, default=None.
+        """
         self.ann_classification_randomized_search_config = ann_classification_randomized_search_config
         self.n_iter = n_iter
         self.n_jobs = n_jobs
@@ -214,7 +221,7 @@ class ANNClassificationRandomizedSearch:
             y_train: it can be list, numpy array, scipy-sparse matrix or pandas dataframe.
             y_test: it can be list, numpy array, scipy-sparse matrix or pandas dataframe.
         Returns:
-            result: dict. It contains ANNClassificationHandlerConfig instance, score and Keras classifier.
+            result: dict. It contains ANNClassificationHandlerConfig instance, float score and Keras classifier.
         """
         ann_classification_handler_config = self._get_randomly_ann_classification_handler_config()
         ann_classification_handler = ANNClassificationHandler(ann_classification_handler_config)
