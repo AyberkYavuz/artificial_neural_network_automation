@@ -19,7 +19,7 @@ class ANNClassificationHandlerConfig:
     """A configuration for Keras artificial neural network classifier.
 
     Attributes:
-      classification_type: The type of classification task. It takes 2 different values
+      classification_type: str. The type of classification task. It takes 2 different values
                          which are "binary", "multiclass".
       neural_network_architecture: Neural network architecture represented by a python list. For example;
                                 [60, 70, 80, 1] means that 60 is input layer, 70 is the first hidden layer neuron number,
@@ -45,10 +45,10 @@ class ANNClassificationHandlerConfig:
             of index `epochs` is reached.
     """
     def __init__(self, neural_network_config: dict):
-        """Artificial Neural Network Configuration
+        """Constructs all the necessary attributes for the ann_classification_handler_config object.
 
         Args:
-          neural_network_config: Python dictionary which includes neural network configuration data
+          neural_network_config: Python dictionary which includes neural network configuration data.
         """
         self.classification_type = neural_network_config["classification_type"]
         self.neural_network_architecture = neural_network_config["neural_network_architecture"]
@@ -139,8 +139,21 @@ class ANNClassificationHandlerConfig:
 
 
 class ANNClassificationHandler:
+    """It designs and trains Keras classifiers
+
+    Attributes:
+      __classification_type: str.
+      __neural_network_architecture: list.
+      __hidden_layers_activation_function: str.
+      __dropout_rate: float or None.
+      __optimizer: str (name of optimizer) or optimizer instance. See `tf.keras.optimizers`.
+      __metric: str (name of a built-in function), function or a `tf.keras.metrics.Metric` instance.
+      __batch_size: int or None.
+      __epochs: int.
+      classifier: Designed Keras classifier.
+    """
     def __init__(self, ann_classification_handler_config: ANNClassificationHandlerConfig):
-        """Compiles Keras classifier based on ann_classification_handler_config object attributes.
+        """Constructs all the necessary attributes for the ann_classification_handler object.
 
         Args:
           ann_classification_handler_config: ANNClassificationHandlerConfig instance.
@@ -158,7 +171,9 @@ class ANNClassificationHandler:
 
     def design_neural_network(self):
         """Designs keras neural network architecture based on ANNClassificationHandlerConfig instance for classification
-        task and returns it.
+        task.
+        Returns:
+            classifier: Designed Keras classifier.
         """
         # Initialising the ANN
         classifier = Sequential()
@@ -194,7 +209,7 @@ class ANNClassificationHandler:
         """Plots the classifier architecture and saves it as a png file.
 
         Args:
-          png_path: string path argument. It must be contain location information of png file
+          png_path: str path argument. It must be contain location information of png file
         """
         plot_model(self.classifier, to_file=png_path, show_shapes=True, show_layer_names=True)
 
