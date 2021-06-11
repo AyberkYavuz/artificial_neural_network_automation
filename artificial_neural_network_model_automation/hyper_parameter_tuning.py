@@ -1,5 +1,6 @@
 from helper.helper import contol_instance_type
 from helper.classification_handler_helper import check_classification_type_value
+from helper.classification_handler_helper import scoring_dictionary
 from helper.helper import is_list_empty
 from helper.helper import is_number_positive
 from helper.helper import check_n_jobs
@@ -246,7 +247,8 @@ class ANNClassificationRandomizedSearch:
         ann_classification_handler.train_neural_network(X_train, y_train)
         y_pred = ann_classification_handler.classifier.predict(X_test)
         y_pred = [1 if prob > 0.5 else 0 for prob in y_pred]
-        score = f1_score(y_test, y_pred)
+        scoring_method = scoring_dictionary[self.ann_classification_randomized_search_config.scoring]
+        score = scoring_method(y_test, y_pred)
         result = {"score": score,
                   "ann_classification_handler_config": ann_classification_handler_config,
                   "classifier": ann_classification_handler.classifier}

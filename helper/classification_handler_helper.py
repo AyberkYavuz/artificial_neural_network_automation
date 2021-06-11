@@ -22,6 +22,11 @@ from tensorflow.keras.metrics import FalseNegatives
 from tensorflow.keras.metrics import PrecisionAtRecall
 from tensorflow.keras.metrics import SensitivityAtSpecificity
 from tensorflow.keras.metrics import SpecificityAtSensitivity
+from sklearn.metrics import f1_score
+from sklearn.metrics import precision_score
+from sklearn.metrics import recall_score
+from sklearn.metrics import roc_auc_score
+from sklearn.metrics import accuracy_score
 
 optimizer_list = [SGD, RMSprop, Adam, Adadelta, Adagrad, Adamax, Nadam, Ftrl]
 optimizer_string_list = ["sgd", "rmsprop", "adam", "adadelta", "adagrad", "adamax", "nadam", "ftrl"]
@@ -32,6 +37,16 @@ metric_list = [Accuracy, BinaryAccuracy, CategoricalAccuracy, TopKCategoricalAcc
 metric_string_list = ["accuracy", "binary_accuracy", "categorical_accuracy", "top_k_categorical_accuracy",
                       "AUC", "Precision", "Recall", "TruePositives", "TrueNegatives", "FalsePositives",
                       "FalseNegatives"]
+
+
+scoring_dictionary = {
+    "f1": f1_score,
+    "precision": precision_score,
+    "recall": recall_score,
+    "accuracy": accuracy_score,
+    "roc_auc": roc_auc_score
+}
+
 
 
 def check_classification_type_value(cl_type):
