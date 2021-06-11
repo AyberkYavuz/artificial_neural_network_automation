@@ -48,7 +48,6 @@ scoring_dictionary = {
 }
 
 
-
 def check_classification_type_value(cl_type):
     """Checks classification type value.
 
