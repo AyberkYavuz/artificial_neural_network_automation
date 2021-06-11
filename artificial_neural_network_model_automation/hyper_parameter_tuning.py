@@ -3,6 +3,9 @@ from helper.classification_handler_helper import check_classification_type_value
 from helper.helper import is_list_empty
 from helper.helper import is_number_positive
 from helper.helper import check_n_jobs
+from helper.helper import check_instance_type_of_scoring
+from helper.helper import check_value_of_scoring
+from helper.helper import get_value_of_scoring_none_condition
 from helper.decorators import execution_time
 from artificial_neural_network_model_automation.classification_handler import ANNClassificationHandlerConfig
 from artificial_neural_network_model_automation.classification_handler import ANNClassificationHandler
@@ -19,6 +22,8 @@ class ANNClassificationRandomizedSearchConfig:
     Attributes:
       classification_type: The type of classification task. It takes 2 different values
                          which are "binary", "multiclass".
+      scoring: str or None. It can be "accuracy", "roc_auc", "f1", "precision", "recall" or None. If None,
+            its value becomes "f1". It is the selection criteria for best model.
       neural_network_architecture_list: List of neural network architectures that are represented by a python list. For example;
                                 [[60, 70, 80, 1], [60, 80, 1], [60, 70, 70, 1]]
       hidden_layers_activation_function_list: List of hidden layers activation function types. For example;
@@ -38,6 +43,7 @@ class ANNClassificationRandomizedSearchConfig:
           neural_network_config_list_dict: Python dictionary which includes neural network configuration lists data
         """
         self.classification_type = neural_network_config_list_dict["classification_type"]
+        self.scoring = neural_network_config_list_dict["scoring"]
         self.neural_network_architecture_list = neural_network_config_list_dict["neural_network_architecture_list"]
         self.hidden_layers_activation_function_list = neural_network_config_list_dict["hidden_layers_activation_function_list"]
         self.dropout_rate_list = neural_network_config_list_dict["dropout_rate_list"]
@@ -55,6 +61,17 @@ class ANNClassificationRandomizedSearchConfig:
         contol_instance_type(cl_type, "classification_type", str)
         check_classification_type_value(cl_type)
         self._classification_type = cl_type
+
+    @property
+    def scoring(self):
+        return self._scoring
+
+    @scoring.setter
+    def scoring(self, sc):
+        check_instance_type_of_scoring(sc)
+        check_value_of_scoring(sc)
+        sc = get_value_of_scoring_none_condition(sc)
+        self._scoring = sc
 
     @property
     def neural_network_architecture_list(self):

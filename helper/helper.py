@@ -110,7 +110,7 @@ def is_list_empty(lst, variable_name):
 
 
 def check_n_jobs(n_jobs):
-    """Checks n_jobs attribute of ANNClassificationRandomizedSearch
+    """Checks n_jobs attribute of ANNClassificationRandomizedSearch.
 
     Args:
       n_jobs: int, default=None. Number of jobs to run in parallel.
@@ -123,3 +123,40 @@ def check_n_jobs(n_jobs):
     else:
         raise Exception("n_jobs value is not valid")
 
+
+def check_instance_type_of_scoring(sc):
+    """Checks the instance type of scoring
+    Args:
+        sc: str or None. Scoring. The selection criteria for the best model.
+    """
+    condition1 = isinstance(sc, str)
+    condition2 = sc is None
+    if condition1 or condition2:
+        print("scoring instance is valid")
+    else:
+        raise Exception("scoring can't be anything than str or None.")
+
+
+def check_value_of_scoring(sc):
+    """Checks the value of scoring.
+    Args:
+        sc: str or None. Scoring. The selection criteria for the best model.
+    """
+    condition1 = isinstance(sc, str)
+    if condition1:
+        if sc in ["accuracy", "roc_auc", "f1", "precision", "recall"]:
+            print("scoring value is valid.")
+        else:
+            raise Exception("scoring value is not valid")
+
+
+def get_value_of_scoring_none_condition(sc):
+    """Updates sc value, if sc is None.
+    Args:
+        sc: str or None. Scoring. The selection criteria for the best model.
+    Returns:
+        sc: str. Scoring. The selection criteria for the best model.
+    """
+    if sc is None:
+        sc = "f1"
+    return sc
