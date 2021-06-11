@@ -265,7 +265,7 @@ class ANNClassificationRandomizedSearch:
         self.best_param_ = data["ann_classification_handler_config"]
         self.best_score_ = max_score
 
-    @execution_time
+    @execution_time("minutes")
     def fit(self, X, y):
         """Run fit with all sets of parameters.
 

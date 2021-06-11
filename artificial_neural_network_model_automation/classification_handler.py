@@ -214,7 +214,7 @@ class ANNClassificationHandler:
         """
         plot_model(self.classifier, to_file=png_path, show_shapes=True, show_layer_names=True)
 
-    @execution_time
+    @execution_time("seconds")
     def train_neural_network(self, X, y):
         """Trains the designed Keras classifier.
 
