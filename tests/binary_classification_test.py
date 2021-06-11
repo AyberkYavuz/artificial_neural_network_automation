@@ -29,7 +29,6 @@ encoded_Y = encoder.transform(Y)
 neural_network_config = {"classification_type": "binary",
                          "neural_network_architecture": [60, 65, 65, 1],
                          "hidden_layers_activation_function": "relu",
-                         "dropout_rate": 0.01,
                          "optimizer": "adam",
                          "metric": "Recall",
                          "batch_size": 10,

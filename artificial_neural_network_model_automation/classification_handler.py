@@ -53,7 +53,8 @@ class ANNClassificationHandlerConfig:
         self.classification_type = neural_network_config["classification_type"]
         self.neural_network_architecture = neural_network_config["neural_network_architecture"]
         self.hidden_layers_activation_function = neural_network_config["hidden_layers_activation_function"]
-        self.dropout_rate = neural_network_config["dropout_rate"]
+        dropout_rate = neural_network_config.get("dropout_rate")
+        self.dropout_rate = dropout_rate
         self.optimizer = neural_network_config["optimizer"]
         self.metric = neural_network_config["metric"]
         self.batch_size = neural_network_config["batch_size"]
