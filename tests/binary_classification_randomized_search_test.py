@@ -35,6 +35,7 @@ optimizer5 = SGD(learning_rate=0.02)
 
 neural_network_config_list_dict = {
     "classification_type": "binary",
+    "scoring": "roc_auc",
     "neural_network_architecture_list": [
         [60, 65, 65, 1],
         [60, 70, 70, 1],
@@ -76,9 +77,8 @@ neural_network_config_list_dict = {
 ann_classification_randomized_search_config = ANNClassificationRandomizedSearchConfig(neural_network_config_list_dict)
 
 
-ann_classification_randomized_search = ANNClassificationRandomizedSearch(ann_classification_randomized_search_config,
-                                                                         n_iter=100)
-ann_classification_randomized_search.fit(X, encoded_Y)  # Method Execution Time : 83.26 seconds
+ann_classification_randomized_search = ANNClassificationRandomizedSearch(ann_classification_randomized_search_config, n_jobs=-1)
+ann_classification_randomized_search.fit(X, encoded_Y)  # Method Execution Time : 6.32 seconds
 
 # parallelism test
 ann_classification_randomized_search_2 = ANNClassificationRandomizedSearch(ann_classification_randomized_search_config,
