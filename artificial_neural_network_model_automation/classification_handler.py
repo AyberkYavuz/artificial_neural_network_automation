@@ -239,3 +239,23 @@ class ANNClassificationHandler:
           not be specified (since targets will be obtained from `X`).
         """
         self.classifier.fit(X, y, batch_size=self.__batch_size, epochs=self.__epochs)
+
+    def get_predictions(self, X_test, threshold=0.5):
+        """Producing predictions of trained Keras classifier
+        X_test: array-like of shape (n_samples, n_features)
+                Training vector, where n_samples is the number of samples and
+                n_features is the number of features.
+        threshold: float, default=0.5. Threshold.
+        Returns:
+            y_pred: array-like of shape (n_samples, n_output) \
+                    or (n_samples,).
+                    Predictions of trained Keras classifier.
+        """
+        y_pred = None
+        if self.__classification_type == "binary":
+            y_pred = self.classifier.predict(X_test)
+            y_pred = [1 if prob > threshold else 0 for prob in y_pred]
+        else:
+            print()
+
+        return y_pred
