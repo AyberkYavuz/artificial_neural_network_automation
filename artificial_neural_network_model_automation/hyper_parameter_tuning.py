@@ -13,7 +13,6 @@ from artificial_neural_network_model_automation.classification_handler import AN
 from random import choice
 from joblib import Parallel, delayed
 from sklearn.model_selection import train_test_split
-from sklearn.metrics import f1_score
 import pandas as pd
 
 
