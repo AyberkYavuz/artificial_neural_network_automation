@@ -250,8 +250,7 @@ class ANNClassificationRandomizedSearch:
 
         if self.ann_classification_randomized_search_config.classification_type == "binary":
             ann_classification_handler.train_neural_network(X_train, y_train)
-            y_pred = ann_classification_handler.classifier.predict(X_test)
-            y_pred = [1 if prob > 0.5 else 0 for prob in y_pred]
+            y_pred = ann_classification_handler.get_predictions(X_test)
             scoring_method = scoring_dictionary[self.ann_classification_randomized_search_config.scoring]
             score = scoring_method(y_test, y_pred)
         else:
