@@ -43,9 +43,7 @@ ann_classification_handler.save_classifier_architecture_plot(png_path)
 # training neural network
 ann_classification_handler.train_neural_network(X, encoded_Y)
 # making predictions
-y_pred = ann_classification_handler.classifier.predict(X)
-# our threshold is 0.5. if number is bigger han 0.5, it returns true. If number is less than 0.5, it returns false
-y_pred = [1 if prob > 0.5 else 0 for prob in y_pred]
+y_pred = ann_classification_handler.get_predictions(X)
 # classification report
 print(classification_report(encoded_Y, y_pred, target_names=encoder.classes_))
 
