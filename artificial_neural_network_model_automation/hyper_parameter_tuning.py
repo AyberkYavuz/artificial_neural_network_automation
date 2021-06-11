@@ -278,7 +278,7 @@ class ANNClassificationRandomizedSearch:
             Target relative to X for classification or regression;
             None for unsupervised learning.
         """
-        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.25, random_state=42)
+        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.30, random_state=42)
         list_of_dictionaries = list()
         if self.n_jobs is None:
             for _ in range(0, self.n_iter):
