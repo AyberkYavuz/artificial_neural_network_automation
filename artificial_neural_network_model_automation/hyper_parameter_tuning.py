@@ -1,6 +1,7 @@
 from helper.helper import contol_instance_type
 from helper.classification_handler_helper import check_classification_type_value
 from helper.classification_handler_helper import scoring_dictionary
+from helper.classification_handler_helper import get_predictions_from_dummy_prob_matrix
 from helper.helper import is_list_empty
 from helper.helper import is_number_positive
 from helper.helper import check_n_jobs
@@ -14,6 +15,7 @@ from random import choice
 from joblib import Parallel, delayed
 from sklearn.model_selection import train_test_split
 import pandas as pd
+from keras.utils import np_utils
 
 
 class ANNClassificationRandomizedSearchConfig:
@@ -70,7 +72,7 @@ class ANNClassificationRandomizedSearchConfig:
     @scoring.setter
     def scoring(self, sc):
         check_instance_type_of_scoring(sc)
-        check_value_of_scoring(sc)
+        check_value_of_scoring(sc, self.classification_type)
         sc = get_value_of_scoring_none_condition(sc)
         self._scoring = sc
 
@@ -231,23 +233,37 @@ class ANNClassificationRandomizedSearch:
         ann_classification_handler_config = ANNClassificationHandlerConfig(neural_network_config)
         return ann_classification_handler_config
 
-    def _fit_and_score(self, X_train, X_test, y_train, y_test):
+    def _fit_and_score(self, X_train, X_test, y_train, y_test, target_categories=None):
         """Fits and scores Keras classifier.
         Args:
             X_train: it can be list, numpy array, scipy-sparse matrix or pandas dataframe.
             X_test: it can be list, numpy array, scipy-sparse matrix or pandas dataframe.
             y_train: it can be list, numpy array, scipy-sparse matrix or pandas dataframe.
             y_test: it can be list, numpy array, scipy-sparse matrix or pandas dataframe.
+            target_categories: list. Categories of target variable. If the task is multi-class classification,
+                               this argument must be initialized.
         Returns:
             result: dict. It contains ANNClassificationHandlerConfig instance, float score and Keras classifier.
         """
         ann_classification_handler_config = self._get_randomly_ann_classification_handler_config()
         ann_classification_handler = ANNClassificationHandler(ann_classification_handler_config)
-        ann_classification_handler.train_neural_network(X_train, y_train)
-        y_pred = ann_classification_handler.classifier.predict(X_test)
-        y_pred = [1 if prob > 0.5 else 0 for prob in y_pred]
-        scoring_method = scoring_dictionary[self.ann_classification_randomized_search_config.scoring]
-        score = scoring_method(y_test, y_pred)
+
+        if self.ann_classification_randomized_search_config.classification_type == "binary":
+            ann_classification_handler.train_neural_network(X_train, y_train)
+            y_pred = ann_classification_handler.classifier.predict(X_test)
+            y_pred = [1 if prob > 0.5 else 0 for prob in y_pred]
+            scoring_method = scoring_dictionary[self.ann_classification_randomized_search_config.scoring]
+            score = scoring_method(y_test, y_pred)
+        else:
+            # dummy target transformation
+            dummy_y_train = np_utils.to_categorical(y_train)
+            ann_classification_handler.train_neural_network(X_train, dummy_y_train)
+            dummy_prob_matrix = ann_classification_handler.classifier.predict(X_test)
+            y_pred = get_predictions_from_dummy_prob_matrix(dummy_prob_matrix, target_categories)
+
+            scoring_method = scoring_dictionary[self.ann_classification_randomized_search_config.scoring]
+            score = scoring_method(y_test, y_pred, average="macro")
+
         result = {"score": score,
                   "ann_classification_handler_config": ann_classification_handler_config,
                   "classifier": ann_classification_handler.classifier}
@@ -266,7 +282,7 @@ class ANNClassificationRandomizedSearch:
         self.best_score_ = max_score
 
     @execution_time("minutes")
-    def fit(self, X, y):
+    def fit(self, X, y, target_categories=None):
         """Run fit with all sets of parameters.
 
         Args:
@@ -277,15 +293,26 @@ class ANNClassificationRandomizedSearch:
             or (n_samples,), default=None
             Target relative to X for classification or regression;
             None for unsupervised learning.
+        target_categories : list. Categories of target variable. If the task is multi-class classification,
+                            this argument must be initialized.
         """
+        if self.ann_classification_randomized_search_config.classification_type == "multiclass":
+            if target_categories is None:
+                raise Exception("target_categories cannot be None in multi-class classification.")
         X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.30, random_state=42)
         list_of_dictionaries = list()
         if self.n_jobs is None:
             for _ in range(0, self.n_iter):
-                result = self._fit_and_score(X_train, X_test, y_train, y_test)
+                result = self._fit_and_score(X_train, X_test, y_train, y_test,
+                                             target_categories=target_categories)
                 list_of_dictionaries.append(result)
                 self._set_metric_params(list_of_dictionaries)
         else:
-            list_of_dictionaries = Parallel(n_jobs=self.n_jobs)(delayed(self._fit_and_score)(X_train, X_test, y_train, y_test) for _ in range(0, self.n_iter))
+            list_of_dictionaries = Parallel(n_jobs=self.n_jobs)(
+                delayed(self._fit_and_score)(
+                    X_train, X_test, y_train, y_test, target_categories=target_categories
+                )
+                for _ in range(0, self.n_iter)
+            )
             self._set_metric_params(list_of_dictionaries)
 

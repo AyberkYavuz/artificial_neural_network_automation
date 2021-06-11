@@ -137,17 +137,25 @@ def check_instance_type_of_scoring(sc):
         raise Exception("scoring can't be anything than str or None.")
 
 
-def check_value_of_scoring(sc):
+def check_value_of_scoring(sc, cl_type):
     """Checks the value of scoring.
     Args:
         sc: str or None. Scoring. The selection criteria for the best model.
+        cl_type: str. Classification type
     """
     condition1 = isinstance(sc, str)
     if condition1:
-        if sc in ["accuracy", "roc_auc", "f1", "precision", "recall"]:
-            print("scoring value is valid.")
+        if cl_type == "binary":
+            if sc in ["accuracy", "roc_auc", "f1", "precision", "recall"]:
+                print("scoring value is valid.")
+            else:
+                raise Exception("scoring value cannot be anything than 'accuracy', 'roc_auc', "
+                                "'f1', 'precision', 'recall'")
         else:
-            raise Exception("scoring value is not valid")
+            if sc in ["f1", "precision", "recall"]:
+                print("scoring value is valid.")
+            else:
+                raise Exception("scoring value cannot be anything than 'f1', 'precision', 'recall'")
 
 
 def get_value_of_scoring_none_condition(sc):
