@@ -43,7 +43,8 @@ class ANNClassificationRandomizedSearchConfig:
           neural_network_config_list_dict: Python dictionary which includes neural network configuration lists data
         """
         self.classification_type = neural_network_config_list_dict["classification_type"]
-        self.scoring = neural_network_config_list_dict["scoring"]
+        scoring = neural_network_config_list_dict.get("scoring")
+        self.scoring = scoring
         self.neural_network_architecture_list = neural_network_config_list_dict["neural_network_architecture_list"]
         self.hidden_layers_activation_function_list = neural_network_config_list_dict["hidden_layers_activation_function_list"]
         self.dropout_rate_list = neural_network_config_list_dict["dropout_rate_list"]
