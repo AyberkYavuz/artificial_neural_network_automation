@@ -145,3 +145,14 @@ def get_predictions_from_dummy_prob_matrix(dummy_prob_matrix, prediction_column_
     dummy_y_train_pred = dummy_prob_matrix_df.to_numpy()
     predictions = argmax(dummy_y_train_pred, axis=1)
     return predictions
+
+
+def check_target_categories(target_categories):
+    """Checks target_categories.
+    Args:
+        target_categories: list. Target varaible categories.
+    Raises:
+        ValueError: if target_categories is None.
+    """
+    if target_categories is None:
+        raise Exception("ValueError: target_categories cannot be None in multi-class classification.")
