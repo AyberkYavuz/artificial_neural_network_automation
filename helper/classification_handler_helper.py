@@ -152,7 +152,7 @@ def check_target_categories(target_categories):
     Args:
         target_categories: list. Target varaible categories.
     Raises:
-        ValueError: if target_categories is None.
+        Exception: if target_categories is None.
     """
     if target_categories is None:
-        raise Exception("ValueError: target_categories cannot be None in multi-class classification.")
+        raise Exception("target_categories cannot be None in multi-class classification.")
