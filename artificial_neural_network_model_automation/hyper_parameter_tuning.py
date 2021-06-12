@@ -2,6 +2,7 @@ from helper.helper import contol_instance_type
 from helper.classification_handler_helper import check_classification_type_value
 from helper.classification_handler_helper import scoring_dictionary
 from helper.classification_handler_helper import get_predictions_from_dummy_prob_matrix
+from helper.classification_handler_helper import check_target_categories
 from helper.helper import is_list_empty
 from helper.helper import is_number_positive
 from helper.helper import check_n_jobs
@@ -257,9 +258,7 @@ class ANNClassificationRandomizedSearch:
             # dummy target transformation
             dummy_y_train = np_utils.to_categorical(y_train)
             ann_classification_handler.train_neural_network(X_train, dummy_y_train)
-            dummy_prob_matrix = ann_classification_handler.classifier.predict(X_test)
-            y_pred = get_predictions_from_dummy_prob_matrix(dummy_prob_matrix, target_categories)
-
+            y_pred = ann_classification_handler.get_predictions(X_test, target_categories=target_categories)
             scoring_method = scoring_dictionary[self.ann_classification_randomized_search_config.scoring]
             score = scoring_method(y_test, y_pred, average="macro")
 
@@ -296,8 +295,7 @@ class ANNClassificationRandomizedSearch:
                             this argument must be initialized.
         """
         if self.ann_classification_randomized_search_config.classification_type == "multiclass":
-            if target_categories is None:
-                raise Exception("target_categories cannot be None in multi-class classification.")
+            check_target_categories(target_categories)
         X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.30, random_state=42)
         list_of_dictionaries = list()
         if self.n_jobs is None:
