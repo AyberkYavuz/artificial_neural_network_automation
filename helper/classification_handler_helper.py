@@ -147,7 +147,7 @@ def get_predictions_from_dummy_prob_matrix(dummy_prob_matrix, prediction_column_
     return predictions
 
 
-def check_target_categories(target_categories):
+def check_target_categories(target_categories: list):
     """Checks target_categories.
     Args:
         target_categories: list. Target varaible categories.
