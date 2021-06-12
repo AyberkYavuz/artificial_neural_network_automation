@@ -49,7 +49,7 @@ neural_network_architecture_list = [
     [60, 60, 60, 60, 1],
     [60, 60, 60, 60, 60, 1],
     [60, 80, 70, 1],
-    [60, 90, 80, 70, 1],
+    [60, 90, 80, 70, 1]
 ]
 hidden_layers_activation_function_list = ["relu", "sigmoid", "tanh", "selu", "elu"]
 dropout_rate_list = [None, 0.0001, 0.001, 0.01, 0.02, 0.03, 0.04]
