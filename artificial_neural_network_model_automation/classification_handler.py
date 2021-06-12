@@ -13,6 +13,8 @@ from helper.classification_handler_helper import check_optimizer_value
 from helper.classification_handler_helper import check_metric_value
 from helper.helper import is_number_positive
 from helper.make_keras_pickable import make_keras_picklable
+from helper.classification_handler_helper import get_predictions_from_dummy_prob_matrix
+from helper.classification_handler_helper import check_target_categories
 
 
 class ANNClassificationHandlerConfig:
@@ -240,22 +242,27 @@ class ANNClassificationHandler:
         """
         self.classifier.fit(X, y, batch_size=self.__batch_size, epochs=self.__epochs)
 
-    def get_predictions(self, X_test, threshold=0.5):
+    def get_predictions(self, X_test, threshold=0.5,  target_categories=None):
         """Producing predictions of trained Keras classifier
         X_test: array-like of shape (n_samples, n_features)
                 Training vector, where n_samples is the number of samples and
                 n_features is the number of features.
+        target_categories: list. Categories of target variable. If the task is multi-class classification,
+                               this argument must be initialized.
         threshold: float, default=0.5. Threshold.
         Returns:
             y_pred: array-like of shape (n_samples, n_output) \
                     or (n_samples,).
                     Predictions of trained Keras classifier.
         """
+        if self.__classification_type == "multiclass":
+            check_target_categories(target_categories)
         y_pred = None
         if self.__classification_type == "binary":
             y_pred = self.classifier.predict(X_test)
             y_pred = [1 if prob > threshold else 0 for prob in y_pred]
         else:
-            print()
+            dummy_prob_matrix = self.classifier.predict(X_test)
+            y_pred = get_predictions_from_dummy_prob_matrix(dummy_prob_matrix, target_categories, threshold=threshold)
 
         return y_pred
