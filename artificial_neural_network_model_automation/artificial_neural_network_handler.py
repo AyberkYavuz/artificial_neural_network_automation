@@ -22,7 +22,7 @@ class ArtificialNeuralNetworkHandlerConfig:
     """A configuration for Keras artificial neural network classifier.
 
     Attributes:
-      machine_learning_task: str. The type of classification task. It takes 2 different values
+      machine_learning_task: str. The type of classification task. It takes 3 different values
                            which are "binary", "multiclass", "regression".
       neural_network_architecture: Neural network architecture represented by a python list. For example;
                                 [60, 70, 80, 1] means that 60 is input layer, 70 is the first hidden layer neuron number,
@@ -160,7 +160,7 @@ class ArtificialNeuralNetworkHandler:
       classifier: Designed Keras classifier.
     """
     def __init__(self, ann_handler_config: ArtificialNeuralNetworkHandlerConfig):
-        """Constructs all the necessary attributes for the ann_classification_handler object.
+        """Constructs all the necessary attributes for the ann_handler object.
 
         Args:
           ann_handler_config: ANNClassificationHandlerConfig instance.
