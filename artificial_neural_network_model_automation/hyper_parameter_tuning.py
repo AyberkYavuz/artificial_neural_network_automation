@@ -1,7 +1,6 @@
 from helper.helper import contol_instance_type
-from helper.classification_handler_helper import check_classification_type_value
+from helper.helper import check_machine_learning_value
 from helper.classification_handler_helper import scoring_dictionary
-from helper.classification_handler_helper import get_predictions_from_dummy_prob_matrix
 from helper.classification_handler_helper import check_target_categories
 from helper.helper import is_list_empty
 from helper.helper import is_number_positive
@@ -10,8 +9,8 @@ from helper.helper import check_instance_type_of_scoring
 from helper.helper import check_value_of_scoring
 from helper.helper import get_value_of_scoring_none_condition
 from helper.decorators import execution_time
-from artificial_neural_network_model_automation.classification_handler import ANNClassificationHandlerConfig
-from artificial_neural_network_model_automation.classification_handler import ANNClassificationHandler
+from artificial_neural_network_model_automation.artificial_neural_network_handler import ArtificialNeuralNetworkHandlerConfig
+from artificial_neural_network_model_automation.artificial_neural_network_handler import ArtificialNeuralNetworkHandler
 from random import choice
 from joblib import Parallel, delayed
 from sklearn.model_selection import train_test_split
@@ -19,12 +18,12 @@ import pandas as pd
 from keras.utils import np_utils
 
 
-class ANNClassificationRandomizedSearchConfig:
-    """A configuration for Keras artificial neural network classifier.
+class ANNRandomizedSearchConfig:
+    """A configuration for ANNRandomizedSearch instance.
 
     Attributes:
-      classification_type: The type of classification task. It takes 2 different values
-                         which are "binary", "multiclass".
+      machine_learning_task: The type of machine learning task. It takes 3 different values
+                         which are "binary", "multiclass", "regression".
       scoring: str or None. It can be "accuracy", "roc_auc", "f1", "precision", "recall" or None. If None,
             its value becomes "f1". It is the selection criteria for best model.
       neural_network_architecture_list: List of neural network architectures that are represented by a python list. For example;
@@ -45,7 +44,7 @@ class ANNClassificationRandomizedSearchConfig:
         Args:
           neural_network_config_list_dict: Python dictionary which includes neural network configuration lists data
         """
-        self.classification_type = neural_network_config_list_dict["classification_type"]
+        self.machine_learning_task = neural_network_config_list_dict["machine_learning_task"]
         scoring = neural_network_config_list_dict.get("scoring")
         self.scoring = scoring
         self.neural_network_architecture_list = neural_network_config_list_dict["neural_network_architecture_list"]
@@ -57,14 +56,14 @@ class ANNClassificationRandomizedSearchConfig:
         self.epochs_list = neural_network_config_list_dict["epochs_list"]
 
     @property
-    def classification_type(self):
-        return self._classification_type
+    def machine_learning_task(self):
+        return self._machine_learning_task
 
-    @classification_type.setter
-    def classification_type(self, cl_type):
-        contol_instance_type(cl_type, "classification_type", str)
-        check_classification_type_value(cl_type)
-        self._classification_type = cl_type
+    @machine_learning_task.setter
+    def machine_learning_task(self, ml_task):
+        contol_instance_type(ml_task, "machine_learning_task", str)
+        check_machine_learning_value(ml_task)
+        self._machine_learning_task = ml_task
 
     @property
     def scoring(self):
@@ -155,8 +154,8 @@ class ANNClassificationRandomizedSearchConfig:
         self._epochs_list = e_list
 
 
-class ANNClassificationRandomizedSearch:
-    """Randomized Search which was designed for ANNClassificationHandler.
+class ANNRandomizedSearch:
+    """Randomized Search which was designed for ANNHandler.
 
     Attributes:
       ann_classification_randomized_search_config: ANNClassificationRandomizedSearchConfig instance.
@@ -214,7 +213,7 @@ class ANNClassificationRandomizedSearch:
     def _get_randomly_ann_classification_handler_config(self):
         """Randomly creates ann_classification_handler_config based on atrributes.
         Returns:
-            ann_classification_handler_config: ANNClassificationHandlerConfig instance.
+            ann_handler_config: ArtificialNeuralNetworkHandlerConfig instance.
         """
         neural_network_architecture = choice(self.ann_classification_randomized_search_config.neural_network_architecture_list)
         hidden_layers_activation_function = choice(self.ann_classification_randomized_search_config.hidden_layers_activation_function_list)
@@ -231,8 +230,8 @@ class ANNClassificationRandomizedSearch:
                                  "metric": metric,
                                  "batch_size": batch_size,
                                  "epochs": epochs}
-        ann_classification_handler_config = ANNClassificationHandlerConfig(neural_network_config)
-        return ann_classification_handler_config
+        ann_handler_config = ArtificialNeuralNetworkHandlerConfig(neural_network_config)
+        return ann_handler_config
 
     def _fit_and_score(self, X_train, X_test, y_train, y_test, target_categories=None):
         """Fits and scores Keras classifier.
@@ -246,25 +245,25 @@ class ANNClassificationRandomizedSearch:
         Returns:
             result: dict. It contains ANNClassificationHandlerConfig instance, float score and Keras classifier.
         """
-        ann_classification_handler_config = self._get_randomly_ann_classification_handler_config()
-        ann_classification_handler = ANNClassificationHandler(ann_classification_handler_config)
-
-        if self.ann_classification_randomized_search_config.classification_type == "binary":
-            ann_classification_handler.train_neural_network(X_train, y_train)
-            y_pred = ann_classification_handler.get_predictions(X_test)
+        ann_handler_config = self._get_randomly_ann_classification_handler_config()
+        ann_handler = ArtificialNeuralNetworkHandler(ann_handler_config)
+        score = None
+        if self.ann_classification_randomized_search_config.machine_learning_task == "binary":
+            ann_handler.train_neural_network(X_train, y_train)
+            y_pred = ann_handler.get_predictions(X_test)
             scoring_method = scoring_dictionary[self.ann_classification_randomized_search_config.scoring]
             score = scoring_method(y_test, y_pred)
-        else:
+        elif self.ann_classification_randomized_search_config.machine_learning_task == "multiclass":
             # dummy target transformation
             dummy_y_train = np_utils.to_categorical(y_train)
-            ann_classification_handler.train_neural_network(X_train, dummy_y_train)
-            y_pred = ann_classification_handler.get_predictions(X_test, target_categories=target_categories)
+            ann_handler.train_neural_network(X_train, dummy_y_train)
+            y_pred = ann_handler.get_predictions(X_test, target_categories=target_categories)
             scoring_method = scoring_dictionary[self.ann_classification_randomized_search_config.scoring]
             score = scoring_method(y_test, y_pred, average="macro")
 
         result = {"score": score,
-                  "ann_classification_handler_config": ann_classification_handler_config,
-                  "classifier": ann_classification_handler.classifier}
+                  "ann_classification_handler_config": ann_handler_config,
+                  "classifier": ann_handler.classifier}
         return result
 
     def _set_metric_params(self, list_of_dictionaries):
@@ -296,7 +295,7 @@ class ANNClassificationRandomizedSearch:
         Raises:
             Exception: if classification_type condition is not met.
         """
-        if self.ann_classification_randomized_search_config.classification_type == "multiclass":
+        if self.ann_classification_randomized_search_config.machine_learning_task == "multiclass":
             check_target_categories(target_categories)
         X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.30, random_state=42)
         list_of_dictionaries = list()
