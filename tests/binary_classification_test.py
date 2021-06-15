@@ -1,7 +1,7 @@
 from sklearn.datasets import load_breast_cancer
 from sklearn.model_selection import train_test_split
-from artificial_neural_network_model_automation.classification_handler import ANNClassificationHandlerConfig
-from artificial_neural_network_model_automation.classification_handler import ANNClassificationHandler
+from artificial_neural_network_model_automation.artificial_neural_network_handler import ArtificialNeuralNetworkHandlerConfig
+from artificial_neural_network_model_automation.artificial_neural_network_handler import ArtificialNeuralNetworkHandler
 from sklearn.metrics import classification_report
 from helper.data_path_handler import get_data_path
 
@@ -15,16 +15,16 @@ X_train, X_test, y_train, y_test = train_test_split(features, target, test_size=
 
 # designing neural network
 
-neural_network_config = {"classification_type": "binary",
+neural_network_config = {"machine_learning_task": "binary",
                          "neural_network_architecture": [30, 40, 40, 1],
                          "hidden_layers_activation_function": "relu",
                          "optimizer": "adam",
                          "metric": "Recall",
                          "batch_size": 10,
                          "epochs": 50}
-ann_classification_handler_config = ANNClassificationHandlerConfig(neural_network_config)
+ann_classification_handler_config = ArtificialNeuralNetworkHandlerConfig(neural_network_config)
 
-ann_classification_handler = ANNClassificationHandler(ann_classification_handler_config)
+ann_classification_handler = ArtificialNeuralNetworkHandler(ann_classification_handler_config)
 
 # save the plot of classifier architecture
 png_path = get_data_path("neural_network_architecture_breast_cancer_data.png",
