@@ -60,6 +60,8 @@ def check_dropout_rate_data_type(d_rate):
 
     Args:
       d_rate: float or None. Dropout rate.
+    Raises:
+        Exception: if conditions are not met.
     """
     condition1 = isinstance(d_rate, float)
     condition2 = d_rate is None
