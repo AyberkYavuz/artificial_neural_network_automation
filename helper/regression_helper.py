@@ -12,8 +12,8 @@ metric_string_list = ["mean_squared_error", "mean_absolute_error", "mean_absolut
                       "mean_squared_logarithmic_error", "cosine_similarity", "logcosh"]
 
 
-def check_metric_value(m):
-    """Checks metric value.
+def check_regression_metric_value(m):
+    """Checks regression metric value.
 
     Args:
       m: String. Metric.
