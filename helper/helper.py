@@ -142,6 +142,8 @@ def check_value_of_scoring(sc, cl_type):
     Args:
         sc: str or None. Scoring. The selection criteria for the best model.
         cl_type: str. Classification type
+    Raises:
+        Exception: if conditions are not met.
     """
     condition1 = isinstance(sc, str)
     if condition1:
