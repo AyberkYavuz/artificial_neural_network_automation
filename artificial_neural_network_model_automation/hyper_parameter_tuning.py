@@ -72,7 +72,7 @@ class ANNRandomizedSearchConfig:
     @scoring.setter
     def scoring(self, sc):
         check_instance_type_of_scoring(sc)
-        check_value_of_scoring(sc, self.classification_type)
+        check_value_of_scoring(sc, self.machine_learning_task)
         sc = get_value_of_scoring_none_condition(sc)
         self._scoring = sc
 
@@ -222,7 +222,7 @@ class ANNRandomizedSearch:
         metric = choice(self.ann_randomized_search_config.metric_list)
         batch_size = choice(self.ann_randomized_search_config.batch_size_list)
         epochs = choice(self.ann_randomized_search_config.epochs_list)
-        neural_network_config = {"classification_type": self.ann_randomized_search_config.machine_learning_task,
+        neural_network_config = {"machine_learning_task": self.ann_randomized_search_config.machine_learning_task,
                                  "neural_network_architecture": neural_network_architecture,
                                  "hidden_layers_activation_function": hidden_layers_activation_function,
                                  "dropout_rate": dropout_rate,
@@ -293,7 +293,7 @@ class ANNRandomizedSearch:
         target_categories : list. Categories of target variable. If the task is multi-class classification,
                             this argument must be initialized.
         Raises:
-            Exception: if classification_type condition is not met.
+            Exception: if machine_learning_task condition is not met.
         """
         if self.ann_randomized_search_config.machine_learning_task == "multiclass":
             check_target_categories(target_categories)
