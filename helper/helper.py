@@ -15,6 +15,21 @@ def contol_instance_type(object, object_name, type):
         raise Exception("Sorry, {} cannot be anything than {}".format(object_name, str(type)))
 
 
+def check_machine_learning_value(ml_task):
+    """Checks machine_learning_task value.
+
+    Args:
+      cl_type: String. Classification type.
+    Raises:
+        Exception: if classification_type_condition is not met.
+    """
+    ml_task_condition = ml_task in ["binary", "multiclass", "regression"]
+    if ml_task_condition:
+        print("machine_learning_task value is valid")
+    else:
+        raise Exception("Sorry, machine_learning_task should be 'binary', 'multiclass' or 'regression.'")
+
+
 def check_neural_network_architecture_values(nn_architecture):
     """Checks neural network architecture values.
 
