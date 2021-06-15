@@ -128,6 +128,8 @@ def check_instance_type_of_scoring(sc):
     """Checks the instance type of scoring
     Args:
         sc: str or None. Scoring. The selection criteria for the best model.
+    Raises:
+        Exception: if conditions are not met.
     """
     condition1 = isinstance(sc, str)
     condition2 = sc is None
