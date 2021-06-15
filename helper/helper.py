@@ -102,6 +102,8 @@ def is_list_empty(lst, variable_name):
     Args:
       lst: list.
       variable_name: str. Variable name for printing messages.
+    Raises:
+        Exception: if conditions are not met.
     """
     if lst:
         print("{} is not empty".format(variable_name))
