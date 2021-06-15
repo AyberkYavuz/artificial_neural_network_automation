@@ -115,11 +115,13 @@ def check_metric_value(m):
 
 
 def get_label_based_on_thresold(x, thresold):
-    """Returns label of probability x which will be 0 or 1.
+    """Generates label of probability x which will be 0 or 1.
 
     Args:
       x: Probability value of target category which was produced by the classifier.
       thresold: thresold which will be used for labeling.
+    Returns:
+        Label of probability x which will be 0 or 1.
     """
     result = None
     if x > thresold:
