@@ -53,6 +53,8 @@ def check_classification_type_value(cl_type):
 
     Args:
       cl_type: String. Classification type.
+    Raises:
+        Exception: if classification_type_condition is not met.
     """
     classification_type_condition = cl_type in ["binary", "multiclass"]
     if classification_type_condition:
