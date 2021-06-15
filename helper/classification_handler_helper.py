@@ -66,6 +66,8 @@ def check_optimizer_value(opt):
 
     Args:
       opt: String or `tf.keras.optimizers`. Optimizer.
+    Raises:
+        Exception: if specified conditions are not met.
     """
     optimizer_instance_result_list = []
     for optimizer_class in optimizer_list:
