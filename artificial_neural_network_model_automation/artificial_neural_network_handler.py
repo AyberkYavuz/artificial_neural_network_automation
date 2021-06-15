@@ -4,25 +4,26 @@ from keras.layers import Dropout
 from keras.utils.vis_utils import plot_model
 from helper.decorators import execution_time
 from helper.helper import contol_instance_type
-from helper.classification_handler_helper import check_classification_type_value
+from helper.helper import check_machine_learning_value
 from helper.helper import check_neural_network_architecture_values
 from helper.helper import check_hidden_layers_activation_value
 from helper.helper import check_dropout_rate_data_type
 from helper.helper import check_dropout_rate_value
 from helper.classification_handler_helper import check_optimizer_value
-from helper.classification_handler_helper import check_metric_value
+from helper.classification_handler_helper import check_classification_metric_value
+from helper.regression_helper import check_regression_metric_value  
 from helper.helper import is_number_positive
 from helper.make_keras_pickable import make_keras_picklable
 from helper.classification_handler_helper import get_predictions_from_dummy_prob_matrix
 from helper.classification_handler_helper import check_target_categories
 
 
-class ANNClassificationHandlerConfig:
+class ArtificialNeuralNetworkHandlerConfig:
     """A configuration for Keras artificial neural network classifier.
 
     Attributes:
-      classification_type: str. The type of classification task. It takes 2 different values
-                         which are "binary", "multiclass".
+      machine_learning_task: str. The type of classification task. It takes 2 different values
+                           which are "binary", "multiclass", "regression".
       neural_network_architecture: Neural network architecture represented by a python list. For example;
                                 [60, 70, 80, 1] means that 60 is input layer, 70 is the first hidden layer neuron number,
                                 80 is the second hidden layer neuron number and 1 is output layer.
@@ -47,12 +48,12 @@ class ANNClassificationHandlerConfig:
             of index `epochs` is reached.
     """
     def __init__(self, neural_network_config: dict):
-        """Constructs all the necessary attributes for the ann_classification_handler_config object.
+        """Constructs all the necessary attributes for the ann_handler_config object.
 
         Args:
           neural_network_config: Python dictionary which includes neural network configuration data.
         """
-        self.classification_type = neural_network_config["classification_type"]
+        self.machine_learning_task = neural_network_config["machine_learning_task"]
         self.neural_network_architecture = neural_network_config["neural_network_architecture"]
         self.hidden_layers_activation_function = neural_network_config["hidden_layers_activation_function"]
         dropout_rate = neural_network_config.get("dropout_rate")
@@ -63,14 +64,14 @@ class ANNClassificationHandlerConfig:
         self.epochs = neural_network_config["epochs"]
 
     @property
-    def classification_type(self):
-        return self._classification_type
+    def machine_learning_task(self):
+        return self._machine_learning_task
 
-    @classification_type.setter
-    def classification_type(self, cl_type):
-        contol_instance_type(cl_type, "classification_type", str)
-        check_classification_type_value(cl_type)
-        self._classification_type = cl_type
+    @machine_learning_task.setter
+    def machine_learning_task(self, ml_task):
+        contol_instance_type(ml_task, "machine_learning_task", str)
+        check_machine_learning_value(ml_task)
+        self._machine_learning_task = ml_task
 
     @property
     def neural_network_architecture(self):
@@ -117,7 +118,10 @@ class ANNClassificationHandlerConfig:
 
     @metric.setter
     def metric(self, m):
-        check_metric_value(m)
+        if self.machine_learning_task in ["binary", "multiclass"]:
+            check_classification_metric_value(m)
+        else:
+            check_regression_metric_value(m)
         self._metric = m
 
     @property
@@ -141,11 +145,11 @@ class ANNClassificationHandlerConfig:
         self._epochs = ep
 
 
-class ANNClassificationHandler:
+class ArtificialNeuralNetworkHandler:
     """It designs and trains Keras classifiers
 
     Attributes:
-      __classification_type: str.
+      __machine_learning_task: str.
       __neural_network_architecture: list.
       __hidden_layers_activation_function: str.
       __dropout_rate: float or None.
@@ -155,20 +159,20 @@ class ANNClassificationHandler:
       __epochs: int.
       classifier: Designed Keras classifier.
     """
-    def __init__(self, ann_classification_handler_config: ANNClassificationHandlerConfig):
+    def __init__(self, ann_handler_config: ArtificialNeuralNetworkHandlerConfig):
         """Constructs all the necessary attributes for the ann_classification_handler object.
 
         Args:
-          ann_classification_handler_config: ANNClassificationHandlerConfig instance.
+          ann_handler_config: ANNClassificationHandlerConfig instance.
         """
-        self.__classification_type = ann_classification_handler_config.classification_type
-        self.__neural_network_architecture = ann_classification_handler_config.neural_network_architecture
-        self.__hidden_layers_activation_function = ann_classification_handler_config.hidden_layers_activation_function
-        self.__dropout_rate = ann_classification_handler_config.dropout_rate
-        self.__optimizer = ann_classification_handler_config.optimizer
-        self.__metric = ann_classification_handler_config.metric
-        self.__batch_size = ann_classification_handler_config.batch_size
-        self.__epochs = ann_classification_handler_config.epochs
+        self.__machine_learning_task = ann_handler_config.machine_learning_task
+        self.__neural_network_architecture = ann_handler_config.neural_network_architecture
+        self.__hidden_layers_activation_function = ann_handler_config.hidden_layers_activation_function
+        self.__dropout_rate = ann_handler_config.dropout_rate
+        self.__optimizer = ann_handler_config.optimizer
+        self.__metric = ann_handler_config.metric
+        self.__batch_size = ann_handler_config.batch_size
+        self.__epochs = ann_handler_config.epochs
         make_keras_picklable()
         self.classifier = self.design_neural_network()
 
@@ -195,16 +199,18 @@ class ANNClassificationHandler:
                                      activation=self.__hidden_layers_activation_function))
 
         # adding output layer
-        if self.__classification_type == "binary":
+        if self.__machine_learning_task == "binary":
             classifier.add(Dense(self.__neural_network_architecture[-1], activation='sigmoid'))
         else:
             classifier.add(Dense(self.__neural_network_architecture[-1], activation='softmax'))
 
         # compile classifier
-        if self.__classification_type == "binary":
+        if self.__machine_learning_task == "binary":
             classifier.compile(loss='binary_crossentropy', optimizer=self.__optimizer, metrics=[self.__metric])
-        else:
+        elif self.__machine_learning_task == "multiclass":
             classifier.compile(loss='categorical_crossentropy', optimizer=self.__optimizer, metrics=[self.__metric])
+        else:
+            classifier.compile(loss='mse', optimizer=self.__optimizer, metrics=[self.__metric])
 
         return classifier
 
@@ -244,25 +250,29 @@ class ANNClassificationHandler:
 
     def get_predictions(self, X_test, threshold=0.5,  target_categories=None):
         """Producing predictions of trained Keras classifier
-        X_test: array-like of shape (n_samples, n_features)
-                Training vector, where n_samples is the number of samples and
-                n_features is the number of features.
-        target_categories: list. Categories of target variable. If the task is multi-class classification,
-                               this argument must be initialized.
-        threshold: float, default=0.5. Threshold.
+        Args:
+            X_test: array-like of shape (n_samples, n_features)
+                    Training vector, where n_samples is the number of samples and
+                    n_features is the number of features.
+            target_categories: list. Categories of target variable. If the task is multi-class classification,
+                                   this argument must be initialized.
+            threshold: float, default=0.5. Threshold. This parameter is required when machine_learning_task is 'binary'
+                       or 'multiclass'
         Returns:
             y_pred: array-like of shape (n_samples, n_output) \
                     or (n_samples,).
                     Predictions of trained Keras classifier.
         """
-        if self.__classification_type == "multiclass":
+        if self.__machine_learning_task == "multiclass":
             check_target_categories(target_categories)
         y_pred = None
-        if self.__classification_type == "binary":
+        if self.__machine_learning_task == "binary":
             y_pred = self.classifier.predict(X_test)
             y_pred = [1 if prob > threshold else 0 for prob in y_pred]
-        else:
+        elif self.__machine_learning_task == "multiclass":
             dummy_prob_matrix = self.classifier.predict(X_test)
             y_pred = get_predictions_from_dummy_prob_matrix(dummy_prob_matrix, target_categories, threshold=threshold)
+        else:
+            y_pred = self.classifier.predict(X_test)
 
         return y_pred
