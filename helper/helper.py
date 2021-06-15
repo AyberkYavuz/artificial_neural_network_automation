@@ -74,6 +74,8 @@ def check_dropout_rate_value(d_rate):
 
     Args:
       d_rate: float. Dropout rate.
+    Raises:
+        Exception: if conditions are not met.
     """
     condition = isinstance(d_rate, float)
     if condition:
