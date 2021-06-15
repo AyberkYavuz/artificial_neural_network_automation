@@ -293,6 +293,8 @@ class ANNClassificationRandomizedSearch:
             None for unsupervised learning.
         target_categories : list. Categories of target variable. If the task is multi-class classification,
                             this argument must be initialized.
+        Raises:
+            Exception: if classification_type condition is not met.
         """
         if self.ann_classification_randomized_search_config.classification_type == "multiclass":
             check_target_categories(target_categories)
