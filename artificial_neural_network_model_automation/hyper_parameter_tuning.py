@@ -39,7 +39,7 @@ class ANNRandomizedSearchConfig:
       epochs_list: List of epochs. For example; [10, 20, 30, 40, 50, 100]
     """
     def __init__(self, neural_network_config_list_dict: dict):
-        """Constructs all the necessary attributes for the ann_classification_randomized_search_config object.
+        """Constructs all the necessary attributes for the ann_randomized_search_config object.
 
         Args:
           neural_network_config_list_dict: Python dictionary which includes neural network configuration lists data
@@ -158,7 +158,7 @@ class ANNRandomizedSearch:
     """Randomized Search which was designed for ANNHandler.
 
     Attributes:
-      ann_classification_randomized_search_config: ANNClassificationRandomizedSearchConfig instance.
+      ann_randomized_search_config: ANNClassificationRandomizedSearchConfig instance.
       n_iter: int, default=10. Number of parameter settings that are sampled. n_iter trades off runtime vs quality of the solution.
       n_jobs: int, default=None. The maximum number of concurrently running jobs, such as the number of Python worker
                         processes when backend=”multiprocessing” or the size of the thread-pool when
@@ -174,16 +174,16 @@ class ANNRandomizedSearch:
       best_score_: float, default=None. This attribute will be initialized,
                                when _set_metric_params private method is called.
     """
-    def __init__(self, ann_classification_randomized_search_config: ANNClassificationRandomizedSearchConfig,
+    def __init__(self, ann_randomized_search_config: ANNRandomizedSearchConfig,
                  n_iter=10, n_jobs=None):
-        """Constructs all the necessary attributes for the ann_classification_randomized_search object.
+        """Constructs all the necessary attributes for the ann_randomized_search object.
 
         Args:
-          ann_classification_randomized_search_config: ANNClassificationRandomizedSearchConfig instance.
+          ann_randomized_search_config: ANNClassificationRandomizedSearchConfig instance.
           n_iter: int, default=10.
           n_jobs: int, default=None.
         """
-        self.ann_classification_randomized_search_config = ann_classification_randomized_search_config
+        self.ann_randomized_search_config = ann_randomized_search_config
         self.n_iter = n_iter
         self.n_jobs = n_jobs
         self.best_param_ = None
@@ -215,14 +215,14 @@ class ANNRandomizedSearch:
         Returns:
             ann_handler_config: ArtificialNeuralNetworkHandlerConfig instance.
         """
-        neural_network_architecture = choice(self.ann_classification_randomized_search_config.neural_network_architecture_list)
-        hidden_layers_activation_function = choice(self.ann_classification_randomized_search_config.hidden_layers_activation_function_list)
-        dropout_rate = choice(self.ann_classification_randomized_search_config.dropout_rate_list)
-        optimizer = choice(self.ann_classification_randomized_search_config.optimizer_list)
-        metric = choice(self.ann_classification_randomized_search_config.metric_list)
-        batch_size = choice(self.ann_classification_randomized_search_config.batch_size_list)
-        epochs = choice(self.ann_classification_randomized_search_config.epochs_list)
-        neural_network_config = {"classification_type": self.ann_classification_randomized_search_config.classification_type,
+        neural_network_architecture = choice(self.ann_randomized_search_config.neural_network_architecture_list)
+        hidden_layers_activation_function = choice(self.ann_randomized_search_config.hidden_layers_activation_function_list)
+        dropout_rate = choice(self.ann_randomized_search_config.dropout_rate_list)
+        optimizer = choice(self.ann_randomized_search_config.optimizer_list)
+        metric = choice(self.ann_randomized_search_config.metric_list)
+        batch_size = choice(self.ann_randomized_search_config.batch_size_list)
+        epochs = choice(self.ann_randomized_search_config.epochs_list)
+        neural_network_config = {"classification_type": self.ann_randomized_search_config.machine_learning_task,
                                  "neural_network_architecture": neural_network_architecture,
                                  "hidden_layers_activation_function": hidden_layers_activation_function,
                                  "dropout_rate": dropout_rate,
@@ -248,17 +248,17 @@ class ANNRandomizedSearch:
         ann_handler_config = self._get_randomly_ann_classification_handler_config()
         ann_handler = ArtificialNeuralNetworkHandler(ann_handler_config)
         score = None
-        if self.ann_classification_randomized_search_config.machine_learning_task == "binary":
+        if self.ann_randomized_search_config.machine_learning_task == "binary":
             ann_handler.train_neural_network(X_train, y_train)
             y_pred = ann_handler.get_predictions(X_test)
-            scoring_method = scoring_dictionary[self.ann_classification_randomized_search_config.scoring]
+            scoring_method = scoring_dictionary[self.ann_randomized_search_config.scoring]
             score = scoring_method(y_test, y_pred)
-        elif self.ann_classification_randomized_search_config.machine_learning_task == "multiclass":
+        elif self.ann_randomized_search_config.machine_learning_task == "multiclass":
             # dummy target transformation
             dummy_y_train = np_utils.to_categorical(y_train)
             ann_handler.train_neural_network(X_train, dummy_y_train)
             y_pred = ann_handler.get_predictions(X_test, target_categories=target_categories)
-            scoring_method = scoring_dictionary[self.ann_classification_randomized_search_config.scoring]
+            scoring_method = scoring_dictionary[self.ann_randomized_search_config.scoring]
             score = scoring_method(y_test, y_pred, average="macro")
 
         result = {"score": score,
@@ -295,7 +295,7 @@ class ANNRandomizedSearch:
         Raises:
             Exception: if classification_type condition is not met.
         """
-        if self.ann_classification_randomized_search_config.machine_learning_task == "multiclass":
+        if self.ann_randomized_search_config.machine_learning_task == "multiclass":
             check_target_categories(target_categories)
         X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.30, random_state=42)
         list_of_dictionaries = list()
