@@ -96,6 +96,8 @@ def check_metric_value(m):
 
     Args:
       m: String. Metric.
+    Raises:
+        Exception: if conditions are not met.
     """
     metric_instance_result_list = []
     for metric_class in metric_list:
