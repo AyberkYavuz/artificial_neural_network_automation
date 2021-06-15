@@ -46,6 +46,8 @@ def check_hidden_layers_activation_value(hlaf):
 
     Args:
       hlaf: str. Hidden layer activation function
+    Raises:
+        Exception: if the condition is not met.
     """
     hidden_layers_activation_function_condition = hlaf in activation_functions
     if hidden_layers_activation_function_condition:
