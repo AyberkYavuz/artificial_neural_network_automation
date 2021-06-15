@@ -89,6 +89,8 @@ def is_number_positive(number, variable_name):
     Args:
       number: int. Number.
       variable_name: str. Variable name for printing messages.
+    Raises:
+        Exception: if the condition is not met.
     """
     if number > 0:
         print("{} value is valid".format(variable_name))
