@@ -115,6 +115,8 @@ def check_n_jobs(n_jobs):
     Args:
       n_jobs: int, default=None. Number of jobs to run in parallel.
             None means 1 unless in a joblib.parallel_backend context. -1 means using all processors.
+    Raises:
+        Exception: if conditions are not met.
     """
     condition1 = isinstance(n_jobs, int)
     condition2 = n_jobs is None
