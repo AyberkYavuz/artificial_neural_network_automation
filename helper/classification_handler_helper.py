@@ -48,21 +48,6 @@ scoring_dictionary = {
 }
 
 
-def check_classification_type_value(cl_type):
-    """Checks classification type value.
-
-    Args:
-      cl_type: String. Classification type.
-    Raises:
-        Exception: if classification_type_condition is not met.
-    """
-    classification_type_condition = cl_type in ["binary", "multiclass"]
-    if classification_type_condition:
-        print("classification_type value is valid")
-    else:
-        raise Exception("Sorry, classification_type should be 'binary' or 'multiclass'")
-
-
 def check_optimizer_value(opt):
     """Checks optimizer value.
 
