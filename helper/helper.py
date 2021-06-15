@@ -18,6 +18,8 @@ def check_neural_network_architecture_values(nn_architecture):
 
     Args:
       nn_architecture: list. Neural network architecture.
+    Raises:
+        Exception: if conditions are not met.
     """
     length_of_neural_network_architecture = len(nn_architecture)
     neural_network_architecture_condition_1 = length_of_neural_network_architecture < 3
