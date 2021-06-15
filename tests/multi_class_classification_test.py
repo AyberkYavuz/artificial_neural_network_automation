@@ -1,7 +1,7 @@
 from sklearn.datasets import load_iris
 from tensorflow.keras.optimizers import SGD
-from artificial_neural_network_model_automation.classification_handler import ANNClassificationHandlerConfig
-from artificial_neural_network_model_automation.classification_handler import ANNClassificationHandler
+from artificial_neural_network_model_automation.artificial_neural_network_handler import ArtificialNeuralNetworkHandlerConfig
+from artificial_neural_network_model_automation.artificial_neural_network_handler import ArtificialNeuralNetworkHandler
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import classification_report
 from keras.utils import np_utils
@@ -19,7 +19,7 @@ dummy_y_train = np_utils.to_categorical(y_train)
 
 # designing neural network
 optimizer = SGD(learning_rate=0.01)
-neural_network_config = {"classification_type": "multiclass",
+neural_network_config = {"machine_learning_task": "multiclass",
                          "neural_network_architecture": [4, 9, 12, 9, 3],
                          "hidden_layers_activation_function": "relu",
                          "optimizer": optimizer,
@@ -27,15 +27,15 @@ neural_network_config = {"classification_type": "multiclass",
                          "batch_size": 10,
                          "epochs": 50}
 
-ann_classification_handler_config = ANNClassificationHandlerConfig(neural_network_config)
+ann_handler_config = ArtificialNeuralNetworkHandlerConfig(neural_network_config)
 
-ann_classification_handler = ANNClassificationHandler(ann_classification_handler_config)
+ann_handler = ArtificialNeuralNetworkHandler(ann_handler_config)
 
 # training neural network
-ann_classification_handler.train_neural_network(X_train, dummy_y_train)
+ann_handler.train_neural_network(X_train, dummy_y_train)
 
 # getting predictions
-y_test_predictions = ann_classification_handler.get_predictions(X_test, target_categories=[0, 1, 2])
+y_test_predictions = ann_handler.get_predictions(X_test, target_categories=[0, 1, 2])
 
 # displaying classification report
 print(classification_report(y_test, y_test_predictions))
