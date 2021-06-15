@@ -1,8 +1,9 @@
 from sklearn.datasets import load_breast_cancer
 from tensorflow.keras.optimizers import Adam
 from tensorflow.keras.optimizers import SGD
-from artificial_neural_network_model_automation.hyper_parameter_tuning import ANNClassificationRandomizedSearchConfig
-from artificial_neural_network_model_automation.hyper_parameter_tuning import ANNClassificationRandomizedSearch
+from artificial_neural_network_model_automation.hyper_parameter_tuning import ANNRandomizedSearchConfig
+from artificial_neural_network_model_automation.hyper_parameter_tuning import ANNRandomizedSearch
+
 
 # loading data
 data = load_breast_cancer()
@@ -17,7 +18,7 @@ optimizer3 = Adam(learning_rate=0.02)
 optimizer4 = SGD()
 optimizer5 = SGD(learning_rate=0.02)
 
-classification_type = "binary"
+machine_learning_task = "binary"
 scoring = "roc_auc"
 neural_network_architecture_list = [
     [30, 40, 40, 1],
@@ -34,7 +35,7 @@ batch_size_list = [10, 20, 30, 40, 50]
 epochs_list = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
 
 neural_network_config_list_dict = {
-    "classification_type": classification_type,
+    "machine_learning_task": machine_learning_task,
     "scoring": scoring,
     "neural_network_architecture_list": neural_network_architecture_list,
     "hidden_layers_activation_function_list": hidden_layers_activation_function_list,
@@ -45,10 +46,9 @@ neural_network_config_list_dict = {
     "epochs_list": epochs_list
 }
 
-ann_classification_randomized_search_config = ANNClassificationRandomizedSearchConfig(neural_network_config_list_dict)
+ann_randomized_search_config = ANNRandomizedSearchConfig(neural_network_config_list_dict)
 
 
-ann_classification_randomized_search = ANNClassificationRandomizedSearch(ann_classification_randomized_search_config,
-                                                                         n_iter=100, n_jobs=-1)
-ann_classification_randomized_search.fit(features, target)
+ann_randomized_search = ANNRandomizedSearch(ann_randomized_search_config, n_iter=100, n_jobs=-1)
+ann_randomized_search.fit(features, target)
 
