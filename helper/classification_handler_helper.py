@@ -76,8 +76,8 @@ def check_optimizer_value(opt):
                             "'rmsprop', 'adam', 'adadelta', 'adagrad', 'adamax', 'nadam', 'ftrl'")
 
 
-def check_metric_value(m):
-    """Checks metric value.
+def check_classification_metric_value(m):
+    """Checks classification metric value.
 
     Args:
       m: String. Metric.
