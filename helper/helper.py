@@ -6,6 +6,8 @@ def contol_instance_type(object, object_name, type):
       object: Python object to be controlled.
       object_name: str. Name of the object.
       type: Data type of object like str, dict, int etc.
+    Raises:
+        Exception: if the condition is not met.
     """
     if isinstance(object, type):
         print("{} data type is valid".format(object_name))
