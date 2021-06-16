@@ -271,8 +271,8 @@ class ANNRandomizedSearch:
                 score = scoring_method(y_test, y_pred)
 
         result = {"score": score,
-                  "ann_classification_handler_config": ann_handler_config,
-                  "classifier": ann_handler.classifier}
+                  "ann_handler_config": ann_handler_config,
+                  "model": ann_handler.neural_network}
         return result
 
     def _set_metric_params(self, list_of_dictionaries):
@@ -283,8 +283,8 @@ class ANNRandomizedSearch:
         metric_dataframe = pd.DataFrame(list_of_dictionaries)
         max_score = metric_dataframe["score"].max()
         data = metric_dataframe[metric_dataframe["score"] == max_score].iloc[0]
-        self.best_estimator_ = data["classifier"]
-        self.best_param_ = data["ann_classification_handler_config"]
+        self.best_estimator_ = data["model"]
+        self.best_param_ = data["ann_handler_config"]
         self.best_score_ = max_score
 
     @execution_time("minutes")
