@@ -3,7 +3,6 @@ from sklearn.model_selection import train_test_split
 from artificial_neural_network_model_automation.artificial_neural_network_handler import ArtificialNeuralNetworkHandlerConfig
 from artificial_neural_network_model_automation.artificial_neural_network_handler import ArtificialNeuralNetworkHandler
 from sklearn.metrics import classification_report
-from helper.data_path_handler import get_data_path
 
 # loading data
 data = load_breast_cancer()
