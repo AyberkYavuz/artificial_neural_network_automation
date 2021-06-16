@@ -1,6 +1,7 @@
 from helper.helper import contol_instance_type
 from helper.helper import check_machine_learning_value
 from helper.classification_handler_helper import classification_scoring_dictionary
+from helper.regression_helper import regression_scoring_dictionary
 from helper.classification_handler_helper import check_target_categories
 from helper.helper import is_list_empty
 from helper.helper import is_number_positive
@@ -260,6 +261,14 @@ class ANNRandomizedSearch:
             y_pred = ann_handler.get_predictions(X_test, target_categories=target_categories)
             scoring_method = classification_scoring_dictionary[self.ann_randomized_search_config.scoring]
             score = scoring_method(y_test, y_pred, average="macro")
+        else:
+            y_pred = ann_handler.get_predictions(X_test)
+            scoring_method = regression_scoring_dictionary[self.ann_randomized_search_config.scoring]
+            if self.ann_randomized_search_config.scoring == "adjusted_r2":
+                number_of_features = len(list(X_train.columns))
+                score = scoring_method(y_test, y_pred, number_of_features)
+            else:
+                score = scoring_method(y_test, y_pred)
 
         result = {"score": score,
                   "ann_classification_handler_config": ann_handler_config,
