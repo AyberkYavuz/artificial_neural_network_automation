@@ -26,11 +26,6 @@ ann_classification_handler_config = ArtificialNeuralNetworkHandlerConfig(neural_
 
 ann_classification_handler = ArtificialNeuralNetworkHandler(ann_classification_handler_config)
 
-# save the plot of classifier architecture
-png_path = get_data_path("neural_network_architecture_breast_cancer_data.png",
-                         "neural_network_model_architecture_plots",
-                         os_type="mac")
-ann_classification_handler.save_classifier_architecture_plot(png_path)
 # training neural network
 ann_classification_handler.train_neural_network(X_train, y_train)
 # making predictions
