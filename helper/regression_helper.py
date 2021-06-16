@@ -4,6 +4,7 @@ from tensorflow.keras.metrics import MeanAbsolutePercentageError
 from tensorflow.keras.metrics import MeanSquaredLogarithmicError
 from tensorflow.keras.metrics import CosineSimilarity
 from tensorflow.keras.metrics import LogCoshError
+from sklearn.metrics import r2_score
 
 
 def adjusted_r2(y_test, y_pred, p):
@@ -31,6 +32,11 @@ metric_string_list = ["mean_squared_error", "mean_absolute_error", "mean_absolut
                       "mean_squared_logarithmic_error", "cosine_similarity", "logcosh"]
 
 regression_scoring_list = ["adjusted_r2", "r2"]
+
+regression_scoring_dictionary = {
+    "adjusted_r2": adjusted_r2,
+    "r2": r2_score
+}
 
 
 def check_regression_metric_value(m):
