@@ -252,7 +252,7 @@ class ArtificialNeuralNetworkHandler:
         self.classifier.fit(X, y, batch_size=self.__batch_size, epochs=self.__epochs)
 
     def get_predictions(self, X_test, threshold=0.5,  target_categories=None):
-        """Producing predictions of trained Keras classifier
+        """Producing predictions of trained Keras neural network
         Args:
             X_test: array-like of shape (n_samples, n_features)
                     Training vector, where n_samples is the number of samples and
