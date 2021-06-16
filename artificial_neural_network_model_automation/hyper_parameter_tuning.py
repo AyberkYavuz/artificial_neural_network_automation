@@ -265,7 +265,7 @@ class ANNRandomizedSearch:
             y_pred = ann_handler.get_predictions(X_test)
             scoring_method = regression_scoring_dictionary[self.ann_randomized_search_config.scoring]
             if self.ann_randomized_search_config.scoring == "adjusted_r2":
-                number_of_features = len(list(X_train.shape[1]))
+                number_of_features = X_train.shape[1]
                 score = scoring_method(y_test, y_pred, number_of_features)
             else:
                 score = scoring_method(y_test, y_pred)
