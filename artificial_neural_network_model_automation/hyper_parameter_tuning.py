@@ -170,7 +170,7 @@ class ANNRandomizedSearch:
                         parallel_backend context manager that sets another value for n_jobs.
       best_param_: ANNClassificationHandlerConfig instance, default=None. This attribute will be initialized,
                                                                  when _set_metric_params private method is called.
-      best_estimator_: Keras classifier, default=None. This attribute will be initialized,
+      best_estimator_: Keras neural network, default=None. This attribute will be initialized,
                                               when _set_metric_params private method is called.
       best_score_: float, default=None. This attribute will be initialized,
                                when _set_metric_params private method is called.
