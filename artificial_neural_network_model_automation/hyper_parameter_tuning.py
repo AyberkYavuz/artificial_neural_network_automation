@@ -235,7 +235,7 @@ class ANNRandomizedSearch:
         return ann_handler_config
 
     def _fit_and_score(self, X_train, X_test, y_train, y_test, target_categories=None):
-        """Fits and scores Keras classifier.
+        """Fits and scores Keras neural network.
         Args:
             X_train: it can be list, numpy array, scipy-sparse matrix or pandas dataframe.
             X_test: it can be list, numpy array, scipy-sparse matrix or pandas dataframe.
@@ -244,7 +244,7 @@ class ANNRandomizedSearch:
             target_categories: list. Categories of target variable. If the task is multi-class classification,
                                this argument must be initialized.
         Returns:
-            result: dict. It contains ANNClassificationHandlerConfig instance, float score and Keras classifier.
+            result: dict. It contains ANNClassificationHandlerConfig instance, float score and Keras neural network.
         """
         ann_handler_config = self._get_randomly_ann_classification_handler_config()
         ann_handler = ArtificialNeuralNetworkHandler(ann_handler_config)
