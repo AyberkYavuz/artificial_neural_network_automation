@@ -270,12 +270,12 @@ class ArtificialNeuralNetworkHandler:
             check_target_categories(target_categories)
         y_pred = None
         if self.__machine_learning_task == "binary":
-            y_pred = self.classifier.predict(X_test)
+            y_pred = self.neural_network.predict(X_test)
             y_pred = [1 if prob > threshold else 0 for prob in y_pred]
         elif self.__machine_learning_task == "multiclass":
-            dummy_prob_matrix = self.classifier.predict(X_test)
+            dummy_prob_matrix = self.neural_network.predict(X_test)
             y_pred = get_predictions_from_dummy_prob_matrix(dummy_prob_matrix, target_categories, threshold=threshold)
         else:
-            y_pred = self.classifier.predict(X_test)
+            y_pred = self.neural_network.predict(X_test)
 
         return y_pred
