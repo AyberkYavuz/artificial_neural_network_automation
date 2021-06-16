@@ -11,9 +11,9 @@ def adjusted_r2_score(y_test, y_pred, p):
     """Checks regression metric value.
 
     Args:
-      y_test: float. Target variable for test
-      y_pred: float. predictions of regressor
-      p: int. Number of independent variables
+      y_test: list or numpy array. Target variable for test
+      y_pred: list or numpy array. Predictions of regressor.
+      p: int. Number of independent variables.
     Returns:
         adjusted_r2: Adjusted R2
     """
@@ -21,6 +21,20 @@ def adjusted_r2_score(y_test, y_pred, p):
     r2 = r2_score(y_test, y_pred)
     adjusted_r2 = 1 - (1 - r2) * (n - 1) / (n - p - 1)
     return adjusted_r2
+
+
+def regression_report(y_test, y_pred, p):
+    """Displays regression report.
+    Args:
+        y_test: list or numpy array. Target variable for test
+        y_pred: list or numpy array. Predictions of regressor.
+        p: int. Number of independent variables.
+    """
+    r2 = r2_score(y_test, y_pred)
+    adjusted_r2 = adjusted_r2_score(y_test, y_pred, p)
+    print("Regression Report\n************************")
+    print("r2 score: " + str(r2))
+    print("adjusted r2 score: " + str(adjusted_r2))
 
 
 metric_list = [RootMeanSquaredError, MeanAbsoluteError, MeanAbsolutePercentageError,
