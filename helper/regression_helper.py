@@ -13,7 +13,7 @@ def adjusted_r2_score(y_test, y_pred, p):
     Args:
       y_test: float. Target variable for test
       y_pred: float. predictions of regressor
-      p: int number of independent variables
+      p: int. Number of independent variables
     Returns:
         adjusted_r2: Adjusted R2
     """
