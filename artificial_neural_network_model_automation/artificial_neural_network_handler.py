@@ -201,8 +201,10 @@ class ArtificialNeuralNetworkHandler:
         # adding output layer
         if self.__machine_learning_task == "binary":
             classifier.add(Dense(self.__neural_network_architecture[-1], activation='sigmoid'))
-        else:
+        elif self.__machine_learning_task == "multiclass":
             classifier.add(Dense(self.__neural_network_architecture[-1], activation='softmax'))
+        else:
+            classifier.add(Dense(self.__neural_network_architecture[-1]))
 
         # compile classifier
         if self.__machine_learning_task == "binary":
