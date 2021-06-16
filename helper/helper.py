@@ -197,11 +197,7 @@ def check_value_of_scoring(sc, ml_task):
             if sc in regression_scoring_list:
                 print("scoring value is valid.")
             else:
-                raise Exception('scoring value cannot be anything than "adjusted_r2", "explained_variance",'
-                                '"max_error", "neg_mean_absolute_error", "neg_mean_squared_error", '
-                                '"neg_root_mean_squared_error", "neg_mean_squared_log_error",'
-                                '"neg_median_absolute_error", "r2", "neg_mean_poisson_deviance", '
-                                '"neg_mean_gamma_deviance", "neg_mean_absolute_percentage_error"')
+                raise Exception('scoring value cannot be anything than "adjusted_r2", "r2"')
 
 
 def get_value_of_scoring_none_condition(sc, ml_task):
