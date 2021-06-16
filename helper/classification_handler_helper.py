@@ -39,7 +39,7 @@ metric_string_list = ["accuracy", "binary_accuracy", "categorical_accuracy", "to
                       "FalseNegatives"]
 
 
-scoring_dictionary = {
+classification_scoring_dictionary = {
     "f1": f1_score,
     "precision": precision_score,
     "recall": recall_score,
