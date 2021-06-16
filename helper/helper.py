@@ -1,3 +1,5 @@
+from helper.regression_helper import regression_scoring_list
+
 
 def contol_instance_type(object, object_name, type):
     """Contols instance type of given object.
@@ -170,27 +172,36 @@ def check_instance_type_of_scoring(sc):
         raise Exception("scoring can't be anything than str or None.")
 
 
-def check_value_of_scoring(sc, cl_type):
+def check_value_of_scoring(sc, ml_task):
     """Checks the value of scoring.
     Args:
         sc: str or None. Scoring. The selection criteria for the best model.
-        cl_type: str. Classification type
+        ml_task: str. Machine learning task.
     Raises:
         Exception: if conditions are not met.
     """
     condition1 = isinstance(sc, str)
     if condition1:
-        if cl_type == "binary":
+        if ml_task == "binary":
             if sc in ["accuracy", "roc_auc", "f1", "precision", "recall"]:
                 print("scoring value is valid.")
             else:
                 raise Exception("scoring value cannot be anything than 'accuracy', 'roc_auc', "
                                 "'f1', 'precision', 'recall'")
-        else:
+        elif ml_task == "multiclass":
             if sc in ["f1", "precision", "recall"]:
                 print("scoring value is valid.")
             else:
                 raise Exception("scoring value cannot be anything than 'f1', 'precision', 'recall'")
+        else:
+            if sc in regression_scoring_list:
+                print("scoring value is valid.")
+            else:
+                raise Exception('scoring value cannot be anything than "adjusted_r2", "explained_variance",'
+                                '"max_error", "neg_mean_absolute_error", "neg_mean_squared_error", '
+                                '"neg_root_mean_squared_error", "neg_mean_squared_log_error",'
+                                '"neg_median_absolute_error", "r2", "neg_mean_poisson_deviance", '
+                                '"neg_mean_gamma_deviance", "neg_mean_absolute_percentage_error"')
 
 
 def get_value_of_scoring_none_condition(sc, ml_task):
