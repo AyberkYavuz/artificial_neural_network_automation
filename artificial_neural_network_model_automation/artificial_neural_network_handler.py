@@ -185,8 +185,9 @@ class ArtificialNeuralNetworkHandler:
         # Initialising the ANN
         neural_network = Sequential()
         # Adding input layer and first hidden layer
-        neural_network.add(Dense(input_dim=self.__neural_network_architecture[0], units=self.__neural_network_architecture[1],
-                             activation=self.__hidden_layers_activation_function))
+        neural_network.add(Dense(input_dim=self.__neural_network_architecture[0],
+                                 units=self.__neural_network_architecture[1],
+                                 activation=self.__hidden_layers_activation_function))
 
         # adding other hidden layers, if they exist
         other_hidden_layer_neuron_numbers = self.__neural_network_architecture[2:-1]
