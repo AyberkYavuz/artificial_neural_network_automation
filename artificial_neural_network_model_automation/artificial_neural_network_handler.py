@@ -223,7 +223,7 @@ class ArtificialNeuralNetworkHandler:
         Args:
           png_path: str path argument. It must be contain location information of png file
         """
-        plot_model(self.classifier, to_file=png_path, show_shapes=True, show_layer_names=True)
+        plot_model(self.neural_network, to_file=png_path, show_shapes=True, show_layer_names=True)
 
     @execution_time("seconds")
     def train_neural_network(self, X, y):
