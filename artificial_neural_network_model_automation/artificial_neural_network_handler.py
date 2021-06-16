@@ -157,7 +157,7 @@ class ArtificialNeuralNetworkHandler:
       __metric: str (name of a built-in function), function or a `tf.keras.metrics.Metric` instance.
       __batch_size: int or None.
       __epochs: int.
-      classifier: Designed Keras classifier.
+      neural_network: Designed Keras neural network.
     """
     def __init__(self, ann_handler_config: ArtificialNeuralNetworkHandlerConfig):
         """Constructs all the necessary attributes for the ann_handler object.
@@ -174,7 +174,7 @@ class ArtificialNeuralNetworkHandler:
         self.__batch_size = ann_handler_config.batch_size
         self.__epochs = ann_handler_config.epochs
         make_keras_picklable()
-        self.classifier = self.design_neural_network()
+        self.neural_network = self.design_neural_network()
 
     def design_neural_network(self):
         """Designs keras neural network architecture based on ANNClassificationHandlerConfig instance for
