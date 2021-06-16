@@ -7,7 +7,7 @@ from tensorflow.keras.metrics import LogCoshError
 from sklearn.metrics import r2_score
 
 
-def adjusted_r2(y_test, y_pred, p):
+def adjusted_r2_score(y_test, y_pred, p):
     """Checks regression metric value.
 
     Args:
@@ -15,14 +15,12 @@ def adjusted_r2(y_test, y_pred, p):
       y_pred: float. predictions of regressor
       p: int number of independent variables
     Returns:
-        adjusted_r2_score: Adjusted R2
+        adjusted_r2: Adjusted R2
     """
-    from sklearn.metrics import r2_score
-    # Adj r2 = 1-(1-R2)*(n-1)/(n-p-1)
     n = len(y_test)
-    r2_score = r2_score(y_test, y_pred)
-    adjusted_r2_score = 1 - (1 - r2_score) * (n - 1) / (n - p - 1)
-    return adjusted_r2_score
+    r2 = r2_score(y_test, y_pred)
+    adjusted_r2 = 1 - (1 - r2) * (n - 1) / (n - p - 1)
+    return adjusted_r2
 
 
 metric_list = [RootMeanSquaredError, MeanAbsoluteError, MeanAbsolutePercentageError,
@@ -34,7 +32,7 @@ metric_string_list = ["mean_squared_error", "mean_absolute_error", "mean_absolut
 regression_scoring_list = ["adjusted_r2", "r2"]
 
 regression_scoring_dictionary = {
-    "adjusted_r2": adjusted_r2,
+    "adjusted_r2": adjusted_r2_score,
     "r2": r2_score
 }
 
