@@ -177,8 +177,8 @@ class ArtificialNeuralNetworkHandler:
         self.classifier = self.design_neural_network()
 
     def design_neural_network(self):
-        """Designs keras neural network architecture based on ANNClassificationHandlerConfig instance for classification
-        task.
+        """Designs keras neural network architecture based on ANNClassificationHandlerConfig instance for
+        machine learning task.
         Returns:
             classifier: Designed Keras classifier.
         """
