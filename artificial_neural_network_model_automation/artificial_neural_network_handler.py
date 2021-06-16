@@ -180,12 +180,12 @@ class ArtificialNeuralNetworkHandler:
         """Designs keras neural network architecture based on ANNClassificationHandlerConfig instance for
         machine learning task.
         Returns:
-            classifier: Designed Keras classifier.
+            : Designed Keras classifier.
         """
         # Initialising the ANN
-        classifier = Sequential()
+        neural_network = Sequential()
         # Adding input layer and first hidden layer
-        classifier.add(Dense(input_dim=self.__neural_network_architecture[0], units=self.__neural_network_architecture[1],
+        neural_network.add(Dense(input_dim=self.__neural_network_architecture[0], units=self.__neural_network_architecture[1],
                              activation=self.__hidden_layers_activation_function))
 
         # adding other hidden layers, if they exist
@@ -194,27 +194,27 @@ class ArtificialNeuralNetworkHandler:
             for hidden_layer_neuron_number in other_hidden_layer_neuron_numbers:
                 if self.__dropout_rate is not None:
                     # adding dropout layer
-                    classifier.add(Dropout(rate=self.__dropout_rate))
-                classifier.add(Dense(hidden_layer_neuron_number,
-                                     activation=self.__hidden_layers_activation_function))
+                    neural_network.add(Dropout(rate=self.__dropout_rate))
+                neural_network.add(Dense(hidden_layer_neuron_number,
+                                         activation=self.__hidden_layers_activation_function))
 
         # adding output layer
         if self.__machine_learning_task == "binary":
-            classifier.add(Dense(self.__neural_network_architecture[-1], activation='sigmoid'))
+            neural_network.add(Dense(self.__neural_network_architecture[-1], activation='sigmoid'))
         elif self.__machine_learning_task == "multiclass":
-            classifier.add(Dense(self.__neural_network_architecture[-1], activation='softmax'))
+            neural_network.add(Dense(self.__neural_network_architecture[-1], activation='softmax'))
         else:
-            classifier.add(Dense(self.__neural_network_architecture[-1]))
+            neural_network.add(Dense(self.__neural_network_architecture[-1]))
 
         # compile classifier
         if self.__machine_learning_task == "binary":
-            classifier.compile(loss='binary_crossentropy', optimizer=self.__optimizer, metrics=[self.__metric])
+            neural_network.compile(loss='binary_crossentropy', optimizer=self.__optimizer, metrics=[self.__metric])
         elif self.__machine_learning_task == "multiclass":
-            classifier.compile(loss='categorical_crossentropy', optimizer=self.__optimizer, metrics=[self.__metric])
+            neural_network.compile(loss='categorical_crossentropy', optimizer=self.__optimizer, metrics=[self.__metric])
         else:
-            classifier.compile(loss='mse', optimizer=self.__optimizer, metrics=[self.__metric])
+            neural_network.compile(loss='mse', optimizer=self.__optimizer, metrics=[self.__metric])
 
-        return classifier
+        return neural_network
 
     def save_classifier_architecture_plot(self, png_path):
         """Plots the classifier architecture and saves it as a png file.
