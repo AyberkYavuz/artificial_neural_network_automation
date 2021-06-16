@@ -74,7 +74,7 @@ class ANNRandomizedSearchConfig:
     def scoring(self, sc):
         check_instance_type_of_scoring(sc)
         check_value_of_scoring(sc, self.machine_learning_task)
-        sc = get_value_of_scoring_none_condition(sc)
+        sc = get_value_of_scoring_none_condition(sc, self.machine_learning_task)
         self._scoring = sc
 
     @property
