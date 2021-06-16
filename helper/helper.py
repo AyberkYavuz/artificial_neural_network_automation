@@ -193,13 +193,18 @@ def check_value_of_scoring(sc, cl_type):
                 raise Exception("scoring value cannot be anything than 'f1', 'precision', 'recall'")
 
 
-def get_value_of_scoring_none_condition(sc):
+def get_value_of_scoring_none_condition(sc, ml_task):
     """Updates sc value, if sc is None.
     Args:
         sc: str or None. Scoring. The selection criteria for the best model.
+        ml_task: str. Machine learning task.
     Returns:
         sc: str. Scoring. The selection criteria for the best model.
     """
-    if sc is None:
-        sc = "f1"
+    if ml_task in ["binary", "multiclass"]:
+        if sc is None:
+            sc = "f1"
+    else:
+        if sc is None:
+            sc = "adjusted_r2"
     return sc
