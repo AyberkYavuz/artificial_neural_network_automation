@@ -249,7 +249,7 @@ class ArtificialNeuralNetworkHandler:
           or `keras.utils.Sequence` instance, `y` should
           not be specified (since targets will be obtained from `X`).
         """
-        self.classifier.fit(X, y, batch_size=self.__batch_size, epochs=self.__epochs)
+        self.neural_network.fit(X, y, batch_size=self.__batch_size, epochs=self.__epochs)
 
     def get_predictions(self, X_test, threshold=0.5,  target_categories=None):
         """Producing predictions of trained Keras neural network
