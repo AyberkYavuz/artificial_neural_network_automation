@@ -180,7 +180,7 @@ class ArtificialNeuralNetworkHandler:
         """Designs keras neural network architecture based on ANNClassificationHandlerConfig instance for
         machine learning task.
         Returns:
-            : Designed Keras classifier.
+            neural_network: Designed neural network.
         """
         # Initialising the ANN
         neural_network = Sequential()
