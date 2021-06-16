@@ -5,16 +5,33 @@ from tensorflow.keras.metrics import MeanSquaredLogarithmicError
 from tensorflow.keras.metrics import CosineSimilarity
 from tensorflow.keras.metrics import LogCoshError
 
+
+def adjusted_r2(y_test, y_pred, p):
+    """Checks regression metric value.
+
+    Args:
+      y_test: float. Target variable for test
+      y_pred: float. predictions of regressor
+      p: int number of independent variables
+    Returns:
+        adjusted_r2_score: Adjusted R2
+    """
+    from sklearn.metrics import r2_score
+    # Adj r2 = 1-(1-R2)*(n-1)/(n-p-1)
+    n = len(y_test)
+    r2_score = r2_score(y_test, y_pred)
+    adjusted_r2_score = 1 - (1 - r2_score) * (n - 1) / (n - p - 1)
+    return adjusted_r2_score
+
+
 metric_list = [RootMeanSquaredError, MeanAbsoluteError, MeanAbsolutePercentageError,
                MeanSquaredLogarithmicError, CosineSimilarity, LogCoshError]
 
 metric_string_list = ["mean_squared_error", "mean_absolute_error", "mean_absolute_percentage_error",
                       "mean_squared_logarithmic_error", "cosine_similarity", "logcosh"]
 
-regression_scoring_list = ["adjusted_r2", "explained_variance", "max_error", "neg_mean_absolute_error",
-                           "neg_mean_squared_error", "neg_root_mean_squared_error", "neg_mean_squared_log_error",
-                           "neg_median_absolute_error", "r2", "neg_mean_poisson_deviance", "neg_mean_gamma_deviance",
-                           "neg_mean_absolute_percentage_error"]
+regression_scoring_list = ["adjusted_r2", "r2"]
+
 
 def check_regression_metric_value(m):
     """Checks regression metric value.
