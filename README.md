@@ -1,6 +1,33 @@
 # artificial_neural_network_automation
 This repository is for automating artificial neural network model creation with tabular data using Keras framework.
 
+## Project Structure
+```bash
+artificial_neural_network_automation/
+├── LICENSE
+├── README.md
+├── artificial_neural_network_model_automation
+│   ├── __init__.py       
+│   ├── artificial_neural_network_handler.py
+│   └── hyper_parameter_tuning.py
+├── helper
+│   ├── __init__.py
+│   ├── classification_helper.py
+│   ├── data_path_handler.py
+│   ├── decorators.py
+│   ├── helper.py
+│   ├── make_keras_pickable.py
+│   └── regression_helper.py
+└── tests
+    ├── __init__.py
+    ├── binary_classification_randomized_search_test.py
+    ├── binary_classification_test.py
+    ├── multi_class_classification_randomized_search_test.py
+    ├── multi_class_classification_test.py
+    ├── regression_randomized_search_test.py
+    └── regression_test.py
+```
+
 ## Usage
 This repository supports binary classification, multi-class classification and regression.
 
