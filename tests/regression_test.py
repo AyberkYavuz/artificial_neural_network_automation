@@ -22,14 +22,16 @@ neural_network_config = {"machine_learning_task": "regression",
                          "batch_size": 10,
                          "epochs": 50}
 
-ann_classification_handler_config = ArtificialNeuralNetworkHandlerConfig(neural_network_config)
+# create artificial neural network configuration object
+ann_handler_config = ArtificialNeuralNetworkHandlerConfig(neural_network_config)
 
-ann_classification_handler = ArtificialNeuralNetworkHandler(ann_classification_handler_config)
+# create artificial neural network handler object
+ann_handler = ArtificialNeuralNetworkHandler(ann_handler_config)
 
-# training neural network
-ann_classification_handler.train_neural_network(X_train, y_train)
+# training designed neural network
+ann_handler.train_neural_network(X_train, y_train)
 # making predictions
-y_pred = ann_classification_handler.get_predictions(X_test)
+y_pred = ann_handler.get_predictions(X_test)
 
 number_of_features = X_train.shape[1]
 regression_report(y_test, y_pred, number_of_features)
