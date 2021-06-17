@@ -278,7 +278,8 @@ class ANNRandomizedSearch:
     def _set_metric_params(self, list_of_dictionaries):
         """Initializes best_estimator_, best_param_ and best_score_ attributes.
         Args:
-            list_of_dictionaries: list. It is list of dictionaries.
+            list_of_dictionaries: list. It is list of dictionaries which contains score, ann_handler_config
+                                  and model attributes.
         """
         metric_dataframe = pd.DataFrame(list_of_dictionaries)
         max_score = metric_dataframe["score"].max()
