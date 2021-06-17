@@ -311,3 +311,9 @@ ann_randomized_search = ANNRandomizedSearch(ann_randomized_search_config, n_iter
 # perform randomized search
 ann_randomized_search.fit(features, target)
 ```
+
+## Contributing
+Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+
+## License
+[MIT](https://github.com/AyberkYavuz/artificial_neural_network_automation/blob/main/LICENSE)
