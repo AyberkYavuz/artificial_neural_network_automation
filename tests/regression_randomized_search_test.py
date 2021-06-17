@@ -22,7 +22,7 @@ neural_network_architecture_list = [
     [13, 50, 1],
     [13, 50, 50, 1]
 ]
-hidden_layers_activation_function_list = ["relu", "sigmoid", "tanh", "selu", "elu"]
+hidden_layers_activation_function_list = ["relu", "selu", "elu"]
 dropout_rate_list = [None, 0.0001, 0.001, 0.01, 0.02, 0.03, 0.04]
 
 optimizer1 = Adam()
