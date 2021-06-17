@@ -9,13 +9,13 @@ from helper.helper import check_neural_network_architecture_values
 from helper.helper import check_hidden_layers_activation_value
 from helper.helper import check_dropout_rate_data_type
 from helper.helper import check_dropout_rate_value
-from helper.classification_handler_helper import check_optimizer_value
-from helper.classification_handler_helper import check_classification_metric_value
+from helper.classification_helper import check_optimizer_value
+from helper.classification_helper import check_classification_metric_value
 from helper.regression_helper import check_regression_metric_value  
 from helper.helper import is_number_positive
 from helper.make_keras_pickable import make_keras_picklable
-from helper.classification_handler_helper import get_predictions_from_dummy_prob_matrix
-from helper.classification_handler_helper import check_target_categories
+from helper.classification_helper import get_predictions_from_dummy_prob_matrix
+from helper.classification_helper import check_target_categories
 
 
 class ArtificialNeuralNetworkHandlerConfig:
