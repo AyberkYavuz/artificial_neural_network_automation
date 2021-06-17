@@ -344,3 +344,13 @@ Pull requests are welcome. For major changes, please open an issue first to disc
 
 ## License
 [MIT](https://github.com/AyberkYavuz/artificial_neural_network_automation/blob/main/LICENSE)
+
+## In Memory of Mustafa Akgül
+Mustafa Akgül (May 10, 1948 Ankara, Turkey - December 13, 2017 Ankara, Turkey) is a Turkish academic, engineer, 
+mathematician, computer scientist, activist, known for his work for the spread of the Internet in Turkey.
+
+He is known as the father of the Internet and free software in Turkey.
+
+I have always been proud to be your student.
+ 
+I dedicate my project to your unique memory.
