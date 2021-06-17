@@ -27,11 +27,13 @@ neural_network_config = {"machine_learning_task": "multiclass",
                          "batch_size": 10,
                          "epochs": 50}
 
+# create artificial neural network configuration object
 ann_handler_config = ArtificialNeuralNetworkHandlerConfig(neural_network_config)
 
+# create artificial neural network handler object
 ann_handler = ArtificialNeuralNetworkHandler(ann_handler_config)
 
-# training neural network
+# training designed neural network
 ann_handler.train_neural_network(X_train, dummy_y_train)
 
 # getting predictions
