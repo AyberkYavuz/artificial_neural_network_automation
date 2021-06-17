@@ -307,7 +307,7 @@ class ANNRandomizedSearch:
         """
         if self.ann_randomized_search_config.machine_learning_task == "multiclass":
             check_target_categories(target_categories)
-        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.30, random_state=42)
+        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.33, random_state=42)
         list_of_dictionaries = list()
         if self.n_jobs is None:
             for _ in range(0, self.n_iter):
