@@ -48,7 +48,8 @@ neural_network_config_list_dict = {
 
 ann_randomized_search_config = ANNRandomizedSearchConfig(neural_network_config_list_dict)
 
-
+# create artificial neural network randomized search object
 ann_randomized_search = ANNRandomizedSearch(ann_randomized_search_config, n_iter=100, n_jobs=-1)
+# perform randomized serach
 ann_randomized_search.fit(features, target)
 
