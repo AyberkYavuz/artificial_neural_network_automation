@@ -4,7 +4,7 @@ This repository is for automating artificial neural network model creation with 
 ## Usage
 This repository supports binary classification, multi-class classification and regression.
 
-### Binary Classification Usage
+### Binary Classification Usage Example
 ```python
 from sklearn.datasets import load_breast_cancer
 from sklearn.model_selection import train_test_split
