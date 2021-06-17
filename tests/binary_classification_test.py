@@ -21,14 +21,17 @@ neural_network_config = {"machine_learning_task": "binary",
                          "metric": "Recall",
                          "batch_size": 10,
                          "epochs": 50}
-ann_classification_handler_config = ArtificialNeuralNetworkHandlerConfig(neural_network_config)
 
-ann_classification_handler = ArtificialNeuralNetworkHandler(ann_classification_handler_config)
+# create artificial neural network configuration object
+ann_handler_config = ArtificialNeuralNetworkHandlerConfig(neural_network_config)
 
-# training neural network
-ann_classification_handler.train_neural_network(X_train, y_train)
+# create artificial neural network handler object
+ann_handler = ArtificialNeuralNetworkHandler(ann_handler_config)
+
+# training designed neural network
+ann_handler.train_neural_network(X_train, y_train)
 # making predictions
-y_pred = ann_classification_handler.get_predictions(X_test)
+y_pred = ann_handler.get_predictions(X_test)
 # classification report
 print(classification_report(y_test, y_pred))
 
