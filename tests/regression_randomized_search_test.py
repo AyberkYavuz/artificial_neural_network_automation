@@ -40,7 +40,6 @@ epochs_list = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
 
 neural_network_config_list_dict = {
     "machine_learning_task": machine_learning_task,
-    "scoring": "r2",
     "neural_network_architecture_list": neural_network_architecture_list,
     "hidden_layers_activation_function_list": hidden_layers_activation_function_list,
     "dropout_rate_list": dropout_rate_list,
