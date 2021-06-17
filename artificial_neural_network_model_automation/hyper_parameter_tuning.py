@@ -262,6 +262,7 @@ class ANNRandomizedSearch:
             scoring_method = classification_scoring_dictionary[self.ann_randomized_search_config.scoring]
             score = scoring_method(y_test, y_pred, average="macro")
         else:
+            ann_handler.train_neural_network(X_train, y_train)
             y_pred = ann_handler.get_predictions(X_test)
             scoring_method = regression_scoring_dictionary[self.ann_randomized_search_config.scoring]
             if self.ann_randomized_search_config.scoring == "adjusted_r2":
