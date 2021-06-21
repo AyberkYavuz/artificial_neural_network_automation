@@ -340,7 +340,8 @@ ann_randomized_search.fit(features, target)
 ```
 
 ## Contributing
-Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+Suggestions for new features are welcome. For major changes or improvements, please open an issue first to 
+discuss what you would like to change or improve.
 
 ## License
 [MIT](https://github.com/AyberkYavuz/artificial_neural_network_automation/blob/main/LICENSE)
