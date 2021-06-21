@@ -6,6 +6,7 @@ from helper.decorators import execution_time
 from helper.helper import contol_instance_type
 from helper.helper import check_machine_learning_value
 from helper.helper import check_neural_network_architecture_values
+from helper.helper import check_output_layer_value
 from helper.helper import check_hidden_layers_activation_value
 from helper.helper import check_dropout_rate_data_type
 from helper.helper import check_dropout_rate_value
@@ -81,6 +82,8 @@ class ArtificialNeuralNetworkHandlerConfig:
     def neural_network_architecture(self, nn_architecture):
         contol_instance_type(nn_architecture, "neural_network_architecture", list)
         check_neural_network_architecture_values(nn_architecture)
+        output_layer_value = nn_architecture[-1]
+        check_output_layer_value(self.machine_learning_task, output_layer_value)
         self._neural_network_architecture = nn_architecture
 
     @property
