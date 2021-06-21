@@ -59,6 +59,26 @@ def check_neural_network_architecture_values(nn_architecture):
     print("neural_network_architecture value is valid")
 
 
+def check_output_layer_value(ml_task, output_layer_value):
+    """Checks output layer of neural network architecture.
+    Args:
+        ml_task: str. Machine learning task.
+        output_layer_value: int.
+    Raises:
+        Exception: if conditions are not met.
+    """
+    ml_task_condition = ml_task in ["binary", "regression"]
+    if ml_task_condition:
+        if output_layer_value > 1:
+            raise Exception("Output layer value cannot be greater than 1, "
+                            "when machine_learning_task is binary or regression.")
+    else:
+        if output_layer_value == 1:
+            raise Exception("Output layer value cannot be equal to 1, "
+                            "when machine_learning_task is multiclass."
+                            "Output layer should be number of categories of target variable.")
+
+
 activation_functions = ["relu", "sigmoid", "tanh", "selu", "elu", "exponential"]
 
 
