@@ -10,7 +10,7 @@ setup(
     name='artificial_neural_network_model_automation',
 
     # Packages to include into the distribution
-    packages=find_namespace_packages(include=['artificial_neural_network_model_automation.*']),
+    packages=find_namespace_packages(include=['artificial_neural_network_automation.*']),
 
     # Start with a small number and increase it with every change you make
     # https://semver.org
