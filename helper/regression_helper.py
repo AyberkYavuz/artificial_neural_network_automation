@@ -15,7 +15,7 @@ def adjusted_r2_score(y_test, y_pred, p):
       y_pred: list or numpy array. Predictions of regressor.
       p: int. Number of independent variables.
     Returns:
-        adjusted_r2: Adjusted R2
+        adjusted_r2: float. Adjusted R2
     """
     n = len(y_test)
     r2 = r2_score(y_test, y_pred)
