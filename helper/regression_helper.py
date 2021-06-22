@@ -55,7 +55,7 @@ def check_regression_metric_value(m):
     """Checks regression metric value.
 
     Args:
-      m: String. Metric.
+      m: str. Metric.
     Raises:
         Exception: if conditions are not met.
     """
