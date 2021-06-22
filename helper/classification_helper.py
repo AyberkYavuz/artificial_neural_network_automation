@@ -110,7 +110,7 @@ def get_label_based_on_thresold(x, thresold):
 
     Args:
       x: Probability value of target category which was produced by the classifier.
-      thresold: thresold which will be used for labeling.
+      thresold: float. thresold which will be used for labeling.
     Returns:
         Label of probability x which will be 0 or 1.
     """
