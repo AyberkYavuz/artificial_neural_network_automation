@@ -80,7 +80,7 @@ def check_classification_metric_value(m):
     """Checks classification metric value.
 
     Args:
-      m: String. Metric.
+      m: str. Metric.
     Raises:
         Exception: if conditions are not met.
     """
