@@ -157,7 +157,7 @@ class ArtificialNeuralNetworkHandler:
       __dropout_rate: float or None.
       __optimizer: str (name of optimizer) or optimizer instance. See `tf.keras.optimizers`.
       __metric: str (name of a built-in function), function or a `tf.keras.metrics.Metric` instance.
-      __batch_size: int or None.
+      __batch_size: int.
       __epochs: int.
       neural_network: Designed Keras neural network.
     """
