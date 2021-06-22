@@ -160,7 +160,8 @@ class ANNRandomizedSearch:
 
     Attributes:
       ann_randomized_search_config: ANNClassificationRandomizedSearchConfig instance.
-      n_iter: int, default=10. Number of parameter settings that are sampled. n_iter trades off runtime vs quality of the solution.
+      n_iter: int, default=10. Number of parameter settings that are sampled. n_iter trades off runtime vs quality of
+                        the solution.
       n_jobs: int, default=None. The maximum number of concurrently running jobs, such as the number of Python worker
                         processes when backend=”multiprocessing” or the size of the thread-pool when
                         backend=”threading”. If -1 all CPUs are used. If 1 is given, no parallel computing code is used
@@ -169,11 +170,11 @@ class ANNRandomizedSearch:
                         interpreted as n_jobs=1 (sequential execution) unless the call is performed under a
                         parallel_backend context manager that sets another value for n_jobs.
       best_param_: ANNClassificationHandlerConfig instance, default=None. This attribute will be initialized,
-                                                                 when _set_metric_params private method is called.
+                        when _set_metric_params private method is called.
       best_estimator_: Keras neural network, default=None. This attribute will be initialized,
-                                              when _set_metric_params private method is called.
+                        when _set_metric_params private method is called.
       best_score_: float, default=None. This attribute will be initialized,
-                               when _set_metric_params private method is called.
+                        when _set_metric_params private method is called.
     """
     def __init__(self, ann_randomized_search_config: ANNRandomizedSearchConfig,
                  n_iter=10, n_jobs=None):
