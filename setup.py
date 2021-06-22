@@ -56,7 +56,9 @@ setup(
                       'pydot>=1.4.2'],
 
     # https://pypi.org/classifiers/
-    classifiers=['Programming Language :: Python :: 3.8', 'Topic :: Scientific/Engineering',
+    classifiers=['Programming Language :: Python :: 3', 'Topic :: Scientific/Engineering',
                  'Topic :: Scientific/Engineering :: Artificial Intelligence',
-                 'License :: OSI Approved :: MIT License']
+                 'License :: OSI Approved :: MIT License'],
+
+    python_requires=">=3.8"
 )
