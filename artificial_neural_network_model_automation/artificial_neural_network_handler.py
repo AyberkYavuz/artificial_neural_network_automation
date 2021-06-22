@@ -60,8 +60,7 @@ class ArtificialNeuralNetworkHandlerConfig:
         self.dropout_rate = dropout_rate
         self.optimizer = neural_network_config["optimizer"]
         self.metric = neural_network_config["metric"]
-        batch_size = neural_network_config.get("batch_size")
-        self.batch_size = batch_size
+        self.batch_size = neural_network_config["batch_size"]
         self.epochs = neural_network_config["epochs"]
 
     @property
