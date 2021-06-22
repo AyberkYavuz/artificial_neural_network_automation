@@ -52,7 +52,7 @@ def check_optimizer_value(opt):
     """Checks optimizer value.
 
     Args:
-      opt: String or `tf.keras.optimizers`. Optimizer.
+      opt: str or `tf.keras.optimizers`. Optimizer.
     Raises:
         Exception: if specified conditions are not met.
     """
