@@ -37,9 +37,7 @@ class ArtificialNeuralNetworkHandlerConfig:
       metric: List of metrics to be evaluated by the model during training and testing. Each of this can be a string
            (name of a built-in function), function or a `tf.keras.metrics.Metric` instance. See
            `tf.keras.metrics`. Typically you will use `metrics=['accuracy']`.
-      batch_size: int or `None`. Number of samples per gradient update. If unspecified, `batch_size` will
-               default to 32. Do not specify the `batch_size` if your data is in the form of datasets, generators,
-               or `keras.utils.Sequence` instances (since they generate batches).
+      batch_size: int. Number of samples per gradient update.
       epochs: int. Number of epochs to train the model.
             An epoch is an iteration over the entire `x` and `y`
             data provided.
