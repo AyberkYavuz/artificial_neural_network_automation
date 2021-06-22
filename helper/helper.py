@@ -21,7 +21,7 @@ def check_machine_learning_value(ml_task):
     """Checks machine_learning_task value.
 
     Args:
-      cl_type: String. Classification type.
+      ml_task: str. Machine learning task.
     Raises:
         Exception: if classification_type_condition is not met.
     """
