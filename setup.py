@@ -7,7 +7,7 @@ long_description_string = "For detailed information\n" \
 
 setup(
     # Name of the package
-    name='artificial_neural_network_model_automation',
+    name='artificial_neural_network_automation',
 
     # Packages to include into the distribution
     packages=find_namespace_packages(include=['artificial_neural_network_automation.*']),
