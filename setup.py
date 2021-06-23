@@ -3,7 +3,7 @@ from setuptools import setup
 
 long_description_string = "For detailed information\n" \
                           "Please look at : " \
-                          "https://github.com/AyberkYavuz/artificial_neural_network_automation/blob/main/README.md"
+                          "https://github.com/AyberkYavuz/artificial_neural_network_automation"
 
 setup(
     # Name of the package
@@ -14,7 +14,7 @@ setup(
 
     # Start with a small number and increase it with every change you make
     # https://semver.org
-    version='0.0.4',
+    version='0.0.1',
 
     # Chose a license from here: https://help.github.com/articles/licensing-a-repository
     # For example: MIT
