@@ -6,7 +6,7 @@ def contol_instance_type(object, object_name, type):
 
     Args:
       object: Python object to be controlled.
-      object_name: str. Name of the object.
+      object_name: str. Name of the object for displaying messages.
       type: Data type of object like str, dict, int etc.
     Raises:
         Exception: if the condition is not met.
