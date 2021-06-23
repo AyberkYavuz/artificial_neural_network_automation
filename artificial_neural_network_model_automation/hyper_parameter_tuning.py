@@ -23,7 +23,7 @@ class ANNRandomizedSearchConfig:
     """A configuration for ANNRandomizedSearch instance.
 
     Attributes:
-      machine_learning_task: The type of machine learning task. It takes 3 different values
+      machine_learning_task: str. The type of machine learning task. It takes 3 different values
                          which are "binary", "multiclass", "regression".
       scoring: str or None. It can be "accuracy", "roc_auc", "f1", "precision", "recall" or None. If None,
             its value becomes "f1". It is the selection criteria for best model.
