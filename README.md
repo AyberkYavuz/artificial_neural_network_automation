@@ -35,7 +35,7 @@ There are 2 ways to install this python package to your platform.
 ### PyPi Installation
 First, please look at [pypi project link](https://pypi.org/project/artificial-neural-network-model-automation/0.0.1/).
 
-PyPi Installation
+**Example PyPi Installation**
 ```bash
 pip install artificial-neural-network-model-automation==0.0.1
 ```
@@ -46,7 +46,7 @@ Please look at [Releases](https://github.com/AyberkYavuz/artificial_neural_netwo
 
 After checking releases, you can install this python package from available tar.gz files to your platform.
 
-Example Installation
+**Example Installation**
 ```bash
 python3 -m pip install https://github.com/AyberkYavuz/artificial_neural_network_automation/archive/refs/tags/0.0.1.tar.gz
 ```
