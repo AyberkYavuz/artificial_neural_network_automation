@@ -32,6 +32,14 @@ artificial_neural_network_automation/
 ## Installation
 There are 2 ways to install this python package.
 
+### PyPi Installation
+First, please look at [pypi project link](https://pypi.org/project/artificial-neural-network-model-automation/0.0.1/).
+
+PyPi Installation
+```bash
+pip install artificial-neural-network-model-automation==0.0.1
+```
+
 ### Installation from Github Releases
 First, you should check the releases in order to install latest release.
 Please look at [Releases](https://github.com/AyberkYavuz/artificial_neural_network_automation/releases).
