@@ -28,6 +28,20 @@ artificial_neural_network_automation/
     └── regression_test.py
 ```
 
+## Installation
+There are 2 ways to install this python package.
+
+### Installation from Github Releases
+First, you should check the releases in order to install latest release.
+Please look at [Releases](https://github.com/AyberkYavuz/artificial_neural_network_automation/releases).
+
+After checking releases you can install this python package from available tar.gz files to your platform.
+
+Example Installation
+```bash
+python3 -m pip install https://github.com/AyberkYavuz/artificial_neural_network_automation/archive/refs/tags/0.0.1.tar.gz
+```
+
 ## Usage
 This repository supports binary classification, multi-class classification and regression.
 
