@@ -6,6 +6,7 @@ This repository is for automating artificial neural network model creation with 
 artificial_neural_network_automation/
 ├── LICENSE
 ├── README.md
+├── setup.py
 ├── artificial_neural_network_model_automation
 │   ├── __init__.py       
 │   ├── artificial_neural_network_handler.py
