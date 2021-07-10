@@ -17,13 +17,13 @@ artificial_neural_network_automation/
 │   ├── make_keras_pickable.py
 │   └── regression_helper.py
 └── tests
-    ├── __init__.py
-    ├── binary_classification_randomized_search_test.py
-    ├── binary_classification_test.py
-    ├── multi_class_classification_randomized_search_test.py
-    ├── multi_class_classification_test.py
-    ├── regression_randomized_search_test.py
-    └── regression_test.py
+│   ├── __init__.py
+│   ├── binary_classification_randomized_search_test.py
+│   ├── binary_classification_test.py
+│   ├── multi_class_classification_randomized_search_test.py
+│   ├── multi_class_classification_test.py
+│   ├── regression_randomized_search_test.py
+│   └── regression_test.py
 ├── LICENSE
 ├── README.md
 ├── setup.py
