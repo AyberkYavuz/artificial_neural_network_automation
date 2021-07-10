@@ -4,9 +4,6 @@ This repository is for automating artificial neural network model creation with 
 ## Project Structure
 ```bash
 artificial_neural_network_automation/
-├── LICENSE
-├── README.md
-├── setup.py
 ├── artificial_neural_network_model_automation
 │   ├── __init__.py       
 │   ├── artificial_neural_network_handler.py
@@ -27,6 +24,9 @@ artificial_neural_network_automation/
     ├── multi_class_classification_test.py
     ├── regression_randomized_search_test.py
     └── regression_test.py
+├── LICENSE
+├── README.md
+├── setup.py
 ```
 
 ## Installation
