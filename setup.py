@@ -1,8 +1,8 @@
 from setuptools import setup
 
 
-long_description_string = "For detailed information\n" \
-                          "Please look at : " \
+long_description_string = "For detailed information,\n" \
+                          "please look at : " \
                           "https://github.com/AyberkYavuz/artificial_neural_network_automation"
 
 setup(
@@ -10,7 +10,7 @@ setup(
     name='artificial_neural_network_model_automation',
 
     # Packages to include into the distribution
-    packages=['artificial_neural_network_model_automation', 'artificial_neural_network_model_automation_helper', 'tests'],
+    packages=['artificial_neural_network_model_automation', 'artificial_neural_network_model_automation_helper'],
 
     # Start with a small number and increase it with every change you make
     # https://semver.org
