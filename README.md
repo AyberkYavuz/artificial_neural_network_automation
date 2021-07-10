@@ -11,7 +11,7 @@ artificial_neural_network_automation/
 │   ├── __init__.py       
 │   ├── artificial_neural_network_handler.py
 │   └── hyper_parameter_tuning.py
-├── helper
+├── artificial_neural_network_model_automation_helper
 │   ├── __init__.py
 │   ├── classification_helper.py
 │   ├── data_path_handler.py
