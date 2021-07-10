@@ -37,7 +37,7 @@ First, please look at [pypi project link](https://pypi.org/project/artificial-ne
 
 **Example PyPi Installation**
 ```bash
-pip install artificial-neural-network-model-automation==0.0.3
+pip install artificial-neural-network-model-automation
 ```
 
 ### Installation from Github Releases
