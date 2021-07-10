@@ -1,4 +1,4 @@
-from helper.regression_helper import regression_scoring_list
+from artificial_neural_network_model_automation_helper.regression_helper import regression_scoring_list
 
 
 def contol_instance_type(object, object_name, type):

@@ -2,7 +2,7 @@ from sklearn.datasets import load_boston
 from sklearn.model_selection import train_test_split
 from artificial_neural_network_model_automation.artificial_neural_network_handler import ArtificialNeuralNetworkHandlerConfig
 from artificial_neural_network_model_automation.artificial_neural_network_handler import ArtificialNeuralNetworkHandler
-from helper.regression_helper import regression_report
+from artificial_neural_network_model_automation_helper.regression_helper import regression_report
 
 # loading data
 data = load_boston()
