@@ -16,7 +16,7 @@ artificial_neural_network_automation/
 │   ├── helper.py
 │   ├── make_keras_pickable.py
 │   └── regression_helper.py
-└── tests
+├── tests
 │   ├── __init__.py
 │   ├── binary_classification_randomized_search_test.py
 │   ├── binary_classification_test.py
@@ -26,7 +26,7 @@ artificial_neural_network_automation/
 │   └── regression_test.py
 ├── LICENSE
 ├── README.md
-├── setup.py
+└── setup.py
 ```
 
 ## Installation
